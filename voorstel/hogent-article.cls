@@ -475,3 +475,7 @@
 }
 \RequirePackage{booktabs}
 \RequirePackage{csquotes}
+
+%% Packages added by Lucas
+\RequirePackage{extdash}
+\RequirePackage{hyphenat}

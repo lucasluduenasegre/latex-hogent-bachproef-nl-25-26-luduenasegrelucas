@@ -9,76 +9,232 @@
 
 % Dit voorstel is gebaseerd op het onderzoeksvoorstel dat werd geschreven in het
 % kader van het vak Research Methods dat ik (vorig/dit) academiejaar heb
-% uitgewerkt (met medesturent VOORNAAM NAAM als mede-auteur).
+% uitgewerkt (met medestudent VOORNAAM NAAM als mede-auteur).
 % 
 
 \section{Inleiding}%
 \label{sec:inleiding}
 
-Waarover zal je bachelorproef gaan? Introduceer het thema en zorg dat volgende zaken zeker duidelijk aanwezig zijn:
+% Waarover zal je bachelorproef gaan? Introduceer het thema en zorg dat volgende zaken zeker duidelijk aanwezig zijn:
+
+% \begin{itemize}
+%   \item kaderen thema
+%   \item de doelgroep
+%   \item de probleemstelling en (centrale) onderzoeksvraag
+%   \item de onderzoeksdoelstelling
+% \end{itemize}
+
+% Denk er aan: een typische bachelorproef is \textit{toegepast onderzoek}, wat betekent dat je start vanuit een concrete probleemsituatie in bedrijfscontext, een \textbf{casus}. Het is belangrijk om je onderwerp goed af te bakenen: je gaat voor die \textit{ene specifieke probleemsituatie} op zoek naar een goede oplossing, op basis van de huidige kennis in het vakgebied.
+
+% De doelgroep moet ook concreet en duidelijk zijn, dus geen algemene of vaag gedefinieerde groepen zoals \emph{bedrijven}, \emph{developers}, \emph{Vlamingen}, enz. Je richt je in elk geval op it-professionals, een bachelorproef is geen populariserende tekst. Eén specifiek bedrijf (die te maken hebben met een concrete probleemsituatie) is dus beter dan \emph{bedrijven} in het algemeen.
+
+% Formuleer duidelijk de onderzoeksvraag! De begeleiders lezen nog steeds te veel voorstellen waarin we geen onderzoeksvraag terugvinden.
+
+% Schrijf ook iets over de doelstelling. Wat zie je als het concrete eindresultaat van je onderzoek, naast de uitgeschreven scriptie? Is het een proof-of-concept, een rapport met aanbevelingen, \ldots Met welk eindresultaat kan je je bachelorproef als een succes beschouwen?
+
+
+
+
+
+% Bij het opzetten van een server-infrastructuur, is helderheid en communicatie met elke - al dan niet technisch ingestelde - stakeholder cruciaal.
+% Om deze duidelijkheid te waarborgen, worden meestal implementatiediagrammen (ofwel deployment diagrams) ontworpen via UML-modeling software, voor deze infrastructuur effectief wordt opgezet. Deze diagrammen beschrijven welke software-elementen (databanken, webservers, firewalls, \ldots) worden geïmplementeerd op welke hard\-ware-ele\-men\-ten (virtuele machines, containers, bare-metal servers, \ldots) en hoe deze met elkaar interageren.
+% Het is echter mogelijk dat de implementatie van de software op deze infrastructuur niet (helemaal) overeenkomt met het implementatiediagram, onder andere wegens ambiguïteit rond bijvoorbeeld softwareversies of firewall-regels.
+% Het doel van dit onderzoek is om een manier te vinden om een gegeven UML-diagram van een infrastructuur (gegenereerd met een taal zoals bv. PlantUML) om te zetten (of parseren) tot een overeenkomend, gebruiksklaar eindresultaat in een ``configuration management''-tool (zoals bv. Ansible).
+
+
+
+% \textcolor{red}{Nota: wegens tijdsgebrek zal het document veel "overfull"-errors bevatten. Ik ben er nog helemaal niet uit hoe ik deze zou oplossen aangezien het vooral gaat om woorden die een ``-'' of een ``/'' bevatten, die ik uiteraard vaak zal moeten gebruiken in mijn tekst.}
+
+Binnen de richting Toegepaste Informatica op HOGENT hebben de meeste OLODs (opleidingsonderdelen) gelinkt aan het keuzetraject ``IT Infrastructure Engineer'' de opzet om te leren (virtuele) serveromgevingen te creeëren en beheren. Bij het opzetten van dit soort infrastructuur, is helderheid over elke stap van het proces en communicatie met elke -- al dan niet technisch ingestelde -- stakeholder cruciaal.
+Om deze duidelijkheid te waarborgen, wordt er binnen de richting (meerbepaald tijdens de analyse-OLODs) ook aangeleerd om met UML-modeling software (Visual Paradigm, draw.io, PlantUML, \ldots) relevante diagrammen te ontwerpen, zoals Activity Diagrams, System Sequence Diagrams, domeinmodellen en BPMN-diagrammen.
+
+Met deze software kan men ook netwerk- en implementatiediagrammen ontwerpen, die de specificaties, software-elementen (databanken, webservers, firewalls, \ldots) en verbanden tussen de verschillende servers in een bepaalde omgeving verduidelijken. Deze servers worden op basis van deze diagrammen daarna respectievelijk opgezet via ``Infrastructure-as-Code''-tools (zoals Terraform, OpenTofu, Vagrant, \ldots) en geconfigureerd met ``configuration management''-tools (Ansible, Puppet, Chef, Salt, \ldots). De HOGENT-OLODs ``DevOps Project: Operations'', ``Cybersecurity Advanced'' en meerbepaald ``Infrastructure Automation'' introduceren ook het gebruik van Ansible, één van de leidende ``configuration management''-tools.
+
+% \textcolor{purple}{Het proces van het ontwerpen van deze diagrammen, meerbepaald implementatiediagrammen volgens een onderzoek van \textcite{Nicacio2020}, is echter vatbaar voor ambiguïteiten, wat een drempel kan veroorzaken voor de effectieve implementatie van de serveromgeving}.
+
+De concrete probleemstelling/casus voor het onderzoek:
+\textcolor{purple}{Het huidige proces waarbij (complexe) implementatie- en netwerkdiagrammen worden geïnterpreteerd en manueel worden omgezet tot een ``configuration management''-ondersteunde serveromgeving kan, volgens \textcite{Nicacio2020}, tijdrovend en vatbaar voor ambiguïteit en foute interpretaties zijn.}
+
+Bij implementatiediagrammen kan er onder meer onduidelijkheid onstaan bij (de versies van) software-packages, hun afhankelijkheden/dependencies, de firewall-regels voor elke VM en hoe dit het bereik buiten het lokale netwerk beïnvloedt.
+Voor netwerkdiagrammen kan dit bijvoorbeeld gaan over specificaties van de servers, (de versies van) hun besturingssystemen en de declaratie van de DNS server(s).
+
+De hoofdonderzoeksvraag voor deze bachelorproef:
+\textcolor{purple}{Hoe kan men een gegeven implementatiediagram (bv. via PlantUML) van een (virtuele) serveromgeving rechtstreeks omzetten (met minimale menselijke interventie) tot een overeenkomende, gebruiksklare ``configuration management''-ondersteunde (bv. met Ansible) serveromgeving?}
+
+Voor deze serveromgeving wordt ervan uit gegaan dat de eenheden (bare-metal servers, virtuele machines, containers, \ldots) al uitgerold zijn via een ``Infrastructure-as-Code''-tool (zoals Terraform, OpenTofu, Vagrant, \ldots), en dat ze enkel nog achteraf geconfigureerd moeten worden.
+
+% Het hoofddoel van dit onderzoek \textcolor{purple}{is een manier vinden om een gegeven UML-diagram van een (virtuele) serveromgeving (gegenereerd met een taal zoals bv. PlantUML) rechtstreeks om te zetten (of parseren) tot overeenkomende, gebruiksklare code in een ``configuration management''-tool (zoals bv. Ansible)}.
+
+\textcolor{purple}{Enkele deelvragen met betrekking tot het \emph{probleemdomein}}:
 
 \begin{itemize}
-  \item kaderen thema
-  \item de doelgroep
-  \item de probleemstelling en (centrale) onderzoeksvraag
-  \item de onderzoeksdoelstelling
+  \item Wat zijn de doeleinden (business- of technisch-gericht) van UML?
+  \item Welke infrastructuur-gerelateerde informatie kan een implementatiediagram \emph{niet} weergeven (dat een ``Infrastructure-as-Code''- en/of ``configuration management''-tool wel kan)?
+  \item Welke stappen zijn er tussen het ontwerp van een implementatiediagram en de eerste opstelling van een ``configuration management''-ondersteunde omgeving?
 \end{itemize}
 
-Denk er aan: een typische bachelorproef is \textit{toegepast onderzoek}, wat betekent dat je start vanuit een concrete probleemsituatie in bedrijfscontext, een \textbf{casus}. Het is belangrijk om je onderwerp goed af te bakenen: je gaat voor die \textit{ene specifieke probleemsituatie} op zoek naar een goede oplossing, op basis van de huidige kennis in het vakgebied.
+\textcolor{purple}{Verdere deelvragen met betrekking tot het \emph{oplossingsdomein}}
 
-De doelgroep moet ook concreet en duidelijk zijn, dus geen algemene of vaag gedefinieerde groepen zoals \emph{bedrijven}, \emph{developers}, \emph{Vlamingen}, enz. Je richt je in elk geval op it-professionals, een bachelorproef is geen populariserende tekst. Eén specifiek bedrijf (die te maken hebben met een concrete probleemsituatie) is dus beter dan \emph{bedrijven} in het algemeen.
+\begin{itemize}
+  \item Naast PlantUML, met welke andere talen kan men implementatiediagrammen weergeven/genereren?
+  \item Buiten Ansible, wat zijn andere ``configuration management''-tools die voor dit soort doeleinden geschikt zijn?
+  \item Aangezien er al tools bestaan om UML-diagrammen te genereren op basis van ``configuration management''-ondersteunde omgevingen, zoals één van \textcite{teramako2023}, welke meerwaarde zou deze oplossing (die in de omgekeerde richting werkt) kunnen bieden?
+  \item Is het mogelijk om deze oplossing te ontwikkeling aan de hand van ``reverse engineering'' van de bovenstaande tool(s)?
+\end{itemize}
 
-Formuleer duidelijk de onderzoeksvraag! De begeleiders lezen nog steeds te veel voorstellen waarin we geen onderzoeksvraag terugvinden.
+De doelstelling van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een parser (of omzetter) van PlantUML-diagrammen naar Ansible-code. Dit zijn de twee tools die op dit moment voor ogen staan, maar er zullen alvorens of tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden. Deze oplossing zou voornamelijk bedoeld zijn voor lectoren (en wellicht ook studenten) binnen de richting Toepegaste Informatica, die hun lessen beter willen voorbereiden met snelle, declaratieve serveromgevingen.
 
-Schrijf ook iets over de doelstelling. Wat zie je als het concrete eindresultaat van je onderzoek, naast de uitgeschreven scriptie? Is het een proof-of-concept, een rapport met aanbevelingen, \ldots Met welk eindresultaat kan je je bachelorproef als een succes beschouwen?
+
+
 
 %---------- Stand van zaken ---------------------------------------------------
 
 \section{Literatuurstudie}%
 \label{sec:literatuurstudie}
 
-Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein, d.w.z.\ een inleidende, doorlopende tekst over het onderzoeksdomein van je bachelorproef. Je steunt daarbij heel sterk op de professionele \emph{vakliteratuur}, en niet zozeer op populariserende teksten voor een breed publiek. Wat is de huidige stand van zaken in dit domein, en wat zijn nog eventuele open vragen (die misschien de aanleiding waren tot je onderzoeksvraag!)?
+% Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein, d.w.z.\ een inleidende, doorlopende tekst over het onderzoeksdomein van je bachelorproef. Je steunt daarbij heel sterk op de professionele \emph{vakliteratuur}, en niet zozeer op populariserende teksten voor een breed publiek. Wat is de huidige stand van zaken in dit domein, en wat zijn nog eventuele open vragen (die misschien de aanleiding waren tot je onderzoeksvraag!)?
 
-Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek?
+% Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek?
 
-Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Hykes2013}! Denk zeker goed na welke werken je refereert en waarom.
+% Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Hykes2013}! Denk zeker goed na welke werken je refereert en waarom.
 
-Draag zorg voor correcte literatuurverwijzingen! Een bronvermelding hoort thuis \emph{binnen} de zin waar je je op die bron baseert, dus niet er buiten! Maak meteen een verwijzing als je gebruik maakt van een bron. Doe dit dus \emph{niet} aan het einde van een lange paragraaf. Baseer nooit teveel aansluitende tekst op eenzelfde bron.
+% Draag zorg voor correcte literatuurverwijzingen! Een bronvermelding hoort thuis \emph{binnen} de zin waar je je op die bron baseert, dus niet er buiten! Maak meteen een verwijzing als je gebruik maakt van een bron. Doe dit dus \emph{niet} aan het einde van een lange paragraaf. Baseer nooit teveel aansluitende tekst op eenzelfde bron.
 
-Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle nodige info aanwezig is om de bron terug te vinden (zoals uitvoerig besproken in de lessen Research Methods).
+% Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle nodige info aanwezig is om de bron terug te vinden (zoals uitvoerig besproken in de lessen Research Methods).
 
 % Voor literatuurverwijzingen zijn er twee belangrijke commando's:
 % \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
 %   geen onderdeel is van de zin.
 % \textcite{KEY} => Auteur (jaartal)  Gebruik dit als de auteursnaam wel een
-%   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
+%   functie heeft in de zin (bv. ``Uit onderzoek door Doll \& Hill (1954) bleek
 %   ...'')
 
-Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur van de tekst kan verduidelijken.
+% Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur van de tekst kan verduidelijken.
+
+
+\subsection{Het belang van Unified Modeling Language (UML)}%
+\label{subsec:uml}%
+
+Unified Modeling Language, of afgekort UML, is een taal die binnen de softwareontwikkeling-discipline geaccepteerd is als de standaard voor het weergeven van object-georiënteerde modellen. UML wordt hoofdzakelijk gebruikt in de industrie-, business- en IT-sector, met als doel om de ontwerp- en implementatiefase te ondersteunen met diagrammen die door zowel business als technische stakeholders kunnen geïnterpreteerd worden. \autocite{Koc2021}
+
+PlantUML is een tool waarmee men via menselijk leesbare en gemakkelijk onderhoudbare (door middel van versiebeheertools zoals Git) tekstbestanden UML-diagrammen kan genereren \autocite{Romeo2025}.
+
+\subsection{Configuration management en haar toepassingen}%
+\label{subsec:cfgmgmt}
+
+Configuration management heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren. Deze manier van werken schaalt beter voor omgevingen met honderden of duizenden servers, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is \autocite{Likitha2022}.
+
+% TODO: Verschillende config mgmt toepassingen oplijsten, waaronder Ansible
+
+\subsection{Stand van zaken binnen de OLODs in Toegepaste Informatica}%
+\label{subsec:stand_van_zaken_binnen_olods_ti}
+
+Er zijn drie noemenswaardige OLODs binnen het derde jaar van Toegepaste Informatica, die de focus leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools.
+
+\begin{itemize}
+  \item ``Cybersecurity Advanced''
+  \item ``DevOps Project: Operations''
+  \item ``Infrastructure Automation''
+\end{itemize}
+
+``DevOps Project: Operations'' is een OLOD voor studenten binnen het keuzetraject ``IT Infrastructure Engineer'' dat het tweede luik vormt van een tweeledig groepsproject, het eerste luik zijnde ``Real-life Integrated Software Engineering'' voor de studenten binnen ``Mobile \& enterprise developer''. Het doel van het ``operations-team'' in dit project, is om een de backend van een webapplicatie (ontwikkeld door het ``development-team'') te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet volledig automatisch kunnen opgezet worden met Ansible, 
+Om de onderliggende werking van deze omgeving te visualiseren voor 
+
+% TODO: Cybersecurity Advanced uitschrijven
+De (basis-)opstelling voor het OLOD Cybersecurity Advanced wordt voorgesteld met een netwerkdiagram, gegenereerd met PlantUML. 
+
+% TODO: Infrastructure Automation uitschrijven
+
+\subsection{Een kort overzicht van parsers en hun doel}%
+\label{subsec:overzicht_parsers}
+
+% TODO
 
 %---------- Methodologie ------------------------------------------------------
+
 \section{Methodologie}%
 \label{sec:methodologie}
 
-Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor literatuurstudie, interviews met belanghebbenden (bv.~voor requirements-analyse), experimenten, simulaties, vergelijkende studie, risico-analyse, PoC, \ldots?
+% Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor literatuurstudie, interviews met belanghebbenden (bv.~voor requirements-analyse), experimenten, simulaties, vergelijkende studie, risico-analyse, PoC, \ldots?
 
-Valt je onderwerp onder één van de typische soorten bachelorproeven die besproken zijn in de lessen Research Methods (bv.\ vergelijkende studie of risico-analyse)? Zorg er dan ook voor dat we duidelijk de verschillende stappen terug vinden die we verwachten in dit soort onderzoek!
+% Valt je onderwerp onder één van de typische soorten bachelorproeven die besproken zijn in de lessen Research Methods (bv.\ vergelijkende studie of risico-analyse)? Zorg er dan ook voor dat we duidelijk de verschillende stappen terug vinden die we verwachten in dit soort onderzoek!
 
-Vermijd onderzoekstechnieken die geen objectieve, meetbare resultaten kunnen opleveren. Enquêtes, bijvoorbeeld, zijn voor een bachelorproef informatica meestal \textbf{niet geschikt}. De antwoorden zijn eerder meningen dan feiten en in de praktijk blijkt het ook bijzonder moeilijk om voldoende respondenten te vinden. Studenten die een enquête willen voeren, hebben meestal ook geen goede definitie van de populatie, waardoor ook niet kan aangetoond worden dat eventuele resultaten representatief zijn.
+% Vermijd onderzoekstechnieken die geen objectieve, meetbare resultaten kunnen opleveren. Enquêtes, bijvoorbeeld, zijn voor een bachelorproef informatica meestal \textbf{niet geschikt}. De antwoorden zijn eerder meningen dan feiten en in de praktijk blijkt het ook bijzonder moeilijk om voldoende respondenten te vinden. Studenten die een enquête willen voeren, hebben meestal ook geen goede definitie van de populatie, waardoor ook niet kan aangetoond worden dat eventuele resultaten representatief zijn.
 
-Uit dit onderdeel moet duidelijk naar voor komen dat je bachelorproef ook technisch voldoen\-de diepgang zal bevatten. Het zou niet kloppen als een bachelorproef informatica ook door bv.\ een student marketing zou kunnen uitgevoerd worden.
+% Uit dit onderdeel moet duidelijk naar voor komen dat je bachelorproef ook technisch voldoen\-de diepgang zal bevatten. Het zou niet kloppen als een bachelorproef informatica ook door bv.\ een student marketing zou kunnen uitgevoerd worden.
 
-Je beschrijft ook al welke tools (hardware, software, diensten, \ldots) je denkt hiervoor te gebruiken of te ontwikkelen.
+% Je beschrijft ook al welke tools (hardware, software, diensten, \ldots) je denkt hiervoor te gebruiken of te ontwikkelen.
 
-Probeer ook een tijdschatting te maken. Hoe lang zal je met elke fase van je onderzoek bezig zijn en wat zijn de concrete \emph{deliverables} in elke fase?
+% Probeer ook een tijdschatting te maken. Hoe lang zal je met elke fase van je onderzoek bezig zijn en wat zijn de concrete \emph{deliverables} in elke fase?
+
+\subsection{Fasering van de bachelorproef}%
+\label{subsec:fasering_bap}
+
+Deze bachelorproef zal uitgevoerd worden in de volgende fases:
+
+\begin{itemize}
+  \item Fase 1: Evaluatie van de bestaande tools in de betrokken vakgebieden
+  \item Fase 2: Bepalen van de hardware- en softwarespecificaties voor de testomgeving
+  \item Fase 3: Ontwerp van de UML-schema(s) voor de testomgeving
+  \item Fase 4: Ontwikkeling van de proof-of-concept parser
+  \item Fase 5: Evaluatie van bekomen oplossing
+\end{itemize}
+
+\subsection{Fase 1: Evaluatie van de bestaande tools in de betrokken vakgebieden}%
+\label{subsec:evaluatie_bestaande_tools_betrokken_vakgebieden}
+
+Bij het begin van het onderzoek zal er een afweging gemaakt worden voor de verschillende tools binnen UML-modeling en ``configuration management'' die gebruikt zullen worden tijdens de ontwikkeling van de proof-of-concept parser.
+De te evalueren tools voor UML-modeling zijn PlantUML\footnote{\url{https://plantuml.com/}}, MermaidJS\footnote{\url{https://mermaid.js.org}} en D2\footnote{\url{https://d2lang.com/}}. Voor het ``configuration management''-gedeelte zal er gekeken worden naar Ansible, Puppet en Chef.
+Dit worden de twee talen waarvoor de parser geschreven zal worden.
+
+\subsection{Fase 2: Bepalen van de hardware- en softwarespecificaties voor de testomgeving}%
+\label{subsec:hardware_softwarespecs_testomgeving}
+
+% TODO
+
+\subsection{Fase 3: Ontwerp van de UML-schema(s) voor de testomgeving}%
+\label{subsec:ontwerp_uml_testomgeving}
+
+% TODO
+
+\subsection{Fase 4: Ontwikkeling van de proof-of-concept parser}%
+\label{subsec:ontwikkeling_poc_parser}
+
+% TODO
+
+\subsection{Fase 5: Evaluatie van de bekomen oplossing}%
+\label{subsec:evaluatie_bekomen_oplossing}
+
+% TODO
 
 %---------- Verwachte resultaten ----------------------------------------------
+
 \section{Verwacht resultaat, conclusie}%
 \label{sec:verwachte_resultaten}
 
-Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de onderdelen van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet welk soort data je moet verzamelen en hoe je die moet meten.
+\subsection{Verwachte te gebruiken tools}%
+\label{subsec:verwachte_te_gebruiken_tools}
 
-Wat heeft de doelgroep van je onderzoek aan het resultaat? Op welke manier zorgt jouw bachelorproef voor een meerwaarde?
+De meest voor de hand liggende tools die voor deze oplossing geschikt lijken, zijn PlantUML en Ansible voor UML-modeling en ``configuration management'' respectievelijk. Dit heeft hoofdzakelijk te maken met de voorkennis van deze tools, met in het bijzonder Ansible aangezien deze binnen Toegepaste Informatica en het vakgebied van de co-promotor de standaard vormt als toepassing voor ``configuration management''.
 
-Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
+\subsection{Verwachte functionaliteit voor proof-of-concept}%
+\label{subsec:verwachte_functionaliteit_poc}
+
+% TODO
+
+\subsection{Technische meerwaarde}%
+\label{subsec:technische_meerwaarde}
+
+% TODO
+
+\subsection{Potentiële business-waarde}%
+\label{subsec:potentiele_business_waarde}
+
+% TODO
+
+% Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de onderdelen van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet welk soort data je moet verzamelen en hoe je die moet meten.
+
+% Wat heeft de doelgroep van je onderzoek aan het resultaat? Op welke manier zorgt jouw bachelorproef voor een meerwaarde?
+
+% Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
 
