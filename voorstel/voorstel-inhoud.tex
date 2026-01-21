@@ -34,8 +34,6 @@
 
 
 
-
-
 % Bij het opzetten van een server-infrastructuur, is helderheid en communicatie met elke - al dan niet technisch ingestelde - stakeholder cruciaal.
 % Om deze duidelijkheid te waarborgen, worden meestal implementatiediagrammen (ofwel deployment diagrams) ontworpen via UML-modeling software, voor deze infrastructuur effectief wordt opgezet. Deze diagrammen beschrijven welke software-elementen (databanken, webservers, firewalls, \ldots) worden geïmplementeerd op welke hard\-ware-ele\-men\-ten (virtuele machines, containers, bare-metal servers, \ldots) en hoe deze met elkaar interageren.
 % Het is echter mogelijk dat de implementatie van de software op deze infrastructuur niet (helemaal) overeenkomt met het implementatiediagram, onder andere wegens ambiguïteit rond bijvoorbeeld softwareversies of firewall-regels.
@@ -43,23 +41,23 @@
 
 
 
-Binnen de opleiding Toegepaste Informatica op HOGENT hebben de meeste OLODs (opleidingsonderdelen) gelinkt aan het keuzetraject ``IT Infrastructure Engineer'' de opzet om te leren (virtuele) serveromgevingen te creeëren en beheren. Bij het opzetten van dit soort infrastructuur, is helderheid over elke stap van het proces en communicatie met elke -- al dan niet technisch ingestelde -- stakeholder cruciaal.
+Binnen de opleiding Toegepaste Informatica op HOGENT hebben de meeste OLODs (opleidingsonderdelen) gelinkt aan het keuzetraject ``System \& Network Administrator'' de opzet om te leren (virtuele) serveromgevingen te creeëren en beheren. Bij het opzetten van dit soort infrastructuur, is helderheid over elke stap van het proces en communicatie met elke -- al dan niet technisch ingestelde -- stakeholder cruciaal.
 Om deze duidelijkheid te waarborgen, wordt er binnen de opleiding (meerbepaald tijdens de analyse-OLODs) ook aangeleerd om te werken met UML-modeling software zoals Visual Paradigm\footnote{\url{https://www.visual-paradigm.com/}} en draw.io\footnote{\url{https://www.drawio.com/}}. Deze software wordt gebruikt om diagrammen te ontwerpen voor softwareontwikkeling, zoals Activity Diagrams, System Sequence Diagrams, domeinmodellen en BPMN-diagrammen.
 
 Men kan met deze software ook netwerk- en implementatiediagrammen ontwerpen, die de specificaties, software-elementen (databanken, webservers, firewalls, \ldots) en verbanden tussen verschillende servers in een bepaalde infrastructuur verduidelijken. Deze servers worden op basis van deze diagrammen daarna respectievelijk opgezet via ``Infrastructure-as-Code''-tools (zoals Terraform\footnote{\url{https://developer.hashicorp.com/terraform}}, OpenTofu\footnote{\url{https://opentofu.org/}}, Vagrant\footnote{\url{https://developer.hashicorp.com/vagrant}}, \ldots) en geconfigureerd met ``configuration management''-tools (Ansible\footnote{\url{https://docs.ansible.com/}}, Puppet\footnote{\url{https://www.puppet.com/}}, Chef\footnote{\url{https://www.chef.io/}}, \ldots). De HOGENT-OLODs ``DevOps Project: Operations'', ``Cybersecurity Advanced'' en meerbepaald ``Infrastructure Automation'' introduceren ook het gebruik van Ansible, één van de leidende ``configuration management''-tools.
 
-De concrete probleemstelling/casus voor het onderzoek:
-\textcolor{purple}{Het huidige proces waarbij (complexe) netwerk- en implementatiediagrammen worden geïnterpreteerd en manueel worden omgezet tot een ``configuration management''-ondersteunde serveromgeving kan, volgens \textcite{Nicacio2020}, tijdrovend en vatbaar voor ambiguïteit en foute interpretaties zijn.}
+De \emph{concrete probleemstelling/casus} voor het onderzoek:
+Het huidige proces waarbij (complexe) netwerk- en implementatiediagrammen worden geïnterpreteerd en manueel worden omgezet tot een ``configuration management''-ondersteunde serveromgeving kan, volgens \textcite{Nicacio2020}, tijdrovend en vatbaar voor ambiguïteit en foute interpretaties zijn.
 
 Bij implementatiediagrammen kan er onder meer onduidelijkheid onstaan bij (de versies van) software-packages, hun afhankelijkheden/dependencies, de firewall-regels voor elke VM en hoe dit het bereik buiten het lokale netwerk beïnvloedt.
 Voor netwerkdiagrammen kan dit bijvoorbeeld gaan over hardwarespecificaties van de servers, (de versies van) hun besturingssystemen en de declaratie van de DNS server(s).
 
-De hoofdonderzoeksvraag voor deze bachelorproef:
-\textcolor{purple}{Hoe kan men een gegeven netwerk- en implementatiediagram (ontworpen met bv. PlantUML\footnote{\url{https://plantuml.com/}}) van een (virtuele) serveromgeving rechtstreeks omzetten (met minimale menselijke interventie) tot een overeenkomende, gebruiksklare ``configuration management''-ondersteunde (bv. met Ansible) serveromgeving?}
+De \emph{hoofdonderzoeksvraag} voor deze bachelorproef:
+Hoe kan men een gegeven netwerk- en implementatiediagram (ontworpen met bv. PlantUML\footnote{\url{https://plantuml.com/}}) van een (virtuele) serveromgeving rechtstreeks omzetten (met minimale menselijke interventie) tot een overeenkomende, gebruiksklare ``configuration management''-ondersteunde (bv. met Ansible) serveromgeving?
 
 Voor deze serveromgeving wordt ervan uit gegaan dat de eenheden (bare-metal servers, virtuele machines, containers, \ldots) alvorens uitgerold zijn via een ``Infrastructure-as-Code''-tool (zoals Terraform, OpenTofu, Vagrant, \ldots), en dat ze enkel nog achteraf geconfigureerd moeten worden via een ``configuration management''-tool.
 
-\textcolor{purple}{Enkele deelvragen met betrekking tot het \emph{probleemdomein}}:
+Enkele deelvragen met betrekking tot het \emph{probleemdomein}:
 
 \begin{itemize}
   \item Wat zijn de doeleinden (business- of technisch-gericht) van UML?
@@ -67,7 +65,7 @@ Voor deze serveromgeving wordt ervan uit gegaan dat de eenheden (bare-metal serv
   \item Welke stappen zijn er tussen het ontwerp van UML-diagrammen en de eerste opstelling van een ``configuration management''-ondersteunde omgeving?
 \end{itemize}
 
-\textcolor{purple}{Verdere deelvragen met betrekking tot het \emph{oplossingsdomein}}
+Verdere deelvragen met betrekking tot het \emph{oplossingsdomein}
 
 \begin{itemize}
   \item Naast PlantUML, met welke andere talen kan men UML-diagrammen ontwerpen?
@@ -76,7 +74,7 @@ Voor deze serveromgeving wordt ervan uit gegaan dat de eenheden (bare-metal serv
   \item Is het mogelijk om deze oplossing te ontwikkelen aan de hand van ``reverse engineering'' van de bovenstaande tools?
 \end{itemize}
 
-De doelstelling van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een transpiler (of omzetter) van PlantUML-diagrammen naar Ansible-code. Dit zijn de twee tools die op dit moment voor ogen staan, maar er zullen alvorens of tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden. Deze oplossing zou voornamelijk bedoeld zijn voor lectoren (en wellicht ook studenten) binnen de opleiding Toepegaste Informatica, die hun lessen beter willen voorbereiden met snelle, declaratieve serveromgevingen.
+De \emph{doelstelling} van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een transpiler (of omzetter) van PlantUML-diagrammen naar Ansible-code. Dit zijn de twee tools die op dit moment voor ogen staan, maar er zullen alvorens of tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden. Deze oplossing zou voornamelijk bedoeld zijn voor lectoren (en wellicht ook studenten) binnen de opleiding Toepegaste Informatica, die hun lessen beter willen voorbereiden met snelle, declaratieve serveromgevingen.
 
 
 
@@ -118,7 +116,7 @@ PlantUML en MermaidJS\footnote{\url{https://mermaid.js.org}} zijn tools waarmee 
 \subsection{Configuration management en haar toepassingen}%
 \label{subsec:cfgmgmt_toepassingen}
 
-``Configuration management'' heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren. Deze manier van werken schaalt beter voor omgevingen met honderden of duizenden servers, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
+``Configuration management'' heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren. In het beste geval verloopt dit proces op een idempotente manier; het herhalen van het hetzelde proces geeft exact hetzelfde resultaat. Deze manier van werken schaalt beter voor omgevingen met honderden of duizenden servers, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
 
 ``Configuration management'' staat echter niet in voor het creeëren en opzetten van servers; dat is de taak van ``Infrastructure-as-Code'' tools zoals Terraform, OpenTofu en Vagrant.
 
@@ -127,7 +125,7 @@ Ansible, Puppet en Chef zijn drie open source tools die in de praktijk het meest
 \subsection{Stand van zaken binnen de OLODs in de opleiding Toegepaste Informatica}%
 \label{subsec:stand_van_zaken_binnen_olods_ti}
 
-Er zijn drie noemenswaardige OLODs, binnen het keuzetraject ``IT Infrastructure Engineer'' van de opleiding Toegepaste Informatica, die de focus leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools en het visualiseren van deze omgevingen met UML-diagrammen.
+Er zijn drie noemenswaardige OLODs, binnen het keuzetraject ``System \& Network Administrator'' van de opleiding Toegepaste Informatica, die de focus leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools en het visualiseren van deze omgevingen met UML-diagrammen.
 
 \begin{itemize}
   \item ``Cybersecurity Advanced''
@@ -135,17 +133,21 @@ Er zijn drie noemenswaardige OLODs, binnen het keuzetraject ``IT Infrastructure 
   \item ``Infrastructure Automation''
 \end{itemize}
 
-Het OLOD ``Cybersecurity Advanced'' introduceert het concept van ``blue-teaming'' binnen het gebied van cybersecurity aan de hand van een reeks virtuele labo's die individueel worden uitgevoerd. Het gebruik van ``configuration management'' of UML-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student wel een voordeel aangezien deze zo de labo-omgeving reproduceerbaar en visueel overzichtelijk kan maken. Bovendien wordt de (basis-)opstelling alvast voorgesteld met een netwerkdiagram, ontworpen met PlantUML. 
+Het OLOD ``Cybersecurity Advanced'' introduceert het concept van ``blue-teaming'' binnen het gebied van cybersecurity aan de hand van een reeks virtuele labo's die individueel worden uitgevoerd. Het gebruik van ``configuration management'' of UML-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student wel een voordeel aangezien deze zo de labo-omgeving reproduceerbaar en visueel overzichtelijk kan maken. Bovendien wordt de (basis-)opstelling alvast voorgesteld met een netwerkdiagram, ontworpen met PlantUML.
 
 ``DevOps Project: Operations'' is een OLOD voor studenten dat het tweede luik vormt van een tweeledig groepsproject, het eerste luik zijnde ``Real-life Integrated Software Engineering'' voor de studenten binnen ``Mobile \& enterprise developer''. Het doel van het ``operations-team'' in dit project, is om een de backend van een webapplicatie (ontwikkeld door het ``development-team'') te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet volledig automatisch kunnen opgezet worden via zowel ``Infrastructure-as-Code''- als ``configuration management''-tools (met in het bijzonder Ansible).
 Om de onderliggende werking van deze omgeving te visualiseren voor al dan niet technische stakeholders, moet er ook een netwerk- en implementatiediagram (of een combinatie ervan) ontworpen worden met UML-modeling software.
 
 Tenslotte biedt het OLOD ``Infrastructure Automation'' een reeks virtuele labo's die verschillende tools (Jenkins\footnote{\url{https://www.jenkins.io/}}, Ansible, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}}) introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen. Nogmaals, hierbij is het gebruik van UML-diagrammen niet verplicht, maar aan te raden.
 
-\subsection{Transpilers en hun doel}%
+\subsection{Compilers, parsers, transpilers en hun doel}%
 \label{subsec:overzicht_transpilers}
 
-``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn tools die code geschreven in één high-level (programmeer-)taal als invoer aannemen en deze als uitvoer omzetten naar code in een andere high-level taal. De use cases voor deze software kunnen zich ook uitbreiden tot het omzetten van code van naar een andere/nieuwere versie van eenzelfde taal of het optimaliseren van code.\autocite{Ilyushin2016}
+% TODO Compilers
+
+% TODO Parsers
+
+``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn tools die code geschreven in één high-level (programmeer-)taal als invoer aannemen en deze als uitvoer omzetten naar code in een andere high-level taal. De use cases voor deze software kunnen zich ook uitbreiden tot het omzetten van code van naar een andere/nieuwere versie van eenzelfde taal of het optimaliseren van code. \autocite{Ilyushin2016}
 
 %---------- Methodologie ------------------------------------------------------
 
@@ -167,55 +169,61 @@ Tenslotte biedt het OLOD ``Infrastructure Automation'' een reeks virtuele labo's
 \subsection{Fasering van de bachelorproef}%
 \label{subsec:fasering_bap}
 
-Deze bachelorproef zal uitgevoerd worden in de volgende fases:
+Deze bachelorproef zal uitgevoerd worden in de volgende fases, van 9 februari t.e.m. 22 mei, 2026:
 
 \begin{itemize}
-  \item Fase 1A: Studie over (het ontwikkelen) van transpilers
-  \item Fase 1B: Evaluatie van de bestaande tools in de betrokken vakgebieden
-  \item Fase 2: Ontwerp van de testomgeving (UML-diagrammen)
-  \item Fase 3A: Implementatie van de testomgeving (zonder ``configuration management'')
-  \item Fase 3B: UML-diagrammen herschrijven naar PlantUML/MermaidJS
-  \item Fase 4: Ontwikkeling van de proof-of-concept transpiler
+  \item 
 \end{itemize}
 
-\subsection{Fase 1A: }
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=.8\textwidth]{images/voorstel-gantt.png}
+%   \caption{\label{fig:voorstel-gantt.png}GANTT-schema voor de opgelijste fases.}
+% \end{figure}
 
-\subsection{Fase 1B: Studie over (het ontwikkelen van) transpilers}%
+Indien een fase begint met hetzelfde nummer maar eindigt met een ander letter, indiceert dit dat ze op hetzelfde moment (kunnen) beginnen, eindigen (met fases 1A, 3C en 5 als uitzondering) en parallel worden uitgevoerd. Week 1 begint op maandag 9 februari, 2026.
+
+\subsection{Fase 1A (week 1-7): Studie over (het ontwikkelen van) transpilers}%
 \label{subsec:studie_ontwikkelen_transpilers}
 
-Aangezien de auteur weinig ervaring heeft met het softwareontwikkeling en nog minder met het ontwikkelen van transpilers, zal er parallel met de andere voorbereidende fases (1-3) een studie uitgevoerd worden over hoe deze werken en hoe deze ontwikkeld kunnen worden.
+Bij het begin van het onderzoek zal er parallel met de andere voorbereidende fases (1-3) een studie uitgevoerd worden over hoe deze werken en hoe deze ontwikkeld kunnen worden.
 De deliverable voor deze fase is een simpele, maar functionele transpiler die de basis zal vormen voor de proof-of-concept.
 
-\subsection{Fase 1C: Evaluatie van de bestaande tools in de betrokken vakgebieden}%
+\subsection{Fase 1B (week 1-2): Evaluatie van de bestaande tools in de betrokken vakgebieden}%
 \label{subsec:evaluatie_bestaande_tools_betrokken_vakgebieden}
 
-Bij het begin van het onderzoek zal er een afweging gemaakt worden (samen met de co-promotor) voor de verschillende tools binnen UML-modeling en ``configuration management'' die gebruikt zullen worden tijdens de ontwikkeling van de proof-of-concept transpiler.
+Hier zal er een afweging gemaakt worden (samen met de co-promotor) voor de verschillende tools binnen UML-modeling en ``configuration management'' die gebruikt zullen worden tijdens de ontwikkeling van de proof-of-concept transpiler.
 De te evalueren tools voor UML-modeling zijn onder andere PlantUML, MermaidJS. Voor het ``configuration management''-gedeelte zal er onder andere gekeken worden naar Ansible, Puppet en Chef. Deze opsomming van tools is echter niet-uitputtend, en andere tools kunnen nog in het vizier komen.
 
-\subsection{Fase 2A: Ontwerp van de testomgeving (UML-diagrammen)}%
+\subsection{Fase 2 (week 3-5): Ontwerp van de testomgeving (UML-diagrammen)}%
 \label{subsec:hardware_softwarespecs_testomgeving}
 
 In deze fase worden de infrastructuur van (virtuele) servers ontworpen voor de test-omgeving van de proof-of-concept transpiler aan de hand van netwerk- en implementatiediagrammen. In deze diagrammen zullen de hardware- (Opslag, RAM, CPU cores, \ldots) en softwarespecificaties (distributie, packages, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (firewalls, \ldots). Het initiële ontwerp zal nog niet met PlantUML/MermaidJS verlopen maar eerder met GUI-ondersteunde tools zoals Visual Paradigm en draw.io.
 
-\subsection{Fase 3A: Implementatie van de testomgeving (zonder configuration management)}%
-\label{subsec:implementatie_testomgeving_zonder_cfg_mgmt}
+\subsection{Fase 3A (week 6-7): Implementatie van de testomgeving}%
+\label{subsec:implementatie_testomgeving}
 
-% TODO
+Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet en geconfigureerd met zowel ``Infrastructure-as-Code''-tool(s) als ``configuration management''. Er wordt intussen ook gedocumenteerd hoe het ``configuration management''-gedeelte wordt opgezet, want dit vormt de target output voor de proof-of-concept transpiler.
 
-\subsection{Fase 3B: UML-diagrammen herschrijven naar PlantUML/MermaidJS}%
+\subsection{Fase 3B (week 6-7): UML-diagrammen herschrijven naar PlantUML/MermaidJS}%
 \label{subsec:uml_diagrammen_herscrijven}
 
-Nadat de netwerk- en implementatiediagrammen zijn ontworpen, zullen deze herschreven worden in PlantUML/MermaidJS. Deze diagrammen vormen de bron-bestanden voor de proof-of-concept transpiler, die deze zal omzetten tot ``configuration management''-code in Ansible/Puppet/Chef.
+Nadat de netwerk- en implementatiediagrammen zijn ontworpen, zullen deze herschreven worden in PlantUML/MermaidJS. Deze diagrammen vormen de bron-bestanden voor de proof-of-concept transpiler, die deze zal omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef).
 
-\subsection{Fase 4: Ontwikkeling van de proof-of-concept transpiler}%
+\subsection{Fase 3C (week 6-10): Opstellen van testcases}
+\label{subsec:opstellen_testcases}
+
+Hier worden de testcases opgesteld waaraan de proof-of-concept transpiler aan moet voldoen. De testen zullen hoofdzakelijk buigen over de kwaliteit van de uitvoer (aantal playbooks, idempotentie, grootte van codebase, \ldots) en de werking van de finale infrastructuur. Deze fase zal in de praktijk waarschijnlijk gedeeltelijk parallel verlopen met fase 4, aangezien er tijdens het ontwikkelen van de oplossing mogelijk nieuwe testcases kunnen ontstaan.
+
+\subsection{Fase 4 (week 8-15): Ontwikkeling van de proof-of-concept transpiler}%
 \label{subsec:ontwikkeling_poc_transpiler}
 
-% TODO
+Tijdens deze fase wordt de proof-of-concept transpiler ontwikkeld. Deze zal als invoer een UML-diagram (ontworpen met PlantUML/MermaidJS) aannemen en deze omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef). Deze fase loopt tot 22 mei, 2026, aangezien dit ook de laatste dag van de stage voor de auteur is.
 
-\subsection{Fase 5: Evaluatie van de bekomen oplossing}%
+\subsection{Fase 5 (week 11-15): Testen van de bekomen oplossing}%
 \label{subsec:evaluatie_bekomen_oplossing}
 
-
+Tenslotte worden de opgestelde testen uit fase 3C uitgevoerd op de (gedeeltelijk) uitgewerkte proof-of-concept transpiler. Op basis van de resultaten deze testen zal er een rapport opgesteld worden die aangeeft in welke mate deze oplossing een antwoord biedt op de hoofdonderzoeksvraag. Nogmaals, dit zal allicht parallel verlopen met fase 4.
 
 %---------- Verwachte resultaten ----------------------------------------------
 
@@ -233,23 +241,21 @@ Nadat de netwerk- en implementatiediagrammen zijn ontworpen, zullen deze herschr
 
 De meest voor de hand liggende tools die voor deze oplossing geschikt lijken, zijn PlantUML en Ansible voor UML-modeling en ``configuration management'' respectievelijk. Dit heeft hoofdzakelijk te maken met de voorkennis van deze tools, met in het bijzonder Ansible aangezien deze binnen de opleiding Toegepaste Informatica en het vakgebied van de co-promotor de standaard vormt als toepassing voor ``configuration management''.
 
-\subsection{Verwachte testomgeving}
-\label{subsec:verwachte_testomgeving}
+\subsection{Verwachte eigenschappen van de testomgeving}
+\label{subsec:verwachte_eigenschappen_testomgeving}
 
+Deze infrastructuur zal allicht redelijk simpel gehouden worden met slechts 2-3 servers, aangezien deze bachelorproef vooral over de ontwikkeling van een proof-of-concept gaat. 
 % TODO
 
-\subsection{Verwachte functionaliteit voor proof-of-concept}%
+\subsection{Verwachte functionaliteit voor de proof-of-concept transpiler}%
 \label{subsec:verwachte_functionaliteit_poc}
 
+Aangezien de auteur weinig ervaring heeft met het softwareontwikkeling en nog minder met het ontwikkelen van transpilers, is het mogelijk dat er tijdens fase 1A alternatieven gezocht zullen worden voor het ontwikkelen van een oplossing. Dit onderzoek situeert zich nu eenmaal hoofdzakelijk in de specialisatierichting ``System \& Network Administrator'' en niet in ``Mobile \& Enterprise development'', dus de focus zal sowieso eerder liggen bij de kwaliteit van de bekomen infrastructuur dan bij de cohesie van de geprogrammeerde transpiler.
 % TODO
 
-\subsection{Technische meerwaarde}%
-\label{subsec:technische_meerwaarde}
+\subsection{Verwachte meerwaarde}%
+\label{subsec:verwachte_meerwaarde}
 
 % TODO
 
-\subsection{Potentiële business-waarde}%
-\label{subsec:potentiele_business_waarde}
-
-% TODO
 
