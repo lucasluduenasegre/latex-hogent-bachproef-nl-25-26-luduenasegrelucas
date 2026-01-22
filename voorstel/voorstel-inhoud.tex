@@ -74,9 +74,11 @@ Verdere deelvragen met betrekking tot het \emph{oplossingsdomein}
   \item Is het mogelijk om deze oplossing te ontwikkelen aan de hand van ``reverse engineering'' van de bovenstaande tools?
 \end{itemize}
 
-De \emph{doelstelling} van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een transpiler (of omzetter) van PlantUML-diagrammen naar Ansible-code. Dit zijn de twee tools die op dit moment voor ogen staan, maar er zullen alvorens of tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden. Deze oplossing zou voornamelijk bedoeld zijn voor lectoren (en wellicht ook studenten) binnen de opleiding Toepegaste Informatica, die hun lessen beter willen voorbereiden met snelle, declaratieve serveromgevingen.
+De \emph{doelstelling} van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een transpiler (of omzetter) van PlantUML-diagrammen naar Ansible-code. Dit zijn de twee tools die op dit moment voor ogen staan, maar er zullen alvorens of tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden. 
 
+De hoop voor deze oplossing is dat deze een meerwaarde kan bieden voor educatieve doeleinden. Neem als voorbeeld een OLOD zoals ``Cybersecurity Advanced'' binnen de opleiding Toegepaste Informatica. De tech-industrie evolueert snel en de labo's die voor dit OLOD ontworpen zijn, zullen daardoor ook snel verouderen.
 
+Aangezien met deze oplossing de drempel tussen de ontwerp- en de implementatiefase verkleint, zouden docenten sneller nieuwe (virtuele) labo-omgevingen kunnen ontwerpen, met (in theorie) kant-en-klare ``configuration management''-code om deze meteen te configureren. Voor studenten kan dit ook een kans bieden om potentiële experimenten tijdens hun studies sneller effectief vorm te geven.
 
 
 %---------- Stand van zaken ---------------------------------------------------
@@ -140,14 +142,12 @@ Om de onderliggende werking van deze omgeving te visualiseren voor al dan niet t
 
 Tenslotte biedt het OLOD ``Infrastructure Automation'' een reeks virtuele labo's die verschillende tools (Jenkins\footnote{\url{https://www.jenkins.io/}}, Ansible, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}}) introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen. Nogmaals, hierbij is het gebruik van UML-diagrammen niet verplicht, maar aan te raden.
 
-\subsection{Compilers, parsers, transpilers en hun doel}%
+\subsection{Compilers, transpilers en hun doel}%
 \label{subsec:overzicht_transpilers}
 
-% TODO Compilers
+Compilers vertalen de broncode van een high-level, menselijk leesbare taal (zoals Java\footnote{\url{https://www.java.com/}} of C\#\footnote{\url{https://dotnet.microsoft.com/en-us/languages/csharp}}) tot equivalente instructies in een andere, vaak low-level taal of machinecode \autocite{Seidl2012}.
 
-% TODO Parsers
-
-``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn tools die code geschreven in één high-level (programmeer-)taal als invoer aannemen en deze als uitvoer omzetten naar code in een andere high-level taal. De use cases voor deze software kunnen zich ook uitbreiden tot het omzetten van code van naar een andere/nieuwere versie van eenzelfde taal of het optimaliseren van code. \autocite{Ilyushin2016}
+``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn compilers die code geschreven in één high-level (programmeer-)taal als invoer aannemen en deze als uitvoer omzetten naar code in een andere high-level taal. De use cases voor deze software kunnen zich ook uitbreiden tot het omzetten van code van naar een andere/nieuwere versie van eenzelfde taal of het optimaliseren van code. \autocite{Ilyushin2016}
 
 %---------- Methodologie ------------------------------------------------------
 
@@ -172,7 +172,14 @@ Tenslotte biedt het OLOD ``Infrastructure Automation'' een reeks virtuele labo's
 Deze bachelorproef zal uitgevoerd worden in de volgende fases, van 9 februari t.e.m. 22 mei, 2026:
 
 \begin{itemize}
-  \item 
+  \item{Fase 1A (week 1-7): Studie over (het ontwikkelen van) transpilers}
+  \item{Fase 1B (week 1-2): Evaluatie van de bestaande tools in de betrokken vakgebieden}
+  \item{Fase 2 (week 3-5): Ontwerp van de testomgeving (UML-diagrammen)}
+  \item{Fase 3A (week 6-7): Implementatie van de testomgeving}
+  \item{Fase 3B (week 6-7): UML-diagrammen herschrijven naar PlantUML/MermaidJS}
+  \item{Fase 3C (week 6-10): Opstellen van testcases}
+  \item{Fase 4 (week 8-15): Ontwikkeling van de proof-of-concept transpiler}
+  \item{Fase 5 (week 11-15): Testen van de bekomen oplossing}
 \end{itemize}
 
 % \begin{figure}
@@ -203,14 +210,14 @@ In deze fase worden de infrastructuur van (virtuele) servers ontworpen voor de t
 \subsection{Fase 3A (week 6-7): Implementatie van de testomgeving}%
 \label{subsec:implementatie_testomgeving}
 
-Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet en geconfigureerd met zowel ``Infrastructure-as-Code''-tool(s) als ``configuration management''. Er wordt intussen ook gedocumenteerd hoe het ``configuration management''-gedeelte wordt opgezet, want dit vormt de target output voor de proof-of-concept transpiler.
+Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet en geconfigureerd met zowel ``Infrastructure-as-Code''-tool(s) als ``configuration management''. Er wordt intussen ook gedocumenteerd hoe het ``configuration management''-gedeelte wordt opgezet, want dit vormt de target output voor de proof-of-concept transpiler. De uitvoer van de transpiler zal dan (uiteraard) worden toegepast op de omgeving minus het ``configuration management''-gedeelte.
 
 \subsection{Fase 3B (week 6-7): UML-diagrammen herschrijven naar PlantUML/MermaidJS}%
 \label{subsec:uml_diagrammen_herscrijven}
 
-Nadat de netwerk- en implementatiediagrammen zijn ontworpen, zullen deze herschreven worden in PlantUML/MermaidJS. Deze diagrammen vormen de bron-bestanden voor de proof-of-concept transpiler, die deze zal omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef).
+Nadat de netwerk- en implementatiediagrammen zijn ontworpen, zullen deze herschreven worden in PlantUML/MermaidJS. Deze diagrammen dienen een tweevoudig doel; ze kunnen binnen de originele context van hun taal als visuele UML-diagrammen worden gegenereerd, en ze vormen de bron-bestanden voor de proof-of-concept transpiler, die deze zal omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef).
 
-\subsection{Fase 3C (week 6-10): Opstellen van testcases}
+\subsection{Fase 3C (week 6-10): Opstellen van testcases}%
 \label{subsec:opstellen_testcases}
 
 Hier worden de testcases opgesteld waaraan de proof-of-concept transpiler aan moet voldoen. De testen zullen hoofdzakelijk buigen over de kwaliteit van de uitvoer (aantal playbooks, idempotentie, grootte van codebase, \ldots) en de werking van de finale infrastructuur. Deze fase zal in de praktijk waarschijnlijk gedeeltelijk parallel verlopen met fase 4, aangezien er tijdens het ontwikkelen van de oplossing mogelijk nieuwe testcases kunnen ontstaan.
@@ -218,7 +225,7 @@ Hier worden de testcases opgesteld waaraan de proof-of-concept transpiler aan mo
 \subsection{Fase 4 (week 8-15): Ontwikkeling van de proof-of-concept transpiler}%
 \label{subsec:ontwikkeling_poc_transpiler}
 
-Tijdens deze fase wordt de proof-of-concept transpiler ontwikkeld. Deze zal als invoer een UML-diagram (ontworpen met PlantUML/MermaidJS) aannemen en deze omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef). Deze fase loopt tot 22 mei, 2026, aangezien dit ook de laatste dag van de stage voor de auteur is.
+Tijdens deze fase wordt de proof-of-concept transpiler ontwikkeld. Deze zal als invoer de netwerk- en implementatiediagrammen (ontworpen met PlantUML/MermaidJS) aannemen en deze omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef). Deze fase loopt tot 22 mei, 2026, aangezien dit ook de laatste dag van de stage voor de auteur is.
 
 \subsection{Fase 5 (week 11-15): Testen van de bekomen oplossing}%
 \label{subsec:evaluatie_bekomen_oplossing}
@@ -239,23 +246,17 @@ Tenslotte worden de opgestelde testen uit fase 3C uitgevoerd op de (gedeeltelijk
 \subsection{Verwachte te gebruiken tools}%
 \label{subsec:verwachte_te_gebruiken_tools}
 
-De meest voor de hand liggende tools die voor deze oplossing geschikt lijken, zijn PlantUML en Ansible voor UML-modeling en ``configuration management'' respectievelijk. Dit heeft hoofdzakelijk te maken met de voorkennis van deze tools, met in het bijzonder Ansible aangezien deze binnen de opleiding Toegepaste Informatica en het vakgebied van de co-promotor de standaard vormt als toepassing voor ``configuration management''.
+De meest voor de hand liggende tools die voor deze oplossing geschikt lijken, zijn PlantUML voor UML-modeling en Ansible voor ``configuration management''. Dit heeft hoofdzakelijk te maken met de voorkennis van deze tools, met in het bijzonder Ansible aangezien deze binnen de opleiding Toegepaste Informatica en het vakgebied van de co-promotor de standaard vormt als toepassing voor ``configuration management''.
 
 \subsection{Verwachte eigenschappen van de testomgeving}
 \label{subsec:verwachte_eigenschappen_testomgeving}
 
-Deze infrastructuur zal allicht redelijk simpel gehouden worden met slechts 2-3 servers, aangezien deze bachelorproef vooral over de ontwikkeling van een proof-of-concept gaat. 
-% TODO
+Deze infrastructuur zal allicht redelijk simpel gehouden worden met slechts 2 tot 3 (virtuele) servers, aangezien deze bachelorproef vooral over de ontwikkeling van een proof-of-concept gaat. Dat gezegd zijnde zal er gemikt worden op het implementeren van een web-, DNS- en monitoringserver. Mogelijke uitbreidingen kunnen een databank-, secundaire DNS- en DHCP-server zijn.
 
 \subsection{Verwachte functionaliteit voor de proof-of-concept transpiler}%
 \label{subsec:verwachte_functionaliteit_poc}
 
-Aangezien de auteur weinig ervaring heeft met het softwareontwikkeling en nog minder met het ontwikkelen van transpilers, is het mogelijk dat er tijdens fase 1A alternatieven gezocht zullen worden voor het ontwikkelen van een oplossing. Dit onderzoek situeert zich nu eenmaal hoofdzakelijk in de specialisatierichting ``System \& Network Administrator'' en niet in ``Mobile \& Enterprise development'', dus de focus zal sowieso eerder liggen bij de kwaliteit van de bekomen infrastructuur dan bij de cohesie van de geprogrammeerde transpiler.
-% TODO
+% Aangezien de auteur weinig ervaring heeft met het softwareontwikkeling en nog minder met het ontwikkelen van transpilers, is het mogelijk dat er tijdens fase 1A alternatieven gezocht zullen worden voor het ontwikkelen van een oplossing. Dit onderzoek situeert zich nu eenmaal hoofdzakelijk in de specialisatierichting ``System \& Network Administrator'' en niet in ``Mobile \& Enterprise development'', dus de focus zal sowieso eerder liggen bij de kwaliteit van de bekomen infrastructuur dan bij de cohesie van de geprogrammeerde transpiler.
 
-\subsection{Verwachte meerwaarde}%
-\label{subsec:verwachte_meerwaarde}
-
-% TODO
-
-
+De verwachting van deze oplossing is om met de bekomende ``configuration management''-code een minimaal werkende infrastructuur te verkrijgen die de beschrijving van de gegeven netwerk- en implementatiediagrammen zo nauw mogelijk benadert.
+Aangezien de syntax van zowel PlantUML als Ansible heel uitgebreid is, zal de transpiler zich slechts over een (relevant) deel hiervan buigen. Er zullen enkel netwerk- en implementatiediagrammen als invoer kunnen gebruikt worden, en voor de Ansible playbooks als uitvoer zal er een deelverzameling van ondersteunde ``collections'' en ``roles'' worden gespecifiëerd. Nogmaals, dit wordt een proof-of-concept, dus het onderzoek zal ook aantonen waar het potentiëel tot uitbreidingen ligt, alsook de limitaties van welke informatie uit een UML-diagram rechtstreeks kan omgezet worden naar ``configuration management'' en vice versa.

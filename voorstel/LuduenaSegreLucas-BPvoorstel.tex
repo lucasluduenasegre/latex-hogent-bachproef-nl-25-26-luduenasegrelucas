@@ -64,7 +64,14 @@
 
 \begin{abstract}
   % Hier schrijf je de samenvatting van je voorstel, als een doorlopende tekst van één paragraaf. Let op: dit is geen inleiding, maar een samenvattende tekst van heel je voorstel met inleiding (voorstelling, kaderen thema), probleemstelling en centrale onderzoeksvraag, onderzoeksdoelstelling (wat zie je als het concrete resultaat van je bachelorproef?), voorgestelde methodologie, verwachte resultaten en meerwaarde van dit onderzoek (wat heeft de doelgroep aan het resultaat?).
-  
+  Op HOGENT, binnen de opleiding Toegepaste Informatica en meerbepaald het keuzetraject ``System \& Network Administrator'', worden er OLODS (opleidingsonderdelen) gegeven die aan de hand van labo's bijdragen aan het leren van serverinfrastructuren creeëren en configureren. Deze infrastructuren worden geïmplementeerd aan de hand van netwerk- en implementatiediagrammen, ontworpen met UML-modeling software.
+  De probleemstelling vertrekt vanuit het foutgevoelige en tijdrovende proces waarbij (complexe) UML-diagrammen eerst geïnterpreteerd en daarna manueel vertaald worden naar een configureerbare infrastructuur.
+  Deze bachelorproef zal onderzoeken hoe men, voor een potentiële serverinfrastructuur, netwerk- en implementatiediagrammen (meerbepaald in tekstuele vorm via PlantUML/MermaidJS) met zo weinig mogelijk manuele interventie kan omzetten naar een overeenkomende, gebruiksklare omgeving ondersteund door ``configuration management'' (zoals Ansible, Puppet of Chef).
+  De doelstelling van dit onderzoek is om een proof-of-concept transpiler te ontwikkelen die gegeven netwerk- en implementatiediagrammen als invoer rechtstreeks kan vertalen naar ``configuration management''-code als uitvoer. 
+  De geplande testomgeving zal bestaan uit 2 tot 3 reeds uitgerolde (virtuele) servers (al dan niet via Infrastructure-as-Code tools), en zullen bestaan uit een web-, DNS- en monitoringserver (zonder nog eventuele uitbreidingen).
+  Qua methodologie wordt er eerst een studie gedaan naar transpilers, parallel met een evaluatie van te gebruiken tools (PlantUML, MermaidJS, Ansible, Puppet en Chef). Vervolgens wordt de testomgeving ontworpen (via UML-diagrammen), opgezet en gedocumenteert. Dan wordt de transpiler ontwikkeld en tenslotte systematisch getest tegen (onder andere) de kwaliteit en idempotentie van de uitvoer.
+  Verwacht wordt dat deze oplossing een meerwaarde biedt voor docenten (en studenten): zij zouden hiermee kunnen sneller en efficiënter nieuwe labo-omgevingen kunnen ontwerpen en deze tegelijk voorzien van bijkomende ``configuration management''-code, aangezien de kloof tussen de ontwerp- en implementatiefase zo wordt verkleint.
+
   % TODO!!
 
 \end{abstract}
