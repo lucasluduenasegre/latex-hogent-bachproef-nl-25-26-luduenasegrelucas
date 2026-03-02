@@ -1,0 +1,189 @@
+%%=============================================================================
+%% Literatuurstudie
+%%=============================================================================
+
+\chapter{\IfLanguageName{dutch}{Literatuurstudie}{State of the art}}%
+\label{ch:literatuurstudie}
+
+% Tip: Begin elk hoofdstuk met een paragraaf inleiding die beschrijft hoe
+% dit hoofdstuk past binnen het geheel van de bachelorproef. Geef in het
+% bijzonder aan wat de link is met het vorige en volgende hoofdstuk.
+
+% Pas na deze inleidende paragraaf komt de eerste sectiehoofding.
+
+% Dit hoofdstuk bevat je literatuurstudie. De inhoud gaat verder op de inleiding, maar zal het onderwerp van de bachelorproef *diepgaand* uitspitten. De bedoeling is dat de lezer na lezing van dit hoofdstuk helemaal op de hoogte is van de huidige stand van zaken (state-of-the-art) in het onderzoeksdomein. Iemand die niet vertrouwd is met het onderwerp, weet nu voldoende om de rest van het verhaal te kunnen volgen, zonder dat die er nog andere informatie moet over opzoeken \autocite{Pollefliet2011}.
+
+% Je verwijst bij elke bewering die je doet, vakterm die je introduceert, enz.\ naar je bronnen. In \LaTeX{} kan dat met het commando \texttt{$\backslash${textcite\{\}}} of \texttt{$\backslash${autocite\{\}}}. Als argument van het commando geef je de ``sleutel'' van een ``record'' in een bibliografische databank in het Bib\LaTeX{}-formaat (een tekstbestand). Als je expliciet naar de auteur verwijst in de zin (narratieve referentie), gebruik je \texttt{$\backslash${}textcite\{\}}. Soms is de auteursnaam niet expliciet een onderdeel van de zin, dan gebruik je \texttt{$\backslash${}autocite\{\}} (referentie tussen haakjes). Dit gebruik je bv.~bij een citaat, of om in het bijschrift van een overgenomen afbeelding, broncode, tabel, enz. te verwijzen naar de bron. In de volgende paragraaf een voorbeeld van elk.
+
+% \textcite{Knuth1998} schreef een van de standaardwerken over sorteer- en zoekalgoritmen. Experten zijn het erover eens dat cloud computing een interessante opportuniteit vormen, zowel voor gebruikers als voor dienstverleners op vlak van informatietechnologie~\autocite{Creeger2009}.
+
+% Let er ook op: het \texttt{cite}-commando voor de punt, dus binnen de zin. Je verwijst meteen naar een bron in de eerste zin die erop gebaseerd is, dus niet pas op het einde van een paragraaf.
+
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{grail.jpg}
+%   \caption[Voorbeeld figuur.]{\label{fig:grail}Voorbeeld van invoegen van een figuur. Zorg altijd voor een uitgebreid bijschrift dat de figuur volledig beschrijft zonder in de tekst te moeten gaan zoeken. Vergeet ook je bronvermelding niet!}
+% \end{figure}
+
+% \begin{listing}
+%   \begin{minted}{python}
+%     import pandas as pd
+%     import seaborn as sns
+
+%     penguins = sns.load_dataset('penguins')
+%     sns.relplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species")
+%   \end{minted}
+%   \caption[Voorbeeld codefragment]{Voorbeeld van het invoegen van een codefragment.}
+% \end{listing}
+
+% \lipsum[7-20]
+
+% \begin{table}
+%   \centering
+%   \begin{tabular}{lcr}
+%     \toprule
+%     \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
+%     $\alpha$         & $\beta$          & $\gamma$         \\
+%     \midrule
+%     A                & 10.230           & a                \\
+%     B                & 45.678           & b                \\
+%     C                & 99.987           & c                \\
+%     \bottomrule
+%   \end{tabular}
+%   \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
+% \end{table}
+
+\section{Unified Modeling Language (UML)}%
+
+``Unified Modeling Language'', of afgekort UML, is een taal/framework die binnen de softwareontwikkeling-discipline geaccepteerd is als de standaard voor het weergeven van object-georiënteerde modellen. UML wordt hoofdzakelijk gebruikt in de industrie-, business- en IT-sector, met als doel om de ontwerp- en implementatiefase te ondersteunen met diagrammen zoals netwerk- (hoewel deze niet strict genomen een UML-diagram is) en implementatiediagrammen, maar ook Activity Diagrams, System Sequence Diagrams, domeinmodellen en BPMN-diagrammen. Deze kunnen door zowel business als technische stakeholders geïnterpreteerd worden voor hun respectievelijke doeleinden. \autocite{Koc2021}
+
+Binnen de opleiding Toegepaste Informatica worden er twee UML-modeling programma's gebruikt; UML Visual Paradigm en draw.io. Dit zijn twee tools die werden geëvalueerd tijdens een vergelijkende studie van \textcite{Lu2023}, waarin deze respectievelijk 122 en 114 scoorden op een maximum van 165 op basis van hun eigenschappen en functies.
+
+PlantUML en MermaidJS\footnote{\url{https://mermaid.js.org}} zijn tools waarmee men UML-diagrammen kan ontwerpen via menselijk leesbare en gemakkelijk onderhoudbare (door middel van versiebeheertools zoals Git\footnote{\url{https://git-scm.com/}}) tekstbestanden \autocite{Romeo2025}.
+Deze tools zijn ook open source, waardoor de broncode van deze software voor iedereen beschikbaar is.
+
+<TODO: Voorbeelden voor typische UML-diagrammen>
+
+\subsection{``PlantUML''}%
+
+<TODO: Verdere toelichting van PlantUML met o.a. voorbeeldcode en diagrammen>
+
+\subsection{``MermaidJS''}%
+
+<TODO: Verdere toelichting van MermaidJS met o.a. voorbeeldcode en diagrammen>
+
+\subsection{``UMLGraph''}%
+
+<TODO: ``Nieuwe'' tool UMLGraph toelichten met o.a. voorbeeldcode en diagrammen (geen ondersteuning voor netwerkdiagrammen)>
+
+\subsection{``D2''}%
+
+<TODO: ``Nieuwe'' tool D2 toelichten met o.a. voorbeeldcode en diagrammen (niet veel over te vinden online, gezien de naam)>
+
+\section{Configuration Management}%
+
+``Configuration management'' heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; op basis van dezelfde stappen wordt hetzelfde resultaat opgeleverd zonder afwijkingen, en vertoont het proces dus consistent gedrag. Deze manier van werken schaalt beter voor omgevingen met honderden of duizenden servers, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
+
+``Configuration management'' staat echter niet in voor het creeëren en opzetten van servers; dat is de taak van ``Infrastructure-as-Code'' tools zoals Terraform, OpenTofu en Vagrant.
+
+Ansible, Puppet en Chef zijn drie open source tools die in de praktijk het meest gebruikt worden om ``configuration management'' toe te passen \autocite{Masek2018}.
+
+\subsection{``Ansible''}%
+
+<TODO: Verdere toelichting van Ansible met o.a. voorbeeldcode>
+
+\subsection{``Puppet''}%
+
+<TODO: Verdere toelichting van Puppet met o.a. voorbeeldcode>
+
+\subsection{``Chef''}%
+
+<TODO: Verdere toelichting van Chef met o.a. voorbeeldcode>
+
+\subsection{``Salt''/``Saltstack''}%
+
+<TODO: ``Nieuwe'' tool Chef toelichten met o.a. voorbeeldcode>
+
+\section{Situering binnen ``Toegepaste Informatica'' (Opleiding)}%
+
+<TODO?: Algemene toelichting over de opleiding Toegepaste Informatica en haar OLODs (hoe deze correct citeren?)>
+
+\subsection{``IT infrastructure engineer'' (Keuzeprofiel)}%
+
+Er zijn drie noemenswaardige OLODs, binnen het keuzeprofiel ``IT infrastructure engineer'' in het derde jaar van de opleiding Toegepaste Informatica, die de nadruk leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools en deze visualiseren met UML-diagrammen. % keuzetraject ``System \& Network Administrator'' --> keuzeprofiel ``IT infrastructure engineer'' in het derde jaa
+
+\begin{itemize}
+  \item ``Cybersecurity Advanced''
+  \item ``Infrastructure Automation''
+  \item ``DevOps Project: Operations''
+\end{itemize}
+
+\subsection{``Cybersecurity Advanced'' (OLOD)}%
+
+Het OLOD ``Cybersecurity Advanced'' introduceert het concept van ``blue-teaming'' binnen het gebied van cybersecurity aan de hand van een reeks virtuele labo's die individueel worden uitgevoerd. Het gebruik van ``configuration management'' of UML-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student wel een aanzienlijk voordeel aangezien deze zo de labo-omgeving reproduceerbaar en visueel overzichtelijk kan maken. Bovendien wordt de (basis-)opstelling alvast voorgesteld met een netwerkdiagram ontworpen via PlantUML.
+
+<TODO: Verdere toelichting met basis-netwerkdiagram, Ansible-code, ...>
+
+\subsection{``Infrastructure Automation'' (OLOD)}%
+
+Tot slot biedt het OLOD ``Infrastructure Automation'' een reeks virtuele labo's die verschillende tools (Jenkins\footnote{\url{https://www.jenkins.io/}}, Ansible, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}}) introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen.
+Zoals eerder vermeld wordt het gebruik van UML-diagrammen hierbij niet verplicht, maar aangeraden.
+
+<TODO: Verdere toelichting met Ansible-labo, Ansible-skeleton, roles van Bert Van Vreckem, ...>
+
+\subsection{``DevOps Project: Operations'' (OLOD)}%
+
+Tot slot is ``DevOps Project: Operations'' een OLOD dat het tweede luik vormt van een tweeledig groepsproject, het eerste luik zijnde ``Real-life Integrated Software Engineering'' voor de studenten binnen ``full stack developer''. Het doel van het ``operations-team'' in dit project, is om de backend van een webapplicatie (ontwikkeld door het ``development-team'') te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet automatisch kunnen opgezet worden via zowel ``Infrastructure-as-Code''- als ``configuration management''-tools (met in het bijzonder Ansible).
+Om de onderliggende werking van deze omgeving te visualiseren voor al dan niet technische stakeholders, moet er ook een netwerkdiagram ontworpen worden met UML-modeling software.
+
+<TODO?: Verdere toelichting met representatief netwerkdiagram van finaal project (vermelding van concrete klantenopdracht (Ortho, HOGENT, etc.) nodig?)>
+
+\section{Compilers}%
+
+Compilers vertalen de broncode van een high-level, menselijk leesbare taal (zoals Java\footnote{\url{https://www.java.com/}} of C\#\footnote{\url{https://dotnet.microsoft.com/en-us/languages/csharp}}) tot equivalente instructies in een andere, vaak low-level taal of machinecode \autocite{Seidl2012}.
+
+<TODO: Concept van compilers veel verder uitwerken, hieronder uit te werken gebieden>
+
+\subsection{High-level talen V.S. Machinecode}%
+
+<TODO?: Verschil tussen high-level talen en machinecode toelichten ((überhaupt) uit te drukken als ``versus''?)>
+
+\subsection{Fases}%
+
+<TODO: Verschillende fases van compilers toelichten>
+
+\subsubsection{Lexicale analyse}%
+\subsubsection{Parsen/ontleden}%
+\subsubsection{Semantische analyse}%
+\subsubsection{Optimalisatie}%
+\subsubsection{Codegeneratie}%
+
+\section{Transpilers}%
+
+``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn compilers die code geschreven in één high-level (programmeer-)taal als invoer aannemen en deze omzetten naar code in een andere high-level taal als uitvoer. De use cases voor deze software kunnen zich ook uitbreiden tot het optimaliseren of omzetten van code naar een andere/nieuwere versie van eenzelfde taal. \autocite{Ilyushin2016}
+
+\subsection{Doel}%
+\subsection{Abstract Syntax Tree}%
+\subsection{Parse Tree}%
+
+<TODO?: Veel van de onderstaande subsecties weet ik nog niet of ik ze (überhaupt) onder ``Compilers'' or ``Transpilers'' zal/zou zetten, aangezien de terminologie soms wat verwarrend is. In hoeverre kan ik dit soort voorbeelden toelichten, als ik allicht niet deze specifieke tools zal toepassen in mijn proof-of-concept?>
+
+\subsection{``ANTLR''}%
+
+<TODO: ANTLR is een parser-generator>
+
+\subsection{``Lex''}%
+
+<TODO: Lex is een lexical analyzer generator voor C, standaard op veel Unix-systemen>
+
+\subsection{``Yacc''}%
+
+<TODO: Yacc is een (LALR) parser generator voor C, ook standaard op veel Unix-systemen>
+
+\subsection{``Babel''}%
+
+<TODO: Javascript transpiler voor backwards compatible JS-code (voor o.a. oudere browsers) te genereren>
+
+\subsection{``Emscripten''}
+
+<TODO: C/C++ naar WebAssembly transpiler>

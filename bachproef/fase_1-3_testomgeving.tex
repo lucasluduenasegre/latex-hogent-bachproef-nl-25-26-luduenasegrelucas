@@ -1,0 +1,120 @@
+%%=============================================================================
+%% Ontwerp en implementatie van de testomgeving
+%%=============================================================================
+
+\chapter{Ontwerp en implementatie van de testomgeving}%
+\label{ch:testomgeving}
+
+\section{Evaluatie van de bestaande tools in de betrokken vakgebieden}%
+
+\subsection{UML}%
+
+<TODO: Korte vergelijkende studie rond PlantUML en MermaidJS>
+
+\subsection{Configuration management}%
+
+<TODO: Korte vergelijkende studie rond Ansible, Puppet, Chef en Salt/Saltstack>
+
+Na het overlopen van de verschillende tools met betrekking tot UML () en ``configuration management'', is er besloten om te werken met Ansible en PlantUML. 
+Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de stageplaats van de auteur), courant gebruikt worden binnen de IT-sector (in het bijzonder Ansible) en bovendien allebei gratis en open source zijn.
+
+\section{Ontwerp van de testomgeving}%
+
+<TODO: Ontwerp verder toelichten>
+
+\lstset{
+    % language=plantuml,
+    breaklines=true,
+    numbers=left,
+    frame=single,
+    caption=[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt via PlantUML.},
+    label=code:test_env.puml
+}
+
+\begin{lstlisting}
+@startnwdiag test_env
+// @endnwdiag <optional_diagram_name> --> Start of network diagram
+  // (Local) network specification
+  //
+  // Format: network <network_name> { ... }
+  network network_alpha {
+    // Optional subnet specification
+    address = 172.26.10.0/24
+
+    // Host(s) specification
+    //
+    // Format: <hostname> [address = <ipv4_address>]
+    //
+    //
+    alpha_web_server [address = 172.26.10.10];
+    alpha_dns_server [address = 172.26.10.20];
+    alpha_monitoring_server [address = 172.26.10.30];
+  }
+
+  network network_beta {
+    address = 172.26.20.0/24
+
+    beta_workstation_1 [address = 172.26.20.10];
+    beta_workstation_2 [address = 172.26.20.20];
+  }
+// @endnwdiag --> End of network diagram
+@endnwdiag
+\end{lstlisting}
+
+\begin{figure*}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{../graphics/test_env.png}
+    \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:test_env.png}Afbeeldingsformaat (\texttt{test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
+\end{figure*}
+
+Er zijn enkele noemenswaardige beperkingen aan dit diagram (en ter extensie deze omgeving):
+
+\begin{itemize}
+    \item Deze omgeving wordt lokaal opgezet via Vagrant. De Ansible-code die gegenereerd wordt zal dus rond deze backend gevormd zijn.
+    \item Er wordt geen rekening gehouden met routering of switching. Routers en switches worden dus niet door deze proof-of-concept omvat, en men gaat ervan uit dat de volledige omgeving toegankelijk is voor de control node.
+    \item De hosts in deze omgeving bevinden zich onder het lokale (klasse B) IPv4-netwerk \texttt{172.26.0.0} met subnetmask \texttt{255.255.0.0} of een prefix-lengte van 16 bits. Meerdere netwerken/subnets worden ondersteund, zolang ze zich binnen dit overkoepelende netwerk bevinden.
+    \item Qua netwerk-adressering wordt enkel IPv4 ondersteund.
+\end{itemize}
+
+\section{Implementatie van de testomgeving}%
+
+<TODO: Implementatie verder toelichten>
+
+\lstset{
+    % language=yaml,
+    breaklines=true,
+    numbers=left,
+    frame=single,
+    caption=[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de test-omgeving; de verwachte uitvoer voor de transpiler.},
+    label=code:inventory_test_env.yml
+}
+
+\begin{lstlisting}
+all:
+  # <network_name>
+  network_alpha:
+    # Required vars for local testing with Vagrant
+    vars:
+      ansible_user: vagrant
+      ansible_ssh_password: vagrant
+      ansible_become: true
+    hosts:
+      # <hostname>
+      alpha_web_server:
+        # <ipv4_address>
+        ansible_host: 172.26.10.10
+      alpha_dns_server:
+        ansible_host: 172.26.10.20
+      alpha_monitoring_server:
+        ansible_host: 172.26.10.30
+  network_beta:
+    vars:
+      ansible_user: vagrant
+      ansible_ssh_password: vagrant
+      ansible_become: true
+    hosts:
+      beta_workstation_1:
+        ansible_host: 172.26.20.10
+      beta_workstation_2:
+        ansible_host: 172.26.20.20
+\end{lstlisting}

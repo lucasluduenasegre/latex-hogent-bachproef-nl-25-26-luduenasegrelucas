@@ -26,5 +26,77 @@
 %% Maak voor elke fase (behalve het literatuuronderzoek) een NIEUW HOOFDSTUK aan
 %% en geef het een gepaste titel.
 
-\lipsum[21-25]
+% \lipsum[21-25]
 
+\subsection{Fasering van de bachelorproef}%
+\label{subsec:fasering_bap}
+
+Deze bachelorproef zal uitgevoerd worden in de volgende fases, van 9 februari (week 1) t.e.m. 22 mei (week 15), 2026:
+
+<TODO?: overlappende marge-periodes inlassen, in geval van foute tijdsinschatting?>
+
+\begin{itemize}
+  \item{\nameref{subsec:literatuurstudie}}
+  \item{\nameref{subsec:evaluatie_bestaande_tools_betrokken_vakgebieden}}
+  \item{\nameref{subsec:ontwerp_testomgeving}}
+  \item{\nameref{subsec:implementatie_testomgeving}}
+  \item{\nameref{subsec:opstellen_testcases}}
+  \item{\nameref{subsec:ontwikkeling_poc_transpiler}}
+  \item{\nameref{subsec:uitvoeren_testcases}}
+\end{itemize}
+
+Indien een fase begint met hetzelfde nummer maar eindigt met een andere letter, indiceert dit dat ze op hetzelfde moment (kunnen) beginnen, eindigen (met fases 1A, 3B en 5 als uitzondering) en parallel worden uitgevoerd.
+
+Aangezien sommige fases afhankelijk zijn van elkaar en/of korter op elkaar vallen, zullen deze voor dit document in de volgende overkoepelende hoofdstukken omvat worden:
+
+<TODO?: is dit oké? Of moeten de volledige fases elke een hoofdstuk krijgen, zelfs als ze redelijk kort zijn zoals bv. fase 1B?>
+
+\begin{itemize}
+    \item{Hoofdstuk~\ref{ch:testomgeving}: \nameref{ch:testomgeving}}
+    \item{Hoofdstuk~\ref{ch:poc}: \nameref{ch:poc}}
+    \item{Hoofdstuk~\ref{ch:testcases}: \nameref{ch:testcases}}
+\end{itemize}
+
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{../graphics/gantt-fases.png}
+  \caption[GANTT-schema (fases van de bachelorproef)]{\label{fig:gantt-fases.png}GANTT-schema voor de verschillende fases van de bachelorproef.}
+\end{figure*}
+
+\subsection{Fase 1A (week 1-7): Literatuurstudie} % Studie over (het ontwikkelen van) transpilers
+\label{subsec:literatuurstudie}
+
+Bij het begin van het onderzoek zal er parallel met de andere voorbereidende fases (1-3) een studie uitgevoerd worden over hoe transpilers werken en hoe deze ontwikkeld worden.
+De deliverable voor deze fase is een simpele, maar functionele transpiler (zonder UML-diagrammen en ``configuration management''-code) die de basis zal vormen voor de toekomstige, finale versie.
+
+\subsection{Fase 1B (week 1-2): Evaluatie van de bestaande tools in de betrokken vakgebieden}%
+\label{subsec:evaluatie_bestaande_tools_betrokken_vakgebieden}
+
+Hier zal er een afweging gemaakt worden voor de verschillende tools binnen UML-modeling en ``configuration management'' die gebruikt zullen worden tijdens de ontwikkeling van de proof-of-concept.
+De te evalueren tools voor UML-modeling zijn PlantUML en MermaidJS. Voor het ``configuration management''-gedeelte zal er gekeken worden naar Ansible, Puppet, Chef en Salt/Saltstack. Deze opsomming van tools is echter niet-uitputtend, en andere tools kunnen nog in het vizier komen.
+
+\subsection{Fase 2 (week 3-5): Ontwerp van de testomgeving}%
+\label{subsec:ontwerp_testomgeving}
+
+In deze fase wordt de (virtuele) testomgeving voor de transpiler ontworpen aan de hand van netwerk- en implementatiediagrammen (ontworpen met PlantUML/MermaidJS). In deze diagrammen zullen de hardware- (Opslag, RAM, CPU cores, \ldots) en softwarespecificaties (distributie, packages, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (firewalls, eventuele backup-regels, \ldots).
+Deze diagrammen dienen een tweevoudig doel; ze kunnen binnen de originele context van hun taal als visuele UML-diagrammen worden gegenereerd, en ze vormen de bron-bestanden voor de transpiler, die deze zal omzetten tot ``configuration management''-code.
+
+\subsection{Fase 3A (week 6-7): Implementatie van de testomgeving}%
+\label{subsec:implementatie_testomgeving}
+
+Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet met ``Infrastructure-as-Code''-tool(s) en geconfigureerd met een ``configuration management''-tool (Ansible/Puppet/Chef/Salt). Er wordt intussen ook gedocumenteerd hoe het ``configuration management''-gedeelte wordt opgezet, want dit vormt de target output voor de transpiler. De aanpassingen in verband met ``configuration management'' worden vervolgens ongedaan gemaakt alvorens de resulterende ``configuration management''-code van de transpiler wordt uitgevoerd op de testomgeving.
+
+\subsection{Fase 3B (week 6-10): Opstellen van de testcases}%
+\label{subsec:opstellen_testcases}
+
+Hier worden de testcases opgesteld waaraan de proof-of-concept moet voldoen. De testen zich zullen hoofdzakelijk buigen over de transpiler en haar uitvoer (aantal playbooks, idempotentie, grootte van codebase, \ldots) alsook de werking van de finale infrastructuur. Deze fase zal in de praktijk waarschijnlijk gedeeltelijk parallel verlopen met fase 4, aangezien er tijdens het ontwikkelen van de oplossing mogelijk nieuwe testcases kunnen ontstaan.
+
+\subsection{Fase 4 (week 8-15): Ontwikkeling van de proof-of-concept (transpiler)}%
+\label{subsec:ontwikkeling_poc_transpiler}
+
+Tijdens deze fase wordt de proof-of-concept ontwikkeld, in de vorm van een transpiler. Deze zal als invoer de netwerk- en implementatiediagrammen (ontworpen met PlantUML/MermaidJS) aannemen en ze omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef/Salt). Deze fase loopt tot 22 mei, 2026, aangezien dit voor de auteur de laatste dag van de stage is.
+
+\subsection{Fase 5 (week 11-15): Uitvoeren van de testcases}%
+\label{subsec:uitvoeren_testcases}
+
+Ten slotte worden de opgestelde testen uit fase 3B uitgevoerd op de (gedeeltelijk) uitgewerkte proof-of-concept. Op basis van de resultaten zal er een rapport worden opgesteld die aangeeft in welke mate deze oplossing een antwoord biedt op de hoofdonderzoeksvraag. Nogmaals, dit zal allicht parallel verlopen met fase 4.

@@ -5,35 +5,81 @@
 \chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
 \label{ch:inleiding}
 
-De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
+% De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
 
-\begin{itemize}
-  \item context, achtergrond
-  \item afbakenen van het onderwerp
-  \item verantwoording van het onderwerp, methodologie
-  \item probleemstelling
-  \item onderzoeksdoelstelling
-  \item onderzoeksvraag
-  \item \ldots
-\end{itemize}
+% \begin{itemize}
+%   \item context, achtergrond
+%   \item afbakenen van het onderwerp
+%   \item verantwoording van het onderwerp, methodologie
+%   \item probleemstelling
+%   \item onderzoeksdoelstelling
+%   \item onderzoeksvraag
+%   \item \ldots
+% \end{itemize}
+
+<TODO?: Inleiding nalezen, checken voor ongegronde beweringen, ...>
+
+\section{Context, achtergrond}%
+\label{sec:inl_context}
+
+Binnen de opleiding Toegepaste Informatica op HOGENT hebben de meeste OLODs (opleidingsonderdelen) gelinkt aan het keuzetraject ``System \& Network Administrator'' de opzet om de creatie en het beheer van (virtuele) serveromgevingen aan te leren. Bij het opzetten van dit soort infrastructuur, is helderheid over elke stap van het proces en communicatie met elke -- al dan niet technisch ingestelde -- stakeholder cruciaal.
+Om deze duidelijkheid te waarborgen, wordt er binnen de opleiding (meerbepaald tijdens de analyse-OLODs) ook aangeleerd om te werken met UML-modeling software zoals Visual Paradigm\footnote{\url{https://www.visual-paradigm.com/}} en draw.io\footnote{\url{https://www.drawio.com/}}. Deze software wordt gebruikt om diagrammen te ontwerpen voor softwareontwikkeling, zoals Activity Diagrams, System Sequence Diagrams, domeinmodellen en BPMN-diagrammen.
+
+Men kan met deze software ook netwerk- en implementatiediagrammen ontwerpen, die de specificaties, software-elementen (databanken, webservers, firewalls, \ldots) en verbanden tussen verschillende servers in een bepaalde infrastructuur verduidelijken. Deze servers worden op basis van deze diagrammen daarna respectievelijk opgezet via ``Infrastructure-as-Code''-tools (zoals Terraform\footnote{\url{https://developer.hashicorp.com/terraform}}, OpenTofu\footnote{\url{https://opentofu.org/}}, Vagrant\footnote{\url{https://developer.hashicorp.com/vagrant}}, \ldots) en geconfigureerd met ``configuration management''-tools (Ansible\footnote{\url{https://docs.ansible.com/}}, Puppet\footnote{\url{https://www.puppet.com/}}, Chef\footnote{\url{https://www.chef.io/}}, \ldots). De HOGENT-OLODs ``DevOps Project: Operations'', ``Cybersecurity Advanced'' en meerbepaald ``Infrastructure Automation'' introduceren ook het gebruik van Ansible, één van de leidende ``configuration management''-tools.
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
-\label{sec:probleemstelling}
+\label{sec:inl_probleemstelling}
 
-Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's'', systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
+% Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's'', systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
 
-\section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
-\label{sec:onderzoeksvraag}
+Het huidige proces waarbij (complexe) netwerk- en implementatiediagrammen worden geïnterpreteerd en manueel worden omgezet tot een ``configuration management''-ondersteunde serveromgeving kan, volgens \textcite{Nicacio2020}, tijdrovend en vatbaar voor ambiguïteit en foute interpretaties zijn.
 
-Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+Bij implementatiediagrammen kan er onder meer onduidelijkheid onstaan bij (de versies van) software-packages, hun afhankelijkheden/dependencies, de firewall-regels voor elke server en hoe dit het bereik buiten het lokale netwerk beïnvloedt.
+Voor netwerkdiagrammen kan dit bijvoorbeeld gaan over hardwarespecificaties van de servers, (de versies van) hun besturingssystemen en de declaratie van de DNS server(s).
+
+\section{\IfLanguageName{dutch}{Hoofdonderzoeksvraag}{Research question}}%
+\label{sec:inl_hoofdonderzoeksvraag}
+
+% Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+
+De hoofdonderzoeksvraag voor deze bachelorproef luidt als volgt:
+
+Hoe kan men een gegeven netwerk- en implementatiediagram (in tekstuele vorm via bv. PlantUML\footnote{\url{https://plantuml.com/}}) van een (virtuele) serveromgeving met minimale menselijke interventie omzetten tot een overeenkomende, gebruiksklare ``configuration management''-ondersteunde (bv. met Ansible) serveromgeving?
+
+Voor deze serveromgeving wordt ervan uit gegaan dat de eenheden (bare-metal servers, virtuele machines, containers, \ldots) alvorens uitgerold zijn via een ``Infrastructure-as-Code''-tool en dat ze enkel nog achteraf geconfigureerd moeten worden via een ``configuration management''-tool.
+
+\section{Deelvragen over het probleemdomein}%
+\label{sec:inl_deelvragen_probleemdomein}
+
+\begin{itemize}
+  \item Wat zijn de doeleinden (business- of technisch-gericht) van UML?
+  \item Welke infrastructuur-gerelateerde informatie kan een netwerk- en implementatiediagram \emph{niet} weergeven (dat een ``Infrastructure-as-Code''- en/of ``configuration management''-tool wel kan)?
+  \item Welke stappen zijn er tussen het ontwerp van UML-diagrammen en de eerste opstelling van een ``configuration management''-ondersteunde omgeving?
+\end{itemize}
+
+\section{Deelvragen over het oplossingsdomein}%
+\label{sec:inl_deelvragen_oplossingsdomein}
+
+\begin{itemize}
+  \item Naast PlantUML en MermaidJS, met welke andere talen kan men UML-diagrammen ontwerpen?
+  \item Buiten Ansible, Puppet en Chef, wat zijn andere ``configuration management''-tools die voor dit soort doeleinden geschikt zijn?
+  \item Aangezien er al tools bestaan om UML-diagrammen te genereren op basis van ``configuration management''-ondersteunde omgevingen, zoals één van \textcite{teramako2023}, welke meerwaarde zou deze oplossing (die in de omgekeerde richting werkt) kunnen bieden?
+  \item Is het mogelijk om deze oplossing te ontwikkelen aan de hand van ``reverse engineering'' van de bovenstaande tools?
+\end{itemize}
 
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
-\label{sec:onderzoeksdoelstelling}
+\label{sec:inl_onderzoeksdoelstelling}
 
-Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
+% Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
+
+De doelstelling van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een transpiler (of omzetter) van PlantUML-diagrammen naar Ansible-code. PlantUML en Ansible zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden. 
+
+Deze oplossing zal een meerwaarde bieden voor educatieve doeleinden binnen de opleiding Toegepaste Informatica. Neem als voorbeeld een OLOD zoals ``Cybersecurity Advanced''. De tech-industrie evolueert snel en de labo's die voor dit OLOD ontworpen zijn, zullen daardoor ook snel verouderen.
+
+Aangezien met deze oplossing de drempel tussen de ontwerp- en implementatiefase verkleint, zouden docenten sneller nieuwe (virtuele) labo-omgevingen kunnen ontwerpen, met (in theorie) kant-en-klare ``configuration management''-code om deze meteen te configureren. Voor studenten kan dit ook een kans bieden om potentiële experimenten tijdens hun studies sneller effectief vorm te geven.
 
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
-\label{sec:opzet-bachelorproef}
+\label{sec:inl_opzet-bachelorproef}
 
 % Het is gebruikelijk aan het einde van de inleiding een overzicht te
 % geven van de opbouw van de rest van de tekst. Deze sectie bevat al een aanzet
@@ -41,10 +87,16 @@ Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor suc
 
 De rest van deze bachelorproef is als volgt opgebouwd:
 
-In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie.
+In Hoofdstuk~\ref{ch:literatuurstudie} (\nameref{ch:literatuurstudie}) wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie.
 
-In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
+In Hoofdstuk~\ref{ch:methodologie} (\nameref{ch:methodologie}) worden de verschillende fases van dit onderzoek toegelicht, alsook de gebruikte onderzoekstechnieken om antwoorden te kunnen formuleren op de hoofdonderzoeksvraag en deelvragen.
 
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
 
-In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
+In Hoofdstuk~\ref{ch:testomgeving} (\nameref{ch:testomgeving}) wordt het ontwerp en de implementatie van de testomgeving voor de proof-of-concept beschreven. Dit bevat een evaluatie van bestaande tools in de betrokken vakgebieden (UML en ``configuration management''), alsook het ontwerp van de verwachte invoer en uitvoer voor de transpiler.
+
+In Hoofdstuk~\ref{ch:poc} (\nameref{ch:poc}) wordt toegelicht hoe de proof-of-concept, in de vorm van een transpiler voor PlantUML naar Ansible, is ontwikkeld.
+
+In Hoofdstuk~\ref{ch:testcases} (\nameref{ch:testcases}) wordt de definitie van de verschillende testcases, waaraan de proof-of-concept op wordt getoetst, beschreven. De resultaten van deze testen zullen ook in dit hoofdstuk toegelicht worden
+
+In Hoofdstuk~\ref{ch:conclusie} (\nameref{ch:conclusie}), tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.

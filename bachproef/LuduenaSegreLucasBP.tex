@@ -5,6 +5,46 @@
 
 \documentclass[dutch,dit,thesis]{hogentreport}
 
+% Beperk (waarschuwingen voor verwaarloosbare) over- en underfull-instanties
+\hfuzz=5.0pt
+\hbadness=10000
+\setlength{\emergencystretch}{3em}
+
+% Maak gebruik van listings
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Maak gebruik van .svg-bestanden
+
+% \usepackage{svg}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
 % TODO:
 % - If necessary, replace the option `dit`' with your own department!
 %   Valid entries are dbo, dbt, dgz, dit, dlo, dog, dsa, soa
@@ -49,15 +89,15 @@
 
 %%---------- Document metadata -------------------------------------------------
 % TODO: Replace this with your own information
-\author{Ernst Aarden}
-\supervisor{Dhr. F. Van Houte}
-\cosupervisor{Mevr. S. Beeckman}
-\title[Optionele ondertitel]%
-    {Titel van de bachelorproef}
+\author{Lucas Ludueña-Segre}
+\supervisor{Dhr. A. Veldeman}
+\cosupervisor{Dhr. Y. Rousseaux}
+\title[Onderzoek \& proof-of-concept]%
+    {Omzetten van UML-diagrammen\\(PlantUML) naar "configuration\\management"-code (Ansible)}
 \academicyear{\advance\year by -1 \the\year--\advance\year by 1 \the\year}
-\examperiod{1}
+\examperiod{2}
 \degreesought{\IfLanguageName{dutch}{Professionele bachelor in de toegepaste informatica}{Bachelor of applied computer science}}
-\partialthesis{false} %% To display 'in partial fulfilment'
+\partialthesis{true} %% To display 'in partial fulfilment'
 %\institution{Internshipcompany BVBA.}
 
 %% Add global exceptions to the hyphenation here
@@ -131,7 +171,7 @@
 % te verspreiden!
 
 \input{inleiding}
-\input{standvanzaken}
+\input{literatuurstudie}
 \input{methodologie}
 
 % Voeg hier je eigen hoofdstukken toe die de ``corpus'' van je bachelorproef
@@ -141,6 +181,10 @@
 %\input{...}
 %\input{...}
 %...
+
+\input{fase_1-3_testomgeving.tex}
+\input{fase_4_poc.tex}
+\input{fase_5_testcases.tex}
 
 \input{conclusie}
 
@@ -153,9 +197,16 @@
 Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat vooraf werd beoordeeld door de promotor. Dat voorstel is opgenomen in deze bijlage.
 
 %% TODO: 
-%\section*{Samenvatting}
+\section*{Samenvatting}
 
 % Kopieer en plak hier de samenvatting (abstract) van je onderzoeksvoorstel.
+Op HOGENT, binnen de opleiding Toegepaste Informatica en meerbepaald het keuzetraject ``System \& Network Administrator'', worden er OLODs (opleidingsonderdelen) gegeven die aan de hand van labo's bijdragen aan het leren beheren van serverinfrastructuren. Deze infrastructuren worden geïmplementeerd aan de hand van netwerk- en implementatiediagrammen, ontworpen met UML-modeling software.
+De probleemstelling voor deze bachelorproef vertrekt vanuit het foutgevoelige en tijdrovende proces waarbij (complexe) UML-diagrammen eerst geïnterpreteerd en daarna manueel vertaald worden naar een configureerbare infrastructuur.
+De hoofdonderzoeksvraag is hoe men, voor een potentiële serverinfrastructuur, netwerk- en implementatiediagrammen (meerbepaald in tekstuele vorm via PlantUML/MermaidJS) met zo weinig mogelijk manuele interventie kan omzetten naar een overeenkomende, gebruiksklare omgeving ondersteund door ``configuration management''-code (zoals Ansible, Puppet of Chef).
+De doelstelling van dit onderzoek is om een proof-of-concept transpiler te ontwikkelen die gegeven netwerk- en implementatiediagrammen als invoer rechtstreeks kan vertalen naar ``configuration management''-code als uitvoer. 
+De geplande testomgeving zal bestaan uit 2 tot 3 reeds uitgerolde (virtuele) servers (al dan niet via Infrastructure-as-Code tools), en zullen bestaan uit een web-, DNS- en monitoringserver (zonder nog eventuele uitbreidingen).
+Qua methodologie wordt er eerst een studie naar transpilers uitgevoerd, parallel met een evaluatie van te gebruiken tools (PlantUML, MermaidJS, Ansible, Puppet en Chef). Vervolgens wordt de testomgeving ontworpen (via UML-diagrammen), opgezet en gedocumenteert. Dan wordt de transpiler ontwikkeld en ten slotte systematisch getest tegen (onder andere) de kwaliteit en idempotentie van de uitvoer.
+Verwacht wordt dat deze oplossing een meerwaarde biedt voor docenten (en studenten): zij zouden hiermee sneller en efficiënter nieuwe labo-omgevingen kunnen ontwerpen en deze tegelijk voorzien van bijkomende ``configuration management''-code, aangezien de kloof tussen de ontwerp- en implementatiefase zo wordt verkleind.
 
 % Verwijzing naar het bestand met de inhoud van het onderzoeksvoorstel
 \input{../voorstel/voorstel-inhoud}
