@@ -15,7 +15,7 @@
 
 <TODO: Korte vergelijkende studie rond Ansible, Puppet, Chef en Salt/Saltstack>
 
-Na het overlopen van de verschillende tools met betrekking tot UML () en ``configuration management'', is er besloten om te werken met Ansible en PlantUML. 
+Na het overlopen van de verschillende tools met betrekking tot UML () en ``configuration management'', is er besloten om te werken met Ansible en PlantUML.
 Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de stageplaats van de auteur), courant gebruikt worden binnen de IT-sector (in het bijzonder Ansible) en bovendien allebei gratis en open source zijn.
 
 \section{Ontwerp van de testomgeving}%
@@ -23,12 +23,12 @@ Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de s
 <TODO: Ontwerp verder toelichten>
 
 \lstset{
-    % language=plantuml,
-    breaklines=true,
-    numbers=left,
-    frame=single,
-    caption=[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt via PlantUML.},
-    label=code:test_env.puml
+  % language=plantuml,
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  caption=[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt via PlantUML.},
+  label=code:test_env.puml
 }
 
 \begin{lstlisting}
@@ -62,18 +62,22 @@ Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de s
 \end{lstlisting}
 
 \begin{figure*}[htbp]
-    \centering
-    \includegraphics[width=\textwidth]{../graphics/test_env.png}
-    \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:test_env.png}Afbeeldingsformaat (\texttt{test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
+  \centering
+  \includegraphics[width=\textwidth]{../graphics/test_env.png}
+  \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:test_env.png}Afbeeldingsformaat (\texttt{test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
 \end{figure*}
 
-Er zijn enkele noemenswaardige beperkingen aan dit diagram (en ter extensie deze omgeving):
+Er zijn een aantal noemenswaardige beperkingen aan deze omgeving (en ter extensie, aan dit diagram):
 
 \begin{itemize}
-    \item Deze omgeving wordt lokaal opgezet via Vagrant. De Ansible-code die gegenereerd wordt zal dus rond deze backend gevormd zijn.
-    \item Er wordt geen rekening gehouden met routering of switching. Routers en switches worden dus niet door deze proof-of-concept omvat, en men gaat ervan uit dat de volledige omgeving toegankelijk is voor de control node.
-    \item De hosts in deze omgeving bevinden zich onder het lokale (klasse B) IPv4-netwerk \texttt{172.26.0.0} met subnetmask \texttt{255.255.0.0} of een prefix-lengte van 16 bits. Meerdere netwerken/subnets worden ondersteund, zolang ze zich binnen dit overkoepelende netwerk bevinden.
-    \item Qua netwerk-adressering wordt enkel IPv4 ondersteund.
+  \item De virtuele machines in deze omgeving gebruiken AlmaLinux 9 als besturingssysteem.
+        De eenvoudige reden hiervoor is omdat de Ansible Roles van Bert Van Vreckem ontwikkeld zijn voor een verouderde versie van Ansible die niet wordt aangeboden op AlmaLinux 10.
+        Veel van de functionaliteit van deze roles wordt op AlmaLinux 10 beperkt en soms zelfs verhinderd.
+        Deze keuze heeft uiteraard duidelijke implicaties op vlak van de veiligheid van deze omgeving, maar dit is één van de afwegingen die gemaakt moest worden voor deze proof-of-concept.
+  \item Deze omgeving wordt lokaal opgezet via Vagrant. De Ansible-code die gegenereerd wordt zal dus rond deze backend gevormd zijn.
+  \item Voor deze proof-of-concept wordt er geen rekening gehouden met routering of switching. Men gaat ervan uit dat de volledige omgeving toegankelijk is voor de control node.
+  \item De hosts in deze omgeving bevinden zich onder het lokale (klasse B) IPv4-netwerk \texttt{172.26.0.0} met subnetmask \texttt{255.255.0.0} of een prefix-lengte van 16 bits. Meerdere netwerken/subnets worden ondersteund, zolang ze zich binnen dit overkoepelende netwerk bevinden.
+  \item Qua netwerk-adressering wordt enkel IPv4 ondersteund.
 \end{itemize}
 
 \section{Implementatie van de testomgeving}%
@@ -81,12 +85,12 @@ Er zijn enkele noemenswaardige beperkingen aan dit diagram (en ter extensie deze
 <TODO: Implementatie verder toelichten>
 
 \lstset{
-    % language=yaml,
-    breaklines=true,
-    numbers=left,
-    frame=single,
-    caption=[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de test-omgeving; de verwachte uitvoer voor de transpiler.},
-    label=code:inventory_test_env.yml
+  % language=yaml,
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  caption=[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de test-omgeving; de verwachte uitvoer voor de transpiler.},
+  label=code:inventory_test_env.yml
 }
 
 \begin{lstlisting}
