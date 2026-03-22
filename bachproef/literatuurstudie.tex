@@ -55,18 +55,57 @@
 
 \section{Unified Modeling Language (UML)}%
 
-``Unified Modeling Language'', of afgekort UML, is een taal/framework die binnen de softwareontwikkeling-discipline geaccepteerd is als de standaard voor het weergeven van object-georiënteerde modellen. UML wordt hoofdzakelijk gebruikt in de industrie-, business- en IT-sector, met als doel om de ontwerp- en implementatiefase te ondersteunen met diagrammen zoals netwerk- (hoewel deze niet strict genomen een UML-diagram is) en implementatiediagrammen, maar ook Activity Diagrams, System Sequence Diagrams, domeinmodellen en BPMN-diagrammen. Deze kunnen door zowel business als technische stakeholders geïnterpreteerd worden voor hun respectievelijke doeleinden. \autocite{Koc2021}
+``Unified Modeling Language'', of afgekort UML, is een taal/framework die binnen de softwareontwikkeling-discipline geaccepteerd is als de standaard voor het weergeven van object-georiënteerde modellen. UML wordt hoofdzakelijk gebruikt in de industrie-, business- en IT-sector, met als doel om de ontwerp- en implementatiefase te ondersteunen met verscheidene diagrammen. Deze kunnen door zowel business als technische stakeholders geïnterpreteerd worden voor hun respectievelijke doeleinden. \autocite{Koc2021}
 
 Binnen de opleiding Toegepaste Informatica worden er twee UML-modeling programma's gebruikt; UML Visual Paradigm en draw.io. Dit zijn twee tools die werden geëvalueerd tijdens een vergelijkende studie van \textcite{Lu2023}, waarin deze respectievelijk 122 en 114 scoorden op een maximum van 165 op basis van hun eigenschappen en functies.
 
 PlantUML en MermaidJS\footnote{\url{https://mermaid.js.org}} zijn tools waarmee men UML-diagrammen kan ontwerpen via menselijk leesbare en gemakkelijk onderhoudbare (door middel van versiebeheertools zoals Git\footnote{\url{https://git-scm.com/}}) tekstbestanden \autocite{Romeo2025}.
 Deze tools zijn ook open source, waardoor de broncode van deze software voor iedereen beschikbaar is.
 
-<TODO: Voorbeelden voor typische UML-diagrammen>
+\subsection{Diagrammen}%
+
+Volgens \textcite{Padmanabhan2012} worden er binnen UML veertien diagramtypen onderscheiden, opgedeeld in Structure, Behavior en Interaction Diagrams. Hier zijn een aantal diagrammen die binnen de opleiding Toegepaste Informatica toegelicht worden:
+
+\begin{description}
+  \item \textbf{Use Case Diagram}: Beschrijft welke actoren (gebruikers, externe systemen) met een gegeven systeem interageren en welke functionaliteit zij gebruiken. Dit diagram is nuttig om de scope en de rollen binnen dit systeem te verduidelijken.
+  \item \textbf{Class Diagram}: Toont de klassen in een systeem met hun attributen, methoden en relaties (associaties, erfenis, compositie). Deze diagrammen zijn typisch op softwarecode gericht.
+  \item \textbf{Deployment Diagram}: Richt zich op de (al dan niet virtuele) nodes (servers, containers, netwerkapparatuur) en de daarop gedeployde artefacten (applicatiepakketten, services). Dit diagram sluit nauw aan bij een netwerkdiagram zoals die in DevOps-scenario's voorkomen.
+  \item \textbf{Activity Diagram}: Beschrijft de flow van controle en gegevens in een proces. Dit kan toegepast worden op een deployment pipeline of een provisioning workflow in een ``Infrastructure-as-Code''-context.
+  \item \textbf{Sequence Diagram}: Legt vast welke berichten in welke volgorde uitgewisseld worden tussen objecten of componenten, bijvoorbeeld tussen een load balancer, webservers en een databank tijdens een typische request-flow.
+\end{description}
+
 
 \subsection{``PlantUML''}%
 
-<TODO: Verdere toelichting van PlantUML met o.a. voorbeeldcode en diagrammen>
+PlantUML is een open-source tool waarmee UML- en aanverwante diagrammen gegenereerd kunnen worden op basis een van declaratief en menselijk leesbaar tekstformaat. 
+De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele  (Class Diagrams, Deployment Diagrams, Activity Diagrams, \ldots), maar ook notaties die niet strikt genomen onder UML vallen zoals netwerkdiagrammen, mindmaps en GANTT-diagrammen. \autocite{PlantUML2025}
+Omdat de diagramdefinities gewone tekstbestanden zijn, lenen ze zich goed tot versiebeheer met bijvoorbeeld Git en integratie in Infrastructure-as-Code workflows.
+
+PlantUML kan standalone gebruikt worden (via de command-line of een ingebouwde webserver), maar is ook beschikbaar als plug-in voor gangbare IDE's en documentatiesystemen (zoals Visual Studio Code, IntelliJ en verschillende wiki-platformen).\autocite{PlantUML2025} 
+In de context van deze bachelorproef is vooral interessant dat PlantUML deployment- en componentdiagrammen kan genereren op basis van tekst, wat een brug vormt tussen conceptuele infrastructuurmodellen en configuratiecode in Ansible.
+
+\paragraph{Voorbeeld: eenvoudig deploymentdiagram}
+
+Onderstaande PlantUML-code beschrijft een vereenvoudigde webarchitectuur met een gebruiker, een webserver en een databankserver:
+
+% \begin{lstlisting}[language=PlantUML,caption={Eenvoudig deploymentdiagram in PlantUML}]
+% @startuml
+% node "Client" as client
+% node "Webserver" as web {
+%   artifact "Webapp" as app
+% }
+% node "Database server" as db {
+%   database "PostgreSQL" as pg
+% }
+
+% client --> app : HTTP(S)
+% app --> pg : SQL
+
+% @enduml
+% \end{lstlisting}
+
+Deze tekst wordt door PlantUML automatisch omgezet in een deploymentdiagram met drie nodes en de bijhorende artefacten en connecties.
+
 
 \subsection{``MermaidJS''}%
 
@@ -79,6 +118,14 @@ Deze tools zijn ook open source, waardoor de broncode van deze software voor ied
 \subsection{``D2''}%
 
 <TODO: ``Nieuwe'' tool D2 toelichten met o.a. voorbeeldcode en diagrammen (niet veel over te vinden online, gezien de naam)>
+
+\section{Infrastructure-as-Code}
+
+\subsection{``Terraform''}
+
+\subsection{``OpenTofu''}
+
+\subsection{``Vagrant''}
 
 \section{Configuration Management}%
 
@@ -110,7 +157,7 @@ Ansible, Puppet en Chef zijn drie open source tools die in de praktijk het meest
 
 \subsection{``IT infrastructure engineer'' (Keuzeprofiel)}%
 
-Er zijn drie noemenswaardige OLODs, binnen het keuzeprofiel ``IT infrastructure engineer'' in het derde jaar van de opleiding Toegepaste Informatica, die de nadruk leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools en deze visualiseren met UML-diagrammen. % keuzetraject ``System \& Network Administrator'' --> keuzeprofiel ``IT infrastructure engineer'' in het derde jaa
+Er zijn drie noemenswaardige OLODs, binnen het keuzeprofiel ``IT infrastructure engineer'' in het derde jaar van de opleiding Toegepaste Informatica, die de nadruk leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools en deze visualiseren met UML-diagrammen. % keuzetraject ``System \& Network Administrator'' --> keuzeprofiel ``IT infrastructure engineer''
 
 \begin{itemize}
   \item ``Cybersecurity Advanced''
