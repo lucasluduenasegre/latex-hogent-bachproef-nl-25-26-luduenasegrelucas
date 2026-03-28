@@ -13,9 +13,9 @@
 
 \subsection{Configuration management}%
 
-<TODO: Korte vergelijkende studie rond Ansible, Puppet, Chef en Salt/Saltstack>
+<TODO: Korte vergelijkende studie rond Ansible, Puppet, Chef>
 
-Na het overlopen van de verschillende tools met betrekking tot UML () en ``configuration management'', is er besloten om te werken met Ansible en PlantUML.
+Na het overlopen van de verschillende tools met betrekking tot UML en ``configuration management'', is er besloten om te werken met Ansible en PlantUML.
 Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de stageplaats van de auteur), courant gebruikt worden binnen de IT-sector (in het bijzonder Ansible) en bovendien allebei gratis en open source zijn.
 
 \section{Ontwerp van de testomgeving}%
@@ -27,7 +27,7 @@ Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de s
   breaklines=true,
   numbers=left,
   frame=single,
-  caption=[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt via PlantUML.},
+  caption=[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt in PlantUML.},
   label=code:test_env.puml
 }
 
@@ -70,14 +70,14 @@ Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de s
 Er zijn een aantal noemenswaardige beperkingen aan deze omgeving (en ter extensie, aan dit diagram):
 
 \begin{itemize}
-  \item De virtuele machines in deze omgeving gebruiken AlmaLinux 9 als besturingssysteem.
-        De eenvoudige reden hiervoor is omdat de Ansible Roles van Bert Van Vreckem ontwikkeld zijn voor een verouderde versie van Ansible die niet wordt aangeboden op AlmaLinux 10.
-        Veel van de functionaliteit van deze roles wordt op AlmaLinux 10 beperkt en soms zelfs verhinderd.
-        Deze keuze heeft uiteraard duidelijke implicaties op vlak van de veiligheid van deze omgeving, maar dit is één van de afwegingen die gemaakt moest worden voor deze proof-of-concept.
   \item Deze omgeving wordt lokaal opgezet via Vagrant. De Ansible-code die gegenereerd wordt zal dus rond deze backend gevormd zijn.
-  \item Voor deze proof-of-concept wordt er geen rekening gehouden met routering of switching. Men gaat ervan uit dat de volledige omgeving toegankelijk is voor de control node.
-  \item De hosts in deze omgeving bevinden zich onder het lokale (klasse B) IPv4-netwerk \texttt{172.26.0.0} met subnetmask \texttt{255.255.0.0} of een prefix-lengte van 16 bits. Meerdere netwerken/subnets worden ondersteund, zolang ze zich binnen dit overkoepelende netwerk bevinden.
-  \item Qua netwerk-adressering wordt enkel IPv4 ondersteund.
+  \item De virtuele machines in deze omgeving gebruiken AlmaLinux 9 als besturingssysteem.
+  De eenvoudige reden hiervoor is omdat de Ansible Roles van Bert Van Vreckem ontwikkeld zijn voor een verouderde versie van Ansible die niet wordt aangeboden op AlmaLinux 10.
+  Veel van de functionaliteit van deze roles wordt op AlmaLinux 10 beperkt en soms zelfs verhinderd.
+  Deze keuze heeft uiteraard duidelijke implicaties op vlak van de veiligheid van deze omgeving, maar dit is één van de afwegingen die gemaakt moest worden voor deze proof-of-concept.
+  \item Het diagram mag enkel nodes binnen de testomgeving (behalve de control node) voorstellen. 
+  % \item Voor deze proof-of-concept wordt er geen rekening gehouden met routering of switching. 
+  \item De hosts in deze omgeving bevinden zich onder het lokale (klasse B) IPv4-netwerk \texttt{172.26.0.0/16} (enkel IPv4 wordt ondersteund). Meerdere netwerken/subnets worden ondersteund, zolang ze zich binnen dit overkoepelende netwerk bevinden. De volledige omgeving moet toegankelijk zijn voor de control node (met IP-adres \texttt{172.26.0.2/16}).
 \end{itemize}
 
 \section{Implementatie van de testomgeving}%
@@ -89,7 +89,7 @@ Er zijn een aantal noemenswaardige beperkingen aan deze omgeving (en ter extensi
   breaklines=true,
   numbers=left,
   frame=single,
-  caption=[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de test-omgeving; de verwachte uitvoer voor de transpiler.},
+  caption=[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de testomgeving; de verwachte uitvoer voor de transpiler.},
   label=code:inventory_test_env.yml
 }
 

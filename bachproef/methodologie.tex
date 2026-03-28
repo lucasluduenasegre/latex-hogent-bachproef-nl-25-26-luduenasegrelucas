@@ -73,7 +73,7 @@ De deliverable voor deze fase is een simpele, maar functionele transpiler (zonde
 \label{subsec:evaluatie_bestaande_tools_betrokken_vakgebieden}
 
 Hier zal er een afweging gemaakt worden voor de verschillende tools binnen UML-modeling en ``configuration management'' die gebruikt zullen worden tijdens de ontwikkeling van de proof-of-concept.
-De te evalueren tools voor UML-modeling zijn PlantUML en MermaidJS. Voor het ``configuration management''-gedeelte zal er gekeken worden naar Ansible, Puppet, Chef en Salt/Saltstack. Deze opsomming van tools is echter niet-uitputtend, en andere tools kunnen nog in het vizier komen.
+De te evalueren tools voor UML-modeling zijn PlantUML en MermaidJS. Voor het ``configuration management''-gedeelte zal er gekeken worden naar Ansible, Puppet, Chef. Deze opsomming van tools is echter niet-uitputtend, en andere tools kunnen nog in het vizier komen.
 
 \subsection{Fase 2 (week 3-5): Ontwerp van de testomgeving}%
 \label{subsec:ontwerp_testomgeving}
@@ -84,7 +84,7 @@ Deze diagrammen dienen een tweevoudig doel; ze kunnen binnen de originele contex
 \subsection{Fase 3A (week 6-7): Implementatie van de testomgeving}%
 \label{subsec:implementatie_testomgeving}
 
-Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet met ``Infrastructure-as-Code''-tool(s) en geconfigureerd met een ``configuration management''-tool (Ansible/Puppet/Chef/Salt). Er wordt intussen ook gedocumenteerd hoe het ``configuration management''-gedeelte wordt opgezet, want dit vormt de target output voor de transpiler. De aanpassingen in verband met ``configuration management'' worden vervolgens ongedaan gemaakt alvorens de resulterende ``configuration management''-code van de transpiler wordt uitgevoerd op de testomgeving.
+Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet met ``Infrastructure-as-Code''-tool(s) en geconfigureerd met een ``configuration management''-tool (Ansible/Puppet/Chef). Er wordt intussen ook gedocumenteerd hoe het ``configuration management''-gedeelte wordt opgezet, want dit vormt de target output voor de transpiler. De aanpassingen in verband met ``configuration management'' worden vervolgens ongedaan gemaakt alvorens de resulterende ``configuration management''-code van de transpiler wordt uitgevoerd op de testomgeving.
 
 \subsection{Fase 3B (week 6-10): Opstellen van de testcases}%
 \label{subsec:opstellen_testcases}
@@ -94,7 +94,7 @@ Hier worden de testcases opgesteld waaraan de proof-of-concept moet voldoen. De 
 \subsection{Fase 4 (week 8-15): Ontwikkeling van de proof-of-concept (transpiler)}%
 \label{subsec:ontwikkeling_poc_transpiler}
 
-Tijdens deze fase wordt de proof-of-concept ontwikkeld, in de vorm van een transpiler. Deze zal als invoer de netwerk- en implementatiediagrammen (ontworpen met PlantUML/MermaidJS) aannemen en ze omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef/Salt). Deze fase loopt tot 22 mei, 2026, aangezien dit voor de auteur de laatste dag van de stage is.
+Tijdens deze fase wordt de proof-of-concept ontwikkeld, in de vorm van een transpiler. Deze zal als invoer de netwerk- en implementatiediagrammen (ontworpen met PlantUML/MermaidJS) aannemen en ze omzetten tot ``configuration management''-code (in Ansible/Puppet/Chef). Deze fase loopt tot 22 mei, 2026, aangezien dit voor de auteur de laatste dag van de stage is.
 
 \subsection{Fase 5 (week 11-15): Uitvoeren van de testcases}%
 \label{subsec:uitvoeren_testcases}

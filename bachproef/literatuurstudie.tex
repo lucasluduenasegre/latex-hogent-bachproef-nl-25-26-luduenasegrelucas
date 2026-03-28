@@ -69,69 +69,114 @@ Volgens \textcite{Padmanabhan2012} worden er binnen UML veertien diagramtypen on
 \begin{description}
   \item \textbf{Use Case Diagram}: Beschrijft welke actoren (gebruikers, externe systemen) met een gegeven systeem interageren en welke functionaliteit zij gebruiken. Dit diagram is nuttig om de scope en de rollen binnen dit systeem te verduidelijken.
   \item \textbf{Class Diagram}: Toont de klassen in een systeem met hun attributen, methoden en relaties (associaties, erfenis, compositie). Deze diagrammen zijn typisch op softwarecode gericht.
-  \item \textbf{Deployment Diagram}: Richt zich op de (al dan niet virtuele) nodes (servers, containers, netwerkapparatuur) en de daarop gedeployde artefacten (applicatiepakketten, services). Dit diagram sluit nauw aan bij een netwerkdiagram zoals die in DevOps-scenario's voorkomen.
+  \item \textbf{Deployment Diagram (of implementatiediagram)}: Richt zich op de (al dan niet virtuele) nodes (servers, containers, netwerkapparatuur) en de daarop gedeployde artefacten (applicatiepakketten, services). Dit diagram sluit nauw aan bij een netwerkdiagram zoals die in DevOps-scenario's voorkomen.
   \item \textbf{Activity Diagram}: Beschrijft de flow van controle en gegevens in een proces. Dit kan toegepast worden op een deployment pipeline of een provisioning workflow in een ``Infrastructure-as-Code''-context.
-  \item \textbf{Sequence Diagram}: Legt vast welke berichten in welke volgorde uitgewisseld worden tussen objecten of componenten, bijvoorbeeld tussen een load balancer, webservers en een databank tijdens een typische request-flow.
+  \item \textbf{Sequence Diagram}: Legt vast welke berichten in welke volgorde uitgewisseld worden tussen objecten of componenten, bijvoorbeeld tussen een webserver en een databank tijdens een typische request-flow.
 \end{description}
 
 
 \subsection{``PlantUML''}%
 
-PlantUML is een open-source tool waarmee UML- en aanverwante diagrammen gegenereerd kunnen worden op basis een van declaratief en menselijk leesbaar tekstformaat. 
-De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele  (Class Diagrams, Deployment Diagrams, Activity Diagrams, \ldots), maar ook notaties die niet strikt genomen onder UML vallen zoals netwerkdiagrammen, mindmaps en GANTT-diagrammen. \autocite{PlantUML2025}
-Omdat de diagramdefinities gewone tekstbestanden zijn, lenen ze zich goed tot versiebeheer met bijvoorbeeld Git en integratie in Infrastructure-as-Code workflows.
+PlantUML is een open-source tool waarmee UML- en aanverwante diagrammen gegenereerd kunnen worden op basis een van declaratief en menselijk leesbaar tekstformaat \autocite{PlantUML2026}. 
+De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele UML-diagrammen (Class Diagrams, Deployment Diagrams, Activity Diagrams, \ldots), maar dus ook notaties die niet strikt genomen onder UML vallen zoals netwerkdiagrammen, mindmaps en GANTT-diagrammen \autocite{PlantUML2025}. 
 
-PlantUML kan standalone gebruikt worden (via de command-line of een ingebouwde webserver), maar is ook beschikbaar als plug-in voor gangbare IDE's en documentatiesystemen (zoals Visual Studio Code, IntelliJ en verschillende wiki-platformen).\autocite{PlantUML2025} 
-In de context van deze bachelorproef is vooral interessant dat PlantUML deployment- en componentdiagrammen kan genereren op basis van tekst, wat een brug vormt tussen conceptuele infrastructuurmodellen en configuratiecode in Ansible.
+PlantUML kan op verschillende manieren gebruikt worden; via de online webinterface\footnote{https://www.plantuml.com/plantuml}, een lokale installatie of een Docker-container. Er worden ook verscheidene integraties aangeboden zoals plugins voor gangbare IDE's (Visual Studio Code, IntelliJ IDEA en Eclipse) en documentatie- en wiki-tools (Confluence en Markdown). Omdat de diagramdefinities gewone tekstbestanden zijn (met ``\texttt{.puml}'' als bestandsextensie), lenen ze zich goed tot versiebeheer met Git. \autocite{PlantUML2025a}
 
 \paragraph{Voorbeeld: eenvoudig deploymentdiagram}
 
-Onderstaande PlantUML-code beschrijft een vereenvoudigde webarchitectuur met een gebruiker, een webserver en een databankserver:
+\lstset{
+  % language=plantuml,
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  caption=[Voorbeeld implementatiediagram (PlantUML)]{Voorbeeld van een simpele implementatiediagram, uitgedrukt in PlantUML.},
+  label=code:depdiag_vb
+}
 
-% \begin{lstlisting}[language=PlantUML,caption={Eenvoudig deploymentdiagram in PlantUML}]
-% @startuml
-% node "Client" as client
-% node "Webserver" as web {
-%   artifact "Webapp" as app
-% }
-% node "Database server" as db {
-%   database "PostgreSQL" as pg
-% }
+\begin{lstlisting}
+@startuml
 
-% client --> app : HTTP(S)
-% app --> pg : SQL
+node node1
+node node2
+node node3
+node node4
+node node5
+node1 -- node2 : label1
+node1 .. node3 : label2
+node1 ~~ node4 : label3
+node1 == node5
 
-% @enduml
-% \end{lstlisting}
+@enduml
 
-Deze tekst wordt door PlantUML automatisch omgezet in een deploymentdiagram met drie nodes en de bijhorende artefacten en connecties.
+\end{lstlisting}
 
+Deze tekst wordt door PlantUML automatisch omgezet in een implementatiediagram met vijf nodes en de bijhorende artefacten en connecties.
+
+<TODO: Voorbeeld implementatiediagram invoegen>
 
 \subsection{``MermaidJS''}%
 
-<TODO: Verdere toelichting van MermaidJS met o.a. voorbeeldcode en diagrammen>
+MermaidJS is een gelijkaardige tool (gebaseerd op JavaScript), die tekstuele, Markdown-geïnspireerde syntax omzet naar diagrammen in \texttt{.svg}-formaat.
+Het wordt vaak gebruikt om documentatie in Markdown (bijvoorbeeld in README-bestanden of op GitHub) te verrijken met flowcharts, sequence diagrams, class diagrams, state diagrams en Gantt-charts zonder een zware grafische editor te hoeven openen. \autocite{Mermaid2019}
 
-\subsection{``UMLGraph''}%
+Zoals PlantUML worden diagrammen in Mermaid vanuit tekstbestanden gegenereerd (met ``\texttt{.mermaid}'' als bestandsextensie), wat zich weer goed leent tot versiebeheer.
 
-<TODO: ``Nieuwe'' tool UMLGraph toelichten met o.a. voorbeeldcode en diagrammen (geen ondersteuning voor netwerkdiagrammen)>
+\paragraph{Voorbeeld: infrastructuurdiagram in Mermaid}
 
-\subsection{``D2''}%
+\lstset{
+  % language=plantuml,
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  caption=[Voorbeeld implementatiediagram (PlantUML)]{Voorbeeld van een simpele implementatiediagram, uitgedrukt in PlantUML.},
+  label=code:depdiag_vb
+}
+\begin{lstlisting}[caption={Eenvoudig infrastructuurdiagram in MermaidJS}]
+architecture-beta
+    group api(cloud)[API]
 
-<TODO: ``Nieuwe'' tool D2 toelichten met o.a. voorbeeldcode en diagrammen (niet veel over te vinden online, gezien de naam)>
+    service db(database)[Database] in api
+    service disk1(disk)[Storage] in api
+    service disk2(disk)[Storage] in api
+    service server(server)[Server] in api
 
-\section{Infrastructure-as-Code}
+    db:L -- R:server
+    disk1:T -- B:server
+    disk2:T -- B:db
+\end{lstlisting}
 
-\subsection{``Terraform''}
+Mermaid rendeert deze tekst tot een architectuurplan die de basisstructuur van een server met een verbonden database en bijhorende opslagmedia visualiseert.
 
-\subsection{``OpenTofu''}
+<TODO: Voorbeeld implementatiediagram invoegen>
 
-\subsection{``Vagrant''}
+\section{Infrastructure-as-Code}%
+
+``Infrastructure-as-Code'' (of IaC) is een praktijk binnen DevOps waarbij de nodes (fysiek of virtueel) binnen een IT-infrastructuur gedefinieerd en beheerd worden via machine-leesbare configuratiebestanden in plaats van via handmatige configuratie of grafische beheerconsoles. Deze definities worden doorgaans onder versiebeheer geplaatst, waardoor men infrastructuurwijzigingen kan testen, herzien en eventueel terugdraaien zoals bij traditionele softwarecode.
+De belangrijkste voordelen van IaC zijn reproduceerbaarheid (omgevingen kunnen opnieuw identiek worden uitgerold), consistentie (vermindering van menselijke fouten en configuratiedrift), en een hogere snelheid van oplevering doordat de provisioning sterk geautomatiseerd wordt. \autocite{Artac2017} 
+
+IaC staat echter niet in voor het configureren van nodes, dat is de taak van ``configuration management''-tools zoals Ansible, Puppet en Chef.
+``Configuration management'' staat echter niet in voor het creeëren en opzetten van servers; dat is de taak van ``Infrastructure-as-Code'' tools zoals Terraform, OpenTofu en Vagrant.
+
+Men onderscheidt grofweg twee benaderingen tot deze praktijk: een imperatieve stijl, waarin stap-voor-stap wordt beschreven welke acties er moeten worden uitgevoerd, en een declaratieve stijl, waarin enkel de gewenste eindsituatie van de infrastructuur wordt beschreven.
+Moderne IaC-tools zoals Terraform, OpenTofu en Vagrant volgen hoofdzakelijk een declaratief model. \autocite{Baer2025}
+
+\subsection{\texttt{Terraform}}%
+
+Terraform is een open-source Infrastructure-as-Code tool van HashiCorp, ontworpen om infrastructuur geautomatiseerd te provisioneren en te beheren over (meerdere) cloud- en on-premises platformen.
+In plaats van infrastructuur handmatig aan te maken in een webconsole, definieert men de gewenste toestand in configuratiebestanden, waarna Terraform aan de hand van verscheidene API's voor de betrokken platformen de nodige resources aanmaakt, wijzigt of verwijdert. \autocite{HashiCorp2024} 
+
+De configuraties worden geschreven in HashiCorp Configuration Language (HCL) (met \texttt{.tf} als bestandsextensie), een menselijk leesbare, declaratieve taal waarin men verschillende zaken kan definiëren zoals resources (zoals al dan niet virtuele nodes, maar ook bijvoorbeeld netwerken of DNS-records), data sources (om externe data aan te reiken) en modules (sets van configuratiebestanden). \autocite{HashiCorp2025}
+
+Terraform ondersteunt honderden providers; dit varieert van providers ontwikkeld door officiële partners (zoals IBM en Ansible) tot providers van third-party bedrijven (zoals Amazon AWS, Microsoft Azure, Google Cloud, \ldots), wat het bijzonder flexibel maakt voor multi-cloud- en hybride omgevingen. \autocite{HashiCorp2025a} 
+
+\subsection{``OpenTofu''}%
+
+\subsection{``Vagrant''}%
 
 \section{Configuration Management}%
 
-``Configuration management'' heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; op basis van dezelfde stappen wordt hetzelfde resultaat opgeleverd zonder afwijkingen, en vertoont het proces dus consistent gedrag. Deze manier van werken schaalt beter voor omgevingen met honderden of duizenden servers, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
-
-``Configuration management'' staat echter niet in voor het creeëren en opzetten van servers; dat is de taak van ``Infrastructure-as-Code'' tools zoals Terraform, OpenTofu en Vagrant.
+``Configuration management'' heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; op basis van dezelfde stappen wordt hetzelfde resultaat opgeleverd zonder afwijkingen, en vertoont het proces dus consistent gedrag. Deze manier van werken, analoog met het principe van ``Infrastructure-as-Code'', schaalt beter voor omgevingen met honderden of duizenden nodes, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
+Als ``Infrastructure-as-Code'' een omgeving automatisch opzet, staat ``Configuration management'' met andere woorden in voor het configuratie-aspect.
 
 Ansible, Puppet en Chef zijn drie open source tools die in de praktijk het meest gebruikt worden om ``configuration management'' toe te passen \autocite{Masek2018}.
 
@@ -146,10 +191,6 @@ Ansible, Puppet en Chef zijn drie open source tools die in de praktijk het meest
 \subsection{``Chef''}%
 
 <TODO: Verdere toelichting van Chef met o.a. voorbeeldcode>
-
-\subsection{``Salt''/``Saltstack''}%
-
-<TODO: ``Nieuwe'' tool Chef toelichten met o.a. voorbeeldcode>
 
 \section{Situering binnen ``Toegepaste Informatica'' (Opleiding)}%
 
