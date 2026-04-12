@@ -75,22 +75,22 @@ Volgens \textcite{Padmanabhan2012} worden er binnen UML veertien diagramtypen on
 \end{description}
 
 
-\subsection{``PlantUML''}%
+\subsection{PlantUML}%
 
 PlantUML is een open-source tool waarmee UML- en aanverwante diagrammen gegenereerd kunnen worden op basis een van declaratief en menselijk leesbaar tekstformaat \autocite{PlantUML2026}. 
 De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele UML-diagrammen (Class Diagrams, Deployment Diagrams, Activity Diagrams, \ldots), maar dus ook notaties die niet strikt genomen onder UML vallen zoals netwerkdiagrammen, mindmaps en GANTT-diagrammen \autocite{PlantUML2025}. 
 
 PlantUML kan op verschillende manieren gebruikt worden; via de online webinterface\footnote{https://www.plantuml.com/plantuml}, een lokale installatie of een Docker-container. Er worden ook verscheidene integraties aangeboden zoals plugins voor gangbare IDE's (Visual Studio Code, IntelliJ IDEA en Eclipse) en documentatie- en wiki-tools (Confluence en Markdown). Omdat de diagramdefinities gewone tekstbestanden zijn (met ``\texttt{.puml}'' als bestandsextensie), lenen ze zich goed tot versiebeheer met Git. \autocite{PlantUML2025a}
 
-\paragraph{Voorbeeld: eenvoudig deploymentdiagram}
+Het volgende codefragment stelt een voorbeeld van een implementatiediagram voor, met vijf nodes en hun bijhorende connecties.
 
 \lstset{
   % language=plantuml,
   breaklines=true,
   numbers=left,
   frame=single,
-  caption=[Voorbeeld implementatiediagram (PlantUML)]{Voorbeeld van een simpele implementatiediagram, uitgedrukt in PlantUML.},
-  label=code:depdiag_vb
+  caption=[Voorbeeld implementatiediagram in tekstformaat (PlantUML)]{Tekstformaat voor een voorbeeld van een implementatiediagram, uitgedrukt in PlantUML. \autocite{PlantUML2025}},
+  label=code:depdiag_vb_puml
 }
 
 \begin{lstlisting}
@@ -107,30 +107,31 @@ node1 ~~ node4 : label3
 node1 == node5
 
 @enduml
-
 \end{lstlisting}
 
-Deze tekst wordt door PlantUML automatisch omgezet in een implementatiediagram met vijf nodes en de bijhorende artefacten en connecties.
+PlantUML verwerkt vervolgens deze tekst en genereert op basis hiervan de volgende afbeelding.
 
-<TODO: Voorbeeld implementatiediagram invoegen>
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{../graphics/depdiag_vb_puml.png}
+  \caption[Voorbeeld implementatiediagram in afbeeldingsformaat (PlantUML)]{\label{fig:depdiag_vb_puml.png}Afbeeldingsformaat voor een voorbeeld van een implementatiediagram, gegenereerd door PlantUML. \autocite{PlantUML2025}}
+\end{figure*}
 
-\subsection{``MermaidJS''}%
+\subsection{MermaidJS}%
 
-MermaidJS is een gelijkaardige tool (gebaseerd op JavaScript), die tekstuele, Markdown-geïnspireerde syntax omzet naar diagrammen in \texttt{.svg}-formaat.
-Het wordt vaak gebruikt om documentatie in Markdown (bijvoorbeeld in README-bestanden of op GitHub) te verrijken met flowcharts, sequence diagrams, class diagrams, state diagrams en Gantt-charts zonder een zware grafische editor te hoeven openen. \autocite{Mermaid2019}
+MermaidJS is een gelijkaardige tool (gebaseerd op JavaScript), die tekstuele, Markdown-geïnspireerde syntax (met ``\texttt{.mermaid}'' als bestandsextensie) omzet naar diagrammen in afbeeldingsformaatformaat.
+Het wordt vaak gebruikt om documentatie in Markdown (bijvoorbeeld in README-bestanden op repositories) te verrijken met flowcharts, sequence diagrams, class diagrams, state diagrams en Gantt-charts zonder een zware grafische editor te hoeven openen. \autocite{Mermaid2019}
 
-Zoals PlantUML worden diagrammen in Mermaid vanuit tekstbestanden gegenereerd (met ``\texttt{.mermaid}'' als bestandsextensie), wat zich weer goed leent tot versiebeheer.
-
-\paragraph{Voorbeeld: infrastructuurdiagram in Mermaid}
+Het volgende codefragment beschrijft een architectuurplan (vergelijkbaar met een netwerkdiagram), bestaande uit een server verbonden met een database, met elk hun bijhorende opslagmedia.
 
 \lstset{
-  % language=plantuml,
   breaklines=true,
   numbers=left,
   frame=single,
-  caption=[Voorbeeld implementatiediagram (PlantUML)]{Voorbeeld van een simpele implementatiediagram, uitgedrukt in PlantUML.},
-  label=code:depdiag_vb
+  caption=[Voorbeeld architectuurplan in tekstformaat (MermaidJS)]{Tekstformaat voor een voorbeeld van een architectuurplan, uitgedrukt in MermaidJS. \autocite{Mermaid2026}},
+  label=code:archplan_vb_mermaid
 }
+
 \begin{lstlisting}[caption={Eenvoudig infrastructuurdiagram in MermaidJS}]
 architecture-beta
     group api(cloud)[API]
@@ -145,9 +146,13 @@ architecture-beta
     disk2:T -- B:db
 \end{lstlisting}
 
-Mermaid rendeert deze tekst tot een architectuurplan die de basisstructuur van een server met een verbonden database en bijhorende opslagmedia visualiseert.
+Mermaid rendeert vervolgens op basis van deze code de volgende afbeelding.
 
-<TODO: Voorbeeld implementatiediagram invoegen>
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{../graphics/archplan_vb_mermaid.png}
+  \caption[Voorbeeld architectuurplan in afbeeldingsformaat (MermaidJS)]{\label{fig:archplan_vb_mermaid.png}Afbeeldingsformaat voor een voorbeeld van een architectuurplan, uitgedrukt in MermaidJS. \autocite{Mermaid2026}}
+\end{figure*}
 
 \section{Infrastructure-as-Code}%
 
@@ -160,7 +165,7 @@ IaC staat echter niet in voor het configureren van nodes, dat is de taak van ``c
 Men onderscheidt grofweg twee benaderingen tot deze praktijk: een imperatieve stijl, waarin stap-voor-stap wordt beschreven welke acties er moeten worden uitgevoerd, en een declaratieve stijl, waarin enkel de gewenste eindsituatie van de infrastructuur wordt beschreven.
 Moderne IaC-tools zoals Terraform, OpenTofu en Vagrant volgen hoofdzakelijk een declaratief model. \autocite{Baer2025}
 
-\subsection{\texttt{Terraform}}%
+\subsection{Terraform}%
 
 Terraform is een open-source Infrastructure-as-Code tool van HashiCorp, ontworpen om infrastructuur geautomatiseerd te provisioneren en te beheren over (meerdere) cloud- en on-premises platformen.
 In plaats van infrastructuur handmatig aan te maken in een webconsole, definieert men de gewenste toestand in configuratiebestanden, waarna Terraform aan de hand van verscheidene API's voor de betrokken platformen de nodige resources aanmaakt, wijzigt of verwijdert. \autocite{HashiCorp2024} 
@@ -169,28 +174,250 @@ De configuraties worden geschreven in HashiCorp Configuration Language (HCL) (me
 
 Terraform ondersteunt honderden providers; dit varieert van providers ontwikkeld door officiële partners (zoals IBM en Ansible) tot providers van third-party bedrijven (zoals Amazon AWS, Microsoft Azure, Google Cloud, \ldots), wat het bijzonder flexibel maakt voor multi-cloud- en hybride omgevingen. \autocite{HashiCorp2025a} 
 
-\subsection{``OpenTofu''}%
+Om de structuur van HCL toe te lichten, presenteert het volgende codefragment een eenvoudige topologie voor Amazon Web Services.
 
-\subsection{``Vagrant''}%
+\lstset{
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  caption=[Voorbeeld Terraform-configuratie]{Voorbeeld van een eenvoudige Terraform-configuratie.},
+  label=code:terraform_vb
+}
+
+\begin{lstlisting}
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 1.0.4"
+    }
+  }
+}
+
+variable "aws_region" {}
+
+variable "base_cidr_block" {
+  description = "A /16 CIDR range definition, such as 10.1.0.0/16, that the VPC will use"
+  default = "10.1.0.0/16"
+}
+
+variable "availability_zones" {
+  description = "A list of availability zones in which to create subnets"
+  type = list(string)
+}
+
+provider "aws" {
+  region = var.aws_region
+}
+
+resource "aws_vpc" "main" {
+  # Referencing the base_cidr_block variable allows the network address
+  # to be changed without modifying the configuration.
+  cidr_block = var.base_cidr_block
+}
+
+resource "aws_subnet" "az" {
+  # Create one subnet for each given availability zone.
+  count = length(var.availability_zones)
+
+  # For each subnet, use one of the specified availability zones.
+  availability_zone = var.availability_zones[count.index]
+
+  # By referencing the aws_vpc.main object, Terraform knows that the subnet
+  # must be created only after the VPC is created.
+  vpc_id = aws_vpc.main.id
+
+  # Built-in functions and operators can be used for simple transformations of
+  # values, such as computing a subnet address. Here we create a /20 prefix for
+  # each subnet, using consecutive addresses for each availability zone,
+  # such as 10.1.16.0/20 .
+  cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 4, count.index+1)
+}
+\end{lstlisting}
+
+<TODO: Toelichting Terraform-code en verdere afwerking \& nachecking>
+
+\subsection{OpenTofu}%
+
+OpenTofu is een community-gedreven fork van Terraform, ontstaan in 2023 naar aanleiding van licentiewijzigingen rond het gebruik van Terraform.
+Het project heeft als doel een volledig vrije, open-governance variant van de Terraform-tooling te bieden, met langdurige compatibiliteit en transparante besluitvorming in de open source gemeenschap.
+Technisch gezien positioneert OpenTofu zich als een drop-in replacement voor Terraform 1.6.x (en voorafgaande versies); bestaande configuraties in HCL en de bekende CLI-commando's blijven bruikbaar, zodat organisaties en projecten relatief eenvoudig kunnen migreren zonder hun codebase volledig te moeten herschrijven.
+De tool ondersteunt dus dezelfde concepten (providers, resources, modules en state-bestanden) en streeft naar achterwaartse compatibiliteit, terwijl op termijn nieuwe functionaliteit kan worden geïntroduceerd die niet noodzakelijk in Terraform beschikbaar is. \autocite{OpenTofu2026}
+
+% OpenTofu werd als open-source project ondergebracht bij de Linux Foundation en sindsdien opgenomen in het Cloud Native Computing Foundation (CNCF) ecosysteem als Sandbox-project, wat de duurzaamheid van de tool verder versterkt.\autocite{<OpenTofu-cncf>}
+
+<TODO: Toelichting OpenTofu-code en verdere afwerking \& nachecking>
+
+\subsection{Vagrant}%
+
+Vagrant is een tool van HashiCorp voor het bouwen en beheren van (lokale) virtuele omgevingen via een eenvoudig, tekstueel configuratiebestand (\texttt{Vagrantfile}).
+Het doel van Vagrant is om lichte, reproduceerbare en draagbare ontwikkel- en testomgevingen te creëren die met één commando kunnen worden opgestart, geprovisioneerd en opnieuw vernietigd. \autocite{HashiCorp2026} 
+
+In een \texttt{Vagrantfile} specificeert men onder meer welke base box (bijv. een bepaalde Ubuntu- of CentOS-variant) gebruikt wordt, hoeveel CPU en geheugen de virtuele machine krijgt, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
+Standaard ondersteunt Vagrant providers zoals VirtualBox, Hyper-V en Docker, maar via plug-ins kunnen ook andere platformen worden aangestuurd, waaronder VMware of publieke cloudproviders. \autocite{HashiCorp2026a} 
+
+Voor provisioning kan Vagrant gebruikmaken van verschillende configuratiebeheertools, waaronder shellscripts, Ansible, Chef en Puppet.
+Dit maakt het mogelijk om met één \texttt{vagrant up}-commando zowel de virtuele infrastructuur (via Vagrant) als de configuratie van het gastbesturingssysteem (bijvoorbeeld via Ansible-playbooks) te automatiseren.\autocite{HashiCorp2026a}
+
+In deze bachelorproef wordt Vagrant ingezet om in een onderwijscontext snel identieke virtuele omgevingen uit te rollen waarin Ansible de verdere configuratie en deployment van software verzorgt.
+
+\lstset{
+  breaklines=true,
+  numbers=left,
+  frame=single,
+  caption=[Voorbeeld Vagrantfile]{Voorbeeld van een eenvoudige Vagrantfile. \autocite{HashiCorp2024a}},
+  label=code:vagrantfile_vb
+}
+\begin{lstlisting}
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp-education/ubuntu-24-04"
+  config.vm.box_version = "0.1.0"
+
+  # Install Docker and dependencies
+  config.vm.provision "shell", name: "install-dependencies", path: "install-dependencies.sh"
+
+  # Start Terramino (can be rerun with vagrant provision --provision-with start-terramino)
+  config.vm.provision "shell", name: "start-terramino", inline: <<-SHELL
+    cd /home/vagrant/terramino-go
+    docker compose up -d
+  SHELL
+
+  # Restart Terramino (can be rerun with vagrant provision --provision-with restart-terramino)
+  # For quick changes that doesn't require rebuilding (e.g. frontend changes)
+  config.vm.provision "shell", name: "restart-terramino", run: "never", inline: <<-SHELL
+    docker compose restart
+  SHELL
+
+  # Reload Terramino (can be rerun with vagrant provision --provision-with reload-terramino)
+  # For changes that require rebuilding (e.g. backend changes)
+  config.vm.provision "shell", name: "reload-terramino", run: "never", inline: <<-SHELL
+    /usr/local/bin/reload-terramino
+  SHELL
+end
+
+
+\end{lstlisting}
+
+<TODO: Toelichting Vagrantfile en verdere afwerking \& nachecking>
 
 \section{Configuration Management}%
 
 ``Configuration management'' heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; op basis van dezelfde stappen wordt hetzelfde resultaat opgeleverd zonder afwijkingen, en vertoont het proces dus consistent gedrag. Deze manier van werken, analoog met het principe van ``Infrastructure-as-Code'', schaalt beter voor omgevingen met honderden of duizenden nodes, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
+
 Als ``Infrastructure-as-Code'' een omgeving automatisch opzet, staat ``Configuration management'' met andere woorden in voor het configuratie-aspect.
 
 Ansible, Puppet en Chef zijn drie open source tools die in de praktijk het meest gebruikt worden om ``configuration management'' toe te passen \autocite{Masek2018}.
 
-\subsection{``Ansible''}%
+\subsection{Ansible}%
 
-<TODO: Verdere toelichting van Ansible met o.a. voorbeeldcode>
+Ansible is een open-source automation- en configuration-managementtool die werkt zonder permanente agenten op de doelhosts: standaard maakt het verbinding via SSH om taken uit te voeren.
+Beheerders beschrijven de gewenste configuratie in menselijk leesbare YAML-bestanden, zogenaamde \emph{playbooks}, die bestaan uit taken (\emph{tasks}) en herbruikbare rollen (\emph{roles}). \autocite{Ansible2025} 
 
-\subsection{``Puppet''}%
+Elke taak maakt gebruik van een Ansible-module (bijvoorbeeld voor het beheren van packages, services, gebruikers, bestanden of firewallregels) die ernaar streeft idempotent te zijn: bij herhaalde uitvoering wordt een systeem enkel aangepast wanneer de huidige toestand afwijkt van de gewenste toestand.
+Dankzij een inventorybestand kan dezelfde playbooklogica toegepast worden op groepen van hosts, wat Ansible bijzonder geschikt maakt voor het configureren van tientallen of honderden servers in één keer. \autocite{Ansible2025}
 
-<TODO: Verdere toelichting van Puppet met o.a. voorbeeldcode>
+Onderstaand voorbeeld toont een beknopte Ansible-playbook die een webserver installeert en start op alle hosts in de groep \texttt{webservers}:
 
-\subsection{``Chef''}%
+\begin{lstlisting}[caption={Eenvoudige Ansible-playbook voor een webserver}]
+---
+- name: Configureer webservers
+  hosts: webservers
+  become: true
 
-<TODO: Verdere toelichting van Chef met o.a. voorbeeldcode>
+  tasks:
+    - name: Installeer Nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Plaats eenvoudige indexpagina
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: "Hello from Ansible!"
+        owner: www-data
+        group: www-data
+        mode: "0644"
+
+    - name: Zorg dat Nginx draait en ingeschakeld is
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+\end{lstlisting}
+
+Deze playbook kan herhaaldelijk uitgevoerd worden; zolang Nginx al geïnstalleerd en correct geconfigureerd is, zullen de taken geen wijzigingen meer rapporteren, wat het idempotente karakter van Ansible illustreert.
+
+<TODO: Toelichting Ansible-code en verdere afwerking \& nachecking>
+
+\subsection{Puppet}%
+
+Puppet is een configuration-managementtool die gebruikmaakt van een declaratieve domeinspecifieke taal (gebaseerd op Ruby) om de gewenste toestand van systemen te beschrijven.
+Beheerders definiëren resources (zoals packages, files en services) in \emph{manifests}; Puppet vergelijkt vervolgens de actuele toestand van een host met deze gewenste toestand en brengt enkel de noodzakelijke wijzigingen aan. \autocite{Perforce2026a}
+
+Typisch wordt Puppet ingezet in een server-agentarchitectuur: een centrale Puppetserver compileert de manifests tot een \emph{catalog} en deelt deze catalog uit aan Puppet-agents op de beheerde hosts.
+De agent past de catalog toe, corrigeert eventuele configuratiedrift en rapporteert zijn status terug aan de server, waardoor beheerders op grote schaal configuraties kunnen afdwingen en monitoren. \autocite{Perforce2026b} 
+
+Het volgende manifest toont vereenvoudigd aan hoe een server geconfigureerd kan worden met Puppet:
+
+\begin{lstlisting}[caption={Eenvoudig Puppet-manifest voor een webserver \autocite{Perforce2026}}]
+file { 'ntp.conf':
+  path    => '/etc/ntp.conf',
+  ensure  => file,
+  content => template('ntp/ntp.conf'),
+  owner   => 'root',
+  mode    => '0644',
+}
+
+package { 'ntp':
+  ensure => installed,
+  before => File['ntp.conf'],
+}
+
+service { 'ntpd':
+  ensure    => running,
+  subscribe => File['ntp.conf'],
+}
+\end{lstlisting}
+
+Wanneer de agent dit manifest meerdere keren toepast, zal Puppet enkel wijzigingen maken als de werkelijke toestand (bijvoorbeeld ontbrekende bestanden of een gestopte service) afwijkt van de beschreven gewenste toestand.
+
+<TODO: Toelichting Puppet-code en verdere afwerking \& nachecking>
+
+\subsection{Chef}%
+
+Chef is een configuration-management- en automatiseringsplatform dat infrastructuur als code benadert via een Ruby-gebaseerde DSL.
+Configuratie wordt georganiseerd in \emph{cookbooks}, die één of meerdere \emph{recipes} bevatten; een recipe beschrijft met behulp van resources (zoals \texttt{package}, \texttt{file} en \texttt{service}) de gewenste toestand van een node.  \autocite{ProgressSoftware2026} 
+
+In een typische opstelling communiceren Chef-clients op de beheerde nodes met een centrale Chefserver, die cookbooks, policies en run lists beheert.{<Chef-recipes-do>,<Chef-overview>} 
+Tijdens een run vraagt de client zijn run list op, convergeert het systeem naar de in de recipes gedefinieerde toestand en rapporteert het resultaat terug, wat een idempotente, herhaalbare configuratieworkflow oplevert. \autocite{ProgressSoftware2026a} 
+
+Onderstaande vereenvoudigde recipe installeert een Apache webserver, kiest op willekeurige basis tussen PHP or Perl als scriptingtaal, en installeert deze vervolgens.
+
+\begin{lstlisting}[caption={Eenvoudige Chef-recipe voor een webserver \autocite{ProgressSoftware2025}}]
+package 'httpd' do
+  action :install
+end
+
+ruby_block 'randomly_choose_language' do
+  block do
+    if Random.rand > 0.5
+      node.run_state['scripting_language'] = 'php'
+    else
+      node.run_state['scripting_language'] = 'perl'
+    end
+  end
+end
+
+package 'scripting_language' do
+  package_name lazy { node.run_state['scripting_language'] }
+  action :install
+end
+\end{lstlisting}
+
+Bij elke Chef-run wordt deze recipe opnieuw geëvalueerd; als \texttt{httpd} al geïnstalleerd is en de client overeenkomt met de gewenste toestand, zullen er geen wijzigingen meer worden doorgevoerd, in lijn met het idempotente karakter van configuration management. Als bij de volgende run een andere scriptingtaal wordt gekozen, dan zullen de wijzigingen op basis daarvan uitgevoerd worden (de deinstallatie van de oude scriptingtaal, gevolgd door installatie van de nieuwe scriptingtaal).
+
+<TODO: Toelichting Chef-code en verdere afwerking \& nachecking>
 
 \section{Situering binnen ``Toegepaste Informatica'' (Opleiding)}%
 
