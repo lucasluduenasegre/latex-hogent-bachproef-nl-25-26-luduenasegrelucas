@@ -1,0 +1,75 @@
+@startuml test_env
+/'
+Diagram name definition
+
+Format: @startuml <diagram_name>
+
+Note: if no diagram name is specified, the filename is used as a fallback for
+naming the output directory. This name should match the network diagram's.
+'/
+
+' Make each component per node unique
+set separator .
+
+' Purely visual, won't have any effect on the parser
+left to right direction
+
+/'
+Host definition
+
+Notes:
+- By default <description> will be used as the resulting hostname;
+<host_identifier> is the fallback if <description> is unused.
+- Underscores in the hostname will be converted to hyphens, due to Unix conventions.
+
+Format:
+node <host_identifier> as <description>
+'/
+node dns as "dns" {
+
+    /'
+    Role definition
+
+    Format:
+    component <role_identifier> as <role_name>
+    '/
+    component bind_exporter
+    component dns_client
+    component dns_server_primary
+    component node_exporter
+}
+
+node monitoring {
+    component dns_client
+    component monitoring_server
+    component node_exporter
+}
+
+node web as "web" {
+    component dns_client
+    component mysqld_exporter
+    component node_exporter
+    component web_server
+}
+
+/'
+Role-to-role connections
+
+Note: Arrows must always point from left to right, but can be styled according to
+      https://crashedmind.github.io/PlantUMLHitchhikersGuide/layout/layout.html
+
+Format:
+<host_identifier>.<role_identifier> --> <host_identifier>.<role_identifier>
+'/
+dns.dns_client -[#teal]-> dns.dns_server_primary
+
+monitoring.dns_client -[#teal]-> dns.dns_server_primary
+monitoring.monitoring_server -[#coral]-> dns.bind_exporter
+monitoring.monitoring_server -[#coral]-> dns.node_exporter
+monitoring.monitoring_server -[#coral]-> monitoring.node_exporter
+monitoring.monitoring_server -[#coral]-> web.mysqld_exporter
+monitoring.monitoring_server -[#coral]-> web.node_exporter
+
+web.dns_client -[#teal]-> dns.dns_server_primary
+
+@enduml

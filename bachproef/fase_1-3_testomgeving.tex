@@ -20,53 +20,55 @@
 <TODO: Korte vergelijkende studie rond Ansible, Puppet en Chef>
 
 Na het overlopen van de verschillende tools met betrekking tot UML en ``configuration management'', is er besloten om te werken met Ansible en PlantUML.
-Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de stageplaats van de auteur), courant gebruikt worden binnen de IT-sector (in het bijzonder Ansible) en bovendien allebei gratis en open source zijn.
+Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de stageplaats van de auteur), courant gebruikt worden binnen de IT-sector (in het bijzonder Ansible) en bovendien allebei gratis (in gebruik) en open source zijn.
 
 \section{Ontwerp van de testomgeving}%
 
 <TODO: Ontwerp verder toelichten>
 
-\lstset{
-  % language=plantuml,
-  breaklines=true,
-  numbers=left,
-  frame=single,
-  caption=[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{nwdiag\_test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt in PlantUML.},
-  label=code:nwdiag_test_env.puml
-}
+% \begin{lstlisting}{language=plantuml, caption=[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{nwdiag\_test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt in PlantUML.}, label=code:nwdiag_test_env.puml}
+% @startnwdiag nwdiag_test_env
+%   ' (Local) network specification
+%   '
+%   ' Format: network <network_name> { ... }
+%   network network-alpha {
+%     ' Subnet specification
+%     ' 
+%     ' Format: address = <network-address>/<prefix-length>
+%     address = 172.26.0.0/24
 
-\begin{lstlisting}
-@startnwdiag nwdiag_test_env
-  ' (Local) network specification
-  '
-  ' Format: network <network_name> { ... }
-  network network-alpha {
-    ' Subnet specification
-    ' 
-    ' Format: address = <network-address>/<prefix-length>
-    address = 172.26.0.0/24
+%     ' Host(s) specification
+%     '
+%     ' Format: <hostname> [address = <ipv4_address>]
+%     alpha-web [address = 172.26.0.10]
+%     alpha-dns [address = 172.26.0.20]
+%     alpha-monitoring [address = 172.26.0.30]
+%   }
 
-    ' Host(s) specification
-    '
-    ' Format: <hostname> [address = <ipv4_address>]
-    alpha-web [address = 172.26.0.10]
-    alpha-dns [address = 172.26.0.20]
-    alpha-monitoring [address = 172.26.0.30]
-  }
+%   network network-beta {
+%     address = 172.26.10.0/24
 
-  network network-beta {
-    address = 172.26.10.0/24
+%     beta-workstation [address = 172.26.10.10]
+%   }
+% @endnwdiag
+% \end{lstlisting}
 
-    beta-workstation [address = 172.26.10.10]
-  }
-@endnwdiag
-\end{lstlisting}
+\lstinputlisting[language=plantuml, caption=[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{nwdiag\_test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt in PlantUML.}, label=code:nwdiag_test_env.puml]{../plantuml/test_env/nwdiag_test_env.puml}
+
+% \begin{figure*}[htbp]
+%   \centering
+%   \includegraphics[width=\textwidth]{../graphics/nwdiag_test_env.png}
+%   \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:test_env.png}Afbeeldingsformaat (\texttt{nwdiag\_test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
+% \end{figure*}
 
 \begin{figure*}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{../graphics/nwdiag_test_env.png}
+  \begin{plantuml}
+    \input{../plantuml/test_env/nwdiag_test_env.puml}
+  \end{plantuml}
   \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:test_env.png}Afbeeldingsformaat (\texttt{nwdiag\_test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
 \end{figure*}
+
 
 Er zijn een aantal noemenswaardige beperkingen aan deze omgeving (en ter extensie, aan dit diagram):
 

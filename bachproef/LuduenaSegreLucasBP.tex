@@ -10,40 +10,72 @@
 \hbadness=10000
 \setlength{\emergencystretch}{3em}
 
-% Maak gebruik van listings
-
-\usepackage{listings}
-\usepackage{xcolor}
-
-% Maak gebruik van .svg-bestanden
+% Te downloaden packages
 
 % \usepackage{svg}
+\usepackage{listings}
+\usepackage{plantuml}
+\usepackage{xcolor}
 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+% Listings-taal voor PlantUML
 
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
+\definecolor{puml-keyword}{RGB}{0, 100, 180}
+\definecolor{puml-directive}{RGB}{140, 0, 140}
+\definecolor{puml-comment}{RGB}{100, 120, 100}
+\definecolor{puml-string}{RGB}{160, 60, 0}
+
+\lstdefinelanguage{plantuml}{
+  % Keywords
+  morekeywords=[1]{
+    @startuml, @enduml, @startnwdiag, @endnwdiag,
+    node, component, network, actor, participant,
+    database, cloud, package, frame, folder,
+    rectangle, usecase, interface, class, enum,
+    start, stop, if, then, else, elseif, endif,
+    while, endwhile, fork, again, end, repeat,
+    as, is, extends, implements,
+    left, right, to, direction,
+    skinparam, title, caption, legend, endlegend,
+    autonumber, activate, deactivate, destroy,
+    create, note, end note, ref, over, across,
+    newpage, divider, delay, space, separator
+  },
+
+  % Directives  
+  morekeywords=[2]{
+    set, !include, !define, !undef,
+    !ifdef, !ifndef, !else, !endif,
+    !function, !return, !procedure, !endprocedure,
+    address, description, managed, cpus, memory,
+    shape, color
+  },
+  
+  % Comments
+  morecomment=[l]{'},
+  morecomment=[l]{//},
+  morecomment=[s]{/'}{'/},
+  
+  % Strings
+  morestring=[b]",
+  morestring=[b]',
+  
+  sensitive=false,
 }
 
-\lstset{style=mystyle}
+\lstset{
+  language=plantuml,
+  basicstyle=\ttfamily\small,
+  keywordstyle=[1]\color{puml-keyword}\bfseries,
+  keywordstyle=[2]\color{puml-directive},
+  commentstyle=\color{puml-comment}\itshape,
+  stringstyle=\color{puml-string},
+  backgroundcolor=\color{gray!8},
+  frame=single,
+  rulecolor=\color{gray!40},
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=2,
+}
 
 % TODO:
 % - If necessary, replace the option `dit`' with your own department!
