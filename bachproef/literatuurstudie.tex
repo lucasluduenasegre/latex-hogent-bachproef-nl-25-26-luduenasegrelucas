@@ -84,16 +84,8 @@ PlantUML kan op verschillende manieren gebruikt worden; via de online webinterfa
 
 Het volgende codefragment stelt een voorbeeld van een implementatiediagram voor, met vijf nodes en hun bijhorende connecties.
 
-\lstset{
-  % language=plantuml,
-  breaklines=true,
-  numbers=left,
-  frame=single,
-  caption=[Voorbeeld implementatiediagram in tekstformaat (PlantUML)]{Tekstformaat voor een voorbeeld van een implementatiediagram, uitgedrukt in PlantUML. \autocite{PlantUML2025}},
-  label=code:depdiag_vb_puml
-}
-
-\begin{lstlisting}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
 @startuml
 
 node node1
@@ -108,6 +100,9 @@ node1 == node5
 
 @enduml
 \end{lstlisting}
+\caption[Voorbeeld implementatiediagram in tekstformaat (PlantUML)]{Tekstformaat voor een voorbeeld van een implementatiediagram, uitgedrukt in PlantUML. \autocite{PlantUML2025}}
+\label{code:depdiag_vb_puml}
+\end{codeblock}
 
 PlantUML verwerkt vervolgens deze tekst en genereert op basis hiervan de volgende afbeelding.
 
@@ -124,15 +119,9 @@ Het wordt vaak gebruikt om documentatie in Markdown (bijvoorbeeld in README-best
 
 Het volgende codefragment beschrijft een architectuurplan (vergelijkbaar met een netwerkdiagram), bestaande uit een server verbonden met een database, met elk hun bijhorende opslagmedia.
 
-\lstset{
-  breaklines=true,
-  numbers=left,
-  frame=single,
-  caption=[Voorbeeld architectuurplan in tekstformaat (MermaidJS)]{Tekstformaat voor een voorbeeld van een architectuurplan, uitgedrukt in MermaidJS. \autocite{Mermaid2026}},
-  label=code:archplan_vb_mermaid
-}
-
-\begin{lstlisting}[caption={Eenvoudig infrastructuurdiagram in MermaidJS}]
+\begin{codeblock}
+  \begin{lstlisting}
+architecture-beta
 architecture-beta
     group api(cloud)[API]
 
@@ -144,7 +133,10 @@ architecture-beta
     db:L -- R:server
     disk1:T -- B:server
     disk2:T -- B:db
-\end{lstlisting}
+  \end{lstlisting}
+\caption[Eenvoudig infrastructuurdiagram in MermaidJS]{Tekstformaat voor een voorbeeld van een architectuurplan, uitgedrukt in MermaidJS. \autocite{Mermaid2026}}
+\label{code:archplan_vb_mermaid}
+\end{codeblock}
 
 Mermaid rendeert vervolgens op basis van deze code de volgende afbeelding.
 
@@ -176,14 +168,7 @@ Terraform ondersteunt honderden providers; dit varieert van providers ontwikkeld
 
 Om de structuur van HCL toe te lichten, presenteert het volgende codefragment een eenvoudige topologie voor Amazon Web Services.
 
-\lstset{
-  breaklines=true,
-  numbers=left,
-  frame=single,
-  caption=[Voorbeeld Terraform-configuratie]{Voorbeeld van een eenvoudige Terraform-configuratie.},
-  label=code:terraform_vb
-}
-
+\begin{codeblock}
 \begin{lstlisting}
 terraform {
   required_providers {
@@ -234,6 +219,9 @@ resource "aws_subnet" "az" {
   cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 4, count.index+1)
 }
 \end{lstlisting}
+\caption[Voorbeeld Terraform-configuratie]{Voorbeeld van een eenvoudige Terraform-configuratie.}
+\label{code:terraform_vb}
+\end{codeblock}
 
 <TODO: Toelichting Terraform-code en verdere afwerking \& nachecking>
 
@@ -261,13 +249,7 @@ Dit maakt het mogelijk om met één \texttt{vagrant up}-commando zowel de virtue
 
 In deze bachelorproef wordt Vagrant ingezet om in een onderwijscontext snel identieke virtuele omgevingen uit te rollen waarin Ansible de verdere configuratie en deployment van software verzorgt.
 
-\lstset{
-  breaklines=true,
-  numbers=left,
-  frame=single,
-  caption=[Voorbeeld Vagrantfile]{Voorbeeld van een eenvoudige Vagrantfile. \autocite{HashiCorp2024a}},
-  label=code:vagrantfile_vb
-}
+\begin{codeblock}
 \begin{lstlisting}
 Vagrant.configure("2") do |config|
   config.vm.box = "hashicorp-education/ubuntu-24-04"
@@ -294,9 +276,10 @@ Vagrant.configure("2") do |config|
     /usr/local/bin/reload-terramino
   SHELL
 end
-
-
 \end{lstlisting}
+\caption[Voorbeeld Vagrantfile]{Voorbeeld van een eenvoudige Vagrantfile. \autocite{HashiCorp2024a}}
+\label{code:vagrantfile_vb}
+\end{codeblock}
 
 <TODO: Toelichting Vagrantfile en verdere afwerking \& nachecking>
 
@@ -318,7 +301,8 @@ Dankzij een inventorybestand kan dezelfde playbooklogica toegepast worden op gro
 
 Onderstaand voorbeeld toont een beknopte Ansible-playbook die een webserver installeert en start op alle hosts in de groep \texttt{webservers}:
 
-\begin{lstlisting}[caption={Eenvoudige Ansible-playbook voor een webserver}]
+\begin{codeblock}
+\begin{lstlisting}
 ---
 - name: Configureer webservers
   hosts: webservers
@@ -345,6 +329,9 @@ Onderstaand voorbeeld toont een beknopte Ansible-playbook die een webserver inst
         state: started
         enabled: true
 \end{lstlisting}
+\caption[Eenvoudige Ansible-playbook voor een webserver]{}
+\label{code:ansible_playbook_vb}
+\end{codeblock}
 
 Deze playbook kan herhaaldelijk uitgevoerd worden; zolang Nginx al geïnstalleerd en correct geconfigureerd is, zullen de taken geen wijzigingen meer rapporteren, wat het idempotente karakter van Ansible illustreert.
 
@@ -360,7 +347,8 @@ De agent past de catalog toe, corrigeert eventuele configuratiedrift en rapporte
 
 Het volgende manifest toont vereenvoudigd aan hoe een server geconfigureerd kan worden met Puppet:
 
-\begin{lstlisting}[caption={Eenvoudig Puppet-manifest voor een webserver \autocite{Perforce2026}}]
+\begin{codeblock}
+\begin{lstlisting}
 file { 'ntp.conf':
   path    => '/etc/ntp.conf',
   ensure  => file,
@@ -379,6 +367,9 @@ service { 'ntpd':
   subscribe => File['ntp.conf'],
 }
 \end{lstlisting}
+\caption[Eenvoudig Puppet-manifest voor een webserver]{\autocite{Perforce2026}}
+\label{code:puppetvb}
+\end{codeblock}
 
 Wanneer de agent dit manifest meerdere keren toepast, zal Puppet enkel wijzigingen maken als de werkelijke toestand (bijvoorbeeld ontbrekende bestanden of een gestopte service) afwijkt van de beschreven gewenste toestand.
 
@@ -394,7 +385,8 @@ Tijdens een run vraagt de client zijn run list op, convergeert het systeem naar 
 
 Onderstaande vereenvoudigde recipe installeert een Apache webserver, kiest op willekeurige basis tussen PHP or Perl als scriptingtaal, en installeert deze vervolgens.
 
-\begin{lstlisting}[caption={Eenvoudige Chef-recipe voor een webserver \autocite{ProgressSoftware2025}}]
+\begin{codeblock}
+\begin{lstlisting}
 package 'httpd' do
   action :install
 end
@@ -414,6 +406,9 @@ package 'scripting_language' do
   action :install
 end
 \end{lstlisting}
+\caption[Eenvoudige Chef-recipe voor een webserver]{\autocite{ProgressSoftware2025}}
+\label{code:chefvb}
+\end{codeblock}
 
 Bij elke Chef-run wordt deze recipe opnieuw geëvalueerd; als \texttt{httpd} al geïnstalleerd is en de client overeenkomt met de gewenste toestand, zullen er geen wijzigingen meer worden doorgevoerd, in lijn met het idempotente karakter van configuration management. Als bij de volgende run een andere scriptingtaal wordt gekozen, dan zullen de wijzigingen op basis daarvan uitgevoerd worden (de deinstallatie van de oude scriptingtaal, gevolgd door installatie van de nieuwe scriptingtaal).
 

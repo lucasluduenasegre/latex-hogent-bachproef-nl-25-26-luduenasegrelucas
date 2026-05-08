@@ -5,28 +5,50 @@
 
 \documentclass[dutch,dit,thesis]{hogentreport}
 
+% Te downloaden packages
+
+% \usepackage{svg}
+\usepackage{listings}
+\usepackage{xcolor}
+
 % Beperk (waarschuwingen voor verwaarloosbare) over- en underfull-instanties
 \hfuzz=5.0pt
 \hbadness=10000
 \setlength{\emergencystretch}{3em}
 
-% Te downloaden packages
+\definecolor{commentcolour}{RGB}{64, 128, 128}   % #408080 - teal grey
+\definecolor{keywordcolour}{RGB}{0, 128, 0}      % #008000 - green
+\definecolor{stringcolour}{RGB}{186, 33, 33}     % #BA2121 - red-brown
+\definecolor{builtincolour}{RGB}{0, 0, 255}      % #0000FF - blue (built-ins)
 
-% \usepackage{svg}
-\usepackage{listings}
-\usepackage{plantuml}
-\usepackage{xcolor}
+\lstdefinestyle{defaultstyle}{
+    commentstyle=\color{commentcolour}\itshape,
+    keywordstyle=\color{keywordcolour}\bfseries,
+    stringstyle=\color{stringcolour},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=true,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=6pt,
+    numberstyle=\tiny,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    rulesepcolor=\color{gray},
+    rulecolor=\color{black},
+    backgroundcolor=\color{white},
+}
 
 % Listings-taal voor PlantUML
 
-\definecolor{puml-keyword}{RGB}{0, 100, 180}
-\definecolor{puml-directive}{RGB}{140, 0, 140}
-\definecolor{puml-comment}{RGB}{100, 120, 100}
-\definecolor{puml-string}{RGB}{160, 60, 0}
-
 \lstdefinelanguage{plantuml}{
-  % Keywords
-  morekeywords=[1]{
+  alsoletter={!,@},
+  % All keywords combined (morekeywords=[n] not supported in lstdefinelanguage)
+  morekeywords={
     @startuml, @enduml, @startnwdiag, @endnwdiag,
     node, component, network, actor, participant,
     database, cloud, package, frame, folder,
@@ -38,43 +60,26 @@
     skinparam, title, caption, legend, endlegend,
     autonumber, activate, deactivate, destroy,
     create, note, end note, ref, over, across,
-    newpage, divider, delay, space, separator
-  },
-
-  % Directives  
-  morekeywords=[2]{
+    newpage, divider, delay, space, separator,
     set, !include, !define, !undef,
     !ifdef, !ifndef, !else, !endif,
     !function, !return, !procedure, !endprocedure,
     address, description, managed, cpus, memory,
     shape, color
   },
-  
   % Comments
   morecomment=[l]{'},
   morecomment=[l]{//},
   morecomment=[s]{/'}{'/},
-  
   % Strings
   morestring=[b]",
   morestring=[b]',
-  
   sensitive=false,
 }
 
 \lstset{
-  language=plantuml,
-  basicstyle=\ttfamily\small,
-  keywordstyle=[1]\color{puml-keyword}\bfseries,
-  keywordstyle=[2]\color{puml-directive},
-  commentstyle=\color{puml-comment}\itshape,
-  stringstyle=\color{puml-string},
-  backgroundcolor=\color{gray!8},
-  frame=single,
-  rulecolor=\color{gray!40},
-  breaklines=true,
-  showstringspaces=false,
-  tabsize=2,
+  style=defaultstyle,
+  nolol=true
 }
 
 % TODO:
@@ -94,15 +99,26 @@
 %% If you compile with the make_thesis.{bat,sh} script, use the following
 %% import instead:
 \usepackage[chapter,outputdir=../output]{minted}
-\usemintedstyle{solarized-light}
+% \usemintedstyle{solarized-light}
+
+\usepackage{caption}
+
+% Niet-zwevende omgeving die de listing-teller gebruikt (om zowel lstlistings als minted tegelijk te kunnen gebruiken)
+\newenvironment{codeblock}{%
+  \captionsetup{type=listing}%
+}{}
 
 %% Formatting for minted environments.
 \setminted{%
-    autogobble,
-    frame=lines,
-    breaklines,
+    fontsize=\footnotesize,
     linenos,
-    tabsize=4
+    numbersep=2pt,
+    autogobble,
+    frame=single,
+    breaklines,
+    tabsize=2,
+    showspaces=false,
+    rulecolor=\color{black},
 }
 
 %% Ensure the list of listings is in the table of contents
@@ -158,7 +174,7 @@
     %% If necessary, information can be changed here
     \degreesought{Professionele Bachelor toegepaste informatica}%
     \begin{otherlanguage}{dutch}%
-       \maketitle%
+        \maketitle%
     \end{otherlanguage}%
 }{}
 
@@ -235,7 +251,7 @@ Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat 
 Op HOGENT, binnen de opleiding Toegepaste Informatica en meerbepaald het keuzetraject ``System \& Network Administrator'', worden er OLODs (opleidingsonderdelen) gegeven die aan de hand van labo's bijdragen aan het leren beheren van serverinfrastructuren. Deze infrastructuren worden geïmplementeerd aan de hand van netwerk- en implementatiediagrammen, ontworpen met UML-modeling software.
 De probleemstelling voor deze bachelorproef vertrekt vanuit het foutgevoelige en tijdrovende proces waarbij (complexe) UML-diagrammen eerst geïnterpreteerd en daarna manueel vertaald worden naar een configureerbare infrastructuur.
 De hoofdonderzoeksvraag is hoe men, voor een potentiële serverinfrastructuur, netwerk- en implementatiediagrammen (meerbepaald in tekstuele vorm via PlantUML/MermaidJS) met zo weinig mogelijk manuele interventie kan omzetten naar een overeenkomende, gebruiksklare omgeving ondersteund door ``configuration management''-code (zoals Ansible, Puppet of Chef).
-De doelstelling van dit onderzoek is om een proof-of-concept transpiler te ontwikkelen die gegeven netwerk- en implementatiediagrammen als invoer rechtstreeks kan vertalen naar ``configuration management''-code als uitvoer. 
+De doelstelling van dit onderzoek is om een proof-of-concept transpiler te ontwikkelen die gegeven netwerk- en implementatiediagrammen als invoer rechtstreeks kan vertalen naar ``configuration management''-code als uitvoer.
 De geplande testomgeving zal bestaan uit 2 tot 3 reeds uitgerolde (virtuele) servers (al dan niet via Infrastructure-as-Code tools), en zullen bestaan uit een web-, DNS- en monitoringserver (zonder nog eventuele uitbreidingen).
 Qua methodologie wordt er eerst een studie naar transpilers uitgevoerd, parallel met een evaluatie van te gebruiken tools (PlantUML, MermaidJS, Ansible, Puppet en Chef). Vervolgens wordt de testomgeving ontworpen (via UML-diagrammen), opgezet en gedocumenteert. Dan wordt de transpiler ontwikkeld en ten slotte systematisch getest tegen (onder andere) de kwaliteit en idempotentie van de uitvoer.
 Verwacht wordt dat deze oplossing een meerwaarde biedt voor docenten (en studenten): zij zouden hiermee sneller en efficiënter nieuwe labo-omgevingen kunnen ontwerpen en deze tegelijk voorzien van bijkomende ``configuration management''-code, aangezien de kloof tussen de ontwerp- en implementatiefase zo wordt verkleind.
