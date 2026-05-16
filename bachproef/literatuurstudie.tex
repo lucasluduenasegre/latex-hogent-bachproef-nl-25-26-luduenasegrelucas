@@ -57,30 +57,32 @@
 
 ``Unified Modeling Language'', of afgekort UML, is een taal/framework die binnen de softwareontwikkeling-discipline geaccepteerd is als de standaard voor het weergeven van object-georiënteerde modellen. UML wordt hoofdzakelijk gebruikt in de industrie-, business- en IT-sector, met als doel om de ontwerp- en implementatiefase te ondersteunen met verscheidene diagrammen. Deze kunnen door zowel business als technische stakeholders geïnterpreteerd worden voor hun respectievelijke doeleinden. \autocite{Koc2021}
 
-Binnen de opleiding Toegepaste Informatica worden er momenteel doorgaans twee UML-modeling programma's gebruikt; UML Visual Paradigm en draw.io. Dit zijn twee tools die werden geëvalueerd tijdens een vergelijkende studie van \textcite{Lu2023}, waarin deze respectievelijk 122 en 114 scoorden op een maximum van 165 op basis van hun eigenschappen en functies.
+Binnen de opleiding \emph{Toegepaste Informatica} worden er momenteel voornamelijk twee UML-modeling programma's gebruikt en aangeraden; \emph{Visual Paradigm} en \emph{draw.io}. Dit zijn twee tools die (onder andere) werden geëvalueerd tijdens een vergelijkende studie van \textcite{Lu2023}, waarin \emph{Visual Paradigm} 122/165 (tweede plaats) en \emph{draw.io} 114/165 (achtste plaats, maar nog boven het gemiddelde) scoorden. Deze score is gebaseerd op hoe goed deze tools de verschillende diagramtypen ondersteunen, alsook of deze al dan niet bepaalde functionaliteiten bevatten zoals bestandsexportering en collaboratie.
 
-PlantUML en MermaidJS\footnote{\url{https://mermaid.js.org}} zijn tools waarmee men UML-diagrammen kan ontwerpen via menselijk leesbare en gemakkelijk onderhoudbare (door middel van versiebeheertools zoals Git\footnote{\url{https://git-scm.com/}}) tekstbestanden \autocite{Romeo2025}.
-Deze tools zijn ook open source, waardoor de broncode van deze software voor iedereen beschikbaar is.
+Deze UML-modeling programma's zijn GUI-gebaseerd, en werken dus eerder met een drag-en-drop systeem. Er bestaan echter ook alternatieve tools zoals \emph{PlantUML} en \emph{MermaidJS}\footnote{\url{https://mermaid.js.org}}, die niet doorgaans vanuit de opleiding worden aangereikt. Deze maken, in tegenstelling tot \emph{Visual Paradigm} en \emph{draw.io}, gebruik van declaratieve talen waarmee men UML-diagrammen kan ontwerpen via menselijk leesbare tekstbestanden, wat ook gemakkelijker te onderhouden is met versiebeheertools zoals Git\footnote{\url{https://git-scm.com/}} \autocite{Romeo2025}.
+Deze tools zijn ook open-source; de broncode van deze software is voor iedereen beschikbaar, wat voor studenten en docenten binnen de opleiding bijzonder interessant is.
 
 \subsection{Diagrammen}%
 
-Volgens \textcite{Padmanabhan2012} worden er binnen UML veertien diagramtypen onderscheiden, opgedeeld in Structure, Behavior en Interaction Diagrams. Hier zijn een aantal diagrammen die binnen de opleiding Toegepaste Informatica toegelicht worden:
+Volgens \textcite{Padmanabhan2012} worden binnen UML er veertien diagramtypen onderscheiden volgens de volgende overkoepelende categoriëen; \emph{Structure}, \emph{Behavior} en \emph{Interaction Diagrams}. Hier zijn een aantal van deze diagramtypen, die het meest binnen de opleiding \emph{Toegepaste Informatica} toegelicht worden:
 
 \begin{description}
   \item \textbf{Use Case Diagram}: Beschrijft welke actoren (gebruikers, externe systemen) met een gegeven systeem interageren en welke functionaliteit zij gebruiken. Dit diagram is nuttig om de scope en de rollen binnen dit systeem te verduidelijken.
   \item \textbf{Class Diagram}: Toont de klassen in een systeem met hun attributen, methoden en relaties (associaties, erfenis, compositie). Deze diagrammen zijn typisch op softwarecode gericht.
   \item \textbf{Deployment Diagram (of implementatiediagram)}: Richt zich op de (al dan niet virtuele) nodes (servers, containers, netwerkapparatuur) en de daarop gedeployde artefacten (applicatiepakketten, services). Dit diagram sluit nauw aan bij een netwerkdiagram zoals die in DevOps-scenario's voorkomen.
-  \item \textbf{Activity Diagram}: Beschrijft de flow van controle en gegevens in een proces. Dit kan toegepast worden op een deployment pipeline of een provisioning workflow in een ``Infrastructure-as-Code''-context.
+  \item \textbf{Activity Diagram}: Beschrijft de flow van controle en gegevens in een proces. Dit kan toegepast worden op een deployment pipeline of een provisioning workflow in een \emph{Infrastructure-as-Code}-context.
   \item \textbf{Sequence Diagram}: Legt vast welke berichten in welke volgorde uitgewisseld worden tussen objecten of componenten, bijvoorbeeld tussen een webserver en een databank tijdens een typische request-flow.
 \end{description}
 
-
 \subsection{PlantUML}%
 
-PlantUML is een open-source tool waarmee UML- en aanverwante diagrammen gegenereerd kunnen worden op basis een van declaratief en menselijk leesbaar tekstformaat \autocite{PlantUML2026}. 
+\emph{PlantUML} is een open-source tool waarmee UML- en aanverwante diagrammen gegenereerd kunnen worden op basis een van declaratief en menselijk leesbaar tekstformaat \autocite{PlantUML2026}.
+
 De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele UML-diagrammen (Class Diagrams, Deployment Diagrams, Activity Diagrams, \ldots), maar dus ook notaties die niet strikt genomen onder UML vallen zoals netwerkdiagrammen, mindmaps en GANTT-diagrammen \autocite{PlantUML2025}. 
 
-PlantUML kan op verschillende manieren gebruikt worden; via de online webinterface\footnote{https://www.plantuml.com/plantuml}, een lokale installatie of een Docker-container. Er worden ook verscheidene integraties aangeboden zoals plugins voor gangbare IDE's (Visual Studio Code, IntelliJ IDEA en Eclipse) en documentatie- en wiki-tools (Confluence en Markdown). Omdat de diagramdefinities gewone tekstbestanden zijn (met ``\texttt{.puml}'' als bestandsextensie), lenen ze zich goed tot versiebeheer met Git. \autocite{PlantUML2025a}
+\emph{PlantUML} kan op verschillende manieren gebruikt worden; via de online webinterface\footnote{https://www.plantuml.com/plantuml}, een lokale installatie of een Docker-container. Er worden ook verscheidene integraties aangeboden zoals plugins voor gangbare IDE's (Visual Studio Code, IntelliJ IDEA en Eclipse) en documentatie- en wiki-tools (Confluence en Markdown).
+
+Aangezien de diagramdefinities gewone tekstbestanden zijn (met ``\texttt{.puml}'' als bestandsextensie), lenen ze zich goed tot versiebeheer met Git. \autocite{PlantUML2025a}
 
 Het volgende codefragment stelt een voorbeeld van een implementatiediagram voor, met vijf nodes en hun bijhorende connecties.
 
@@ -100,28 +102,28 @@ node1 == node5
 
 @enduml
 \end{lstlisting}
-\caption[Voorbeeld implementatiediagram in tekstformaat (PlantUML)]{Tekstformaat voor een voorbeeld van een implementatiediagram, uitgedrukt in PlantUML. \autocite{PlantUML2025}}
+\caption[Voorbeeld implementatiediagram in tekstformaat (PlantUML)]{Tekstformaat voor een voorbeeld van een implementatiediagram, uitgedrukt in \emph{PlantUML}. \autocite{PlantUML2025}}
 \label{code:depdiag_vb_puml}
 \end{codeblock}
 
-PlantUML verwerkt vervolgens deze tekst en genereert op basis hiervan de volgende afbeelding.
+\emph{PlantUML} verwerkt vervolgens deze tekst en genereert op basis hiervan de volgende afbeelding.
 
 \begin{figure*}[htbp]
   \centering
   \includegraphics[width=0.5\textwidth]{../graphics/depdiag_vb_puml.png}
-  \caption[Voorbeeld implementatiediagram in afbeeldingsformaat (PlantUML)]{\label{fig:depdiag_vb_puml.png}Afbeeldingsformaat voor een voorbeeld van een implementatiediagram, gegenereerd door PlantUML. \autocite{PlantUML2025}}
+  \caption[Voorbeeld implementatiediagram in afbeeldingsformaat (\emph{PlantUML})]{\label{fig:depdiag_vb_puml.png}Afbeeldingsformaat voor een voorbeeld van een implementatiediagram, gegenereerd door \emph{PlantUML}. \autocite{PlantUML2025}}
 \end{figure*}
 
-\subsection{MermaidJS}%
+\subsection{\emph{MermaidJS}}%
 
-MermaidJS is een gelijkaardige tool (gebaseerd op JavaScript), die tekstuele, Markdown-geïnspireerde syntax (met ``\texttt{.mermaid}'' als bestandsextensie) omzet naar diagrammen in afbeeldingsformaatformaat.
+\emph{MermaidJS} is een gelijkaardige, open-source tool (gebaseerd op JavaScript), die tekstuele, Markdown-geïnspireerde syntax (met ``\texttt{.mermaid}'' als bestandsextensie) omzet naar diagrammen in afbeeldingsformaatformaat.
+
 Het wordt vaak gebruikt om documentatie in Markdown (bijvoorbeeld in README-bestanden op repositories) te verrijken met flowcharts, sequence diagrams, class diagrams, state diagrams en Gantt-charts zonder een zware grafische editor te hoeven openen. \autocite{Mermaid2019}
 
 Het volgende codefragment beschrijft een architectuurplan (vergelijkbaar met een netwerkdiagram), bestaande uit een server verbonden met een database, met elk hun bijhorende opslagmedia.
 
 \begin{codeblock}
   \begin{lstlisting}
-architecture-beta
 architecture-beta
     group api(cloud)[API]
 
@@ -134,7 +136,7 @@ architecture-beta
     disk1:T -- B:server
     disk2:T -- B:db
   \end{lstlisting}
-\caption[Eenvoudig infrastructuurdiagram in MermaidJS]{Tekstformaat voor een voorbeeld van een architectuurplan, uitgedrukt in MermaidJS. \autocite{Mermaid2026}}
+\caption[Eenvoudig infrastructuurdiagram in \emph{MermaidJS}]{Tekstformaat voor een voorbeeld van een architectuurplan, uitgedrukt in \emph{MermaidJS}. \autocite{Mermaid2026}}
 \label{code:archplan_vb_mermaid}
 \end{codeblock}
 
@@ -143,19 +145,21 @@ Mermaid rendeert vervolgens op basis van deze code de volgende afbeelding.
 \begin{figure*}[htbp]
   \centering
   \includegraphics[width=0.5\textwidth]{../graphics/archplan_vb_mermaid.png}
-  \caption[Voorbeeld architectuurplan in afbeeldingsformaat (MermaidJS)]{\label{fig:archplan_vb_mermaid.png}Afbeeldingsformaat voor een voorbeeld van een architectuurplan, uitgedrukt in MermaidJS. \autocite{Mermaid2026}}
+  \caption[Voorbeeld architectuurplan in afbeeldingsformaat (\emph{MermaidJS})]{\label{fig:archplan_vb_mermaid.png}Afbeeldingsformaat voor een voorbeeld van een architectuurplan, uitgedrukt in \emph{MermaidJS}. \autocite{Mermaid2026}}
 \end{figure*}
 
 \section{Infrastructure-as-Code}%
 
-``Infrastructure-as-Code'' (of IaC) is een praktijk binnen DevOps waarbij de nodes (fysiek of virtueel) binnen een IT-infrastructuur gedefinieerd en beheerd worden via machine-leesbare configuratiebestanden in plaats van via handmatige configuratie of grafische beheerconsoles. Deze definities worden doorgaans onder versiebeheer geplaatst, waardoor men infrastructuurwijzigingen kan testen, herzien en eventueel terugdraaien zoals bij traditionele softwarecode.
-De belangrijkste voordelen van IaC zijn reproduceerbaarheid (omgevingen kunnen opnieuw identiek worden uitgerold), consistentie (vermindering van menselijke fouten en configuratiedrift), en een hogere snelheid van oplevering doordat de provisioning sterk geautomatiseerd wordt. \autocite{Artac2017} 
+\emph{Infrastructure-as-Code} (afgekort IaC) is een praktijk binnen DevOps waarbij de nodes (fysiek of virtueel) binnen een IT-infrastructuur gedefinieerd en beheerd worden via machine-leesbare configuratiebestanden in plaats van via handmatige configuratie of grafische beheerconsoles \autocite{Rahman2019}.
 
-IaC staat echter niet in voor het configureren van nodes, dat is de taak van ``configuration management''-tools zoals Ansible, Puppet en Chef.
-``Configuration management'' staat echter niet in voor het creeëren en opzetten van servers; dat is de taak van ``Infrastructure-as-Code'' tools zoals Terraform, OpenTofu en Vagrant.
+Deze definities worden doorgaans onder versiebeheer geplaatst, waardoor men infrastructuurwijzigingen kan testen, herzien en eventueel terugdraaien zoals bij traditionele softwarecode.
 
-Men onderscheidt grofweg twee benaderingen tot deze praktijk: een imperatieve stijl, waarin stap-voor-stap wordt beschreven welke acties er moeten worden uitgevoerd, en een declaratieve stijl, waarin enkel de gewenste eindsituatie van de infrastructuur wordt beschreven.
-Moderne IaC-tools zoals Terraform, OpenTofu en Vagrant volgen hoofdzakelijk een declaratief model. \autocite{Baer2025}
+De belangrijkste voordelen van IaC zijn reproduceerbaarheid (omgevingen kunnen opnieuw identiek worden uitgerold), consistentie (vermindering van menselijke fouten en configuratiedrift), en een hogere snelheid van oplevering doordat de provisioning sterk geautomatiseerd wordt \autocite{Artac2017}.
+
+IaC staat echter niet in voor het configureren van nodes, dat is de taak van `\emph{configuration management}'-tools zoals Ansible, Puppet en Chef.
+
+\textcite{Baer2025} onderscheidt grofweg twee benaderingen tot deze praktijk: een imperatieve stijl, waarin stap-voor-stap wordt beschreven welke acties er moeten worden uitgevoerd, en een declaratieve stijl, waarin enkel de gewenste eindsituatie van de infrastructuur wordt beschreven.
+Moderne IaC-tools zoals Terraform, OpenTofu en Vagrant volgen hoofdzakelijk een declaratief model.
 
 \subsection{Terraform}%
 
@@ -166,7 +170,7 @@ De configuraties worden geschreven in HashiCorp Configuration Language (HCL) (me
 
 Terraform ondersteunt honderden providers; dit varieert van providers ontwikkeld door officiële partners (zoals IBM en Ansible) tot providers van third-party bedrijven (zoals Amazon AWS, Microsoft Azure, Google Cloud, \ldots), wat het bijzonder flexibel maakt voor multi-cloud- en hybride omgevingen. \autocite{HashiCorp2025a} 
 
-Om de structuur van HCL toe te lichten, presenteert het volgende codefragment een eenvoudige topologie voor Amazon Web Services.
+Het volgende codefragment licht de structuur van HCL toe via een eenvoudige topologie voor Amazon Web Services.
 
 \begin{codeblock}
 \begin{lstlisting}
@@ -219,7 +223,7 @@ resource "aws_subnet" "az" {
   cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 4, count.index+1)
 }
 \end{lstlisting}
-\caption[Voorbeeld Terraform-configuratie]{Voorbeeld van een eenvoudige Terraform-configuratie.}
+\caption[Voorbeeld Terraform-configuratie]{Voorbeeld van een eenvoudige Terraform-configuratie. \autocite{HashiCorp2025}}
 \label{code:terraform_vb}
 \end{codeblock}
 
@@ -227,27 +231,25 @@ resource "aws_subnet" "az" {
 
 \subsection{OpenTofu}%
 
-OpenTofu is een community-gedreven fork van Terraform, ontstaan in 2023 naar aanleiding van licentiewijzigingen rond het gebruik van Terraform.
-Het project heeft als doel een volledig vrije, open-governance variant van de Terraform-tooling te bieden, met langdurige compatibiliteit en transparante besluitvorming in de open source gemeenschap.
-Technisch gezien positioneert OpenTofu zich als een drop-in replacement voor Terraform 1.6.x (en voorafgaande versies); bestaande configuraties in HCL en de bekende CLI-commando's blijven bruikbaar, zodat organisaties en projecten relatief eenvoudig kunnen migreren zonder hun codebase volledig te moeten herschrijven.
+OpenTofu is een relatief recente speler, ontstaan als een community-gedreven fork van Terraform in 2023. De drijfveer achter deze fork is de keuze van HashiCorp om een licentiewijziging naar het \emph{Business Source License} (afgekort BSL) voor Terraform door te voeren. Dit bracht het bestuur in gevaar voor de bestaande community, die op lange termijn eerder leveranciersonafhankelijk willen blijven. \autocite{Gaddam2023}
+
+Het project heeft als doel een volledig vrije, open-governance variant van de Terraform-tooling te bieden, met langdurige compatibiliteit en transparante besluitvorming in de open-source gemeenschap.
+
+Op technisch vlak positioneert OpenTofu zich als een drop-in replacement voor Terraform 1.6.x (en voorafgaande versies); bestaande configuraties in HCL en de bekende CLI-commando's blijven bruikbaar, zodat organisaties en projecten relatief eenvoudig kunnen migreren zonder hun codebase volledig te moeten herschrijven.
 De tool ondersteunt dus dezelfde concepten (providers, resources, modules en state-bestanden) en streeft naar achterwaartse compatibiliteit, terwijl op termijn nieuwe functionaliteit kan worden geïntroduceerd die niet noodzakelijk in Terraform beschikbaar is. \autocite{OpenTofu2026}
-
-% OpenTofu werd als open-source project ondergebracht bij de Linux Foundation en sindsdien opgenomen in het Cloud Native Computing Foundation (CNCF) ecosysteem als Sandbox-project, wat de duurzaamheid van de tool verder versterkt.\autocite{<OpenTofu-cncf>}
-
-<TODO: Toelichting OpenTofu-code en verdere afwerking \& nachecking>
 
 \subsection{Vagrant}%
 
 Vagrant is een tool van HashiCorp voor het bouwen en beheren van (lokale) virtuele omgevingen via een eenvoudig, tekstueel configuratiebestand (\texttt{Vagrantfile}).
 Het doel van Vagrant is om lichte, reproduceerbare en draagbare ontwikkel- en testomgevingen te creëren die met één commando kunnen worden opgestart, geprovisioneerd en opnieuw vernietigd. \autocite{HashiCorp2026} 
 
-In een \texttt{Vagrantfile} specificeert men onder meer welke base box (bijv. een bepaalde Ubuntu- of CentOS-variant) gebruikt wordt, hoeveel CPU en geheugen de virtuele machine krijgt, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
-Standaard ondersteunt Vagrant providers zoals VirtualBox, Hyper-V en Docker, maar via plug-ins kunnen ook andere platformen worden aangestuurd, waaronder VMware of publieke cloudproviders. \autocite{HashiCorp2026a} 
+In een \texttt{Vagrantfile} specificeert men voor elke virtuele machine, onder andere, de base box (of het gastbesturingssysteem zoals \emph{AlmaLinux}, Alpine Linux, Ubuntu), de hoeveelheid CPU en werkgeheugen, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
+Standaard ondersteunt Vagrant providers zoals \emph{VirtualBox}, Hyper-V en Docker, maar via plug-ins kunnen ook andere platformen worden aangestuurd, waaronder VMware of publieke cloudproviders. \autocite{HashiCorp2026a} 
 
-Voor provisioning kan Vagrant gebruikmaken van verschillende configuratiebeheertools, waaronder shellscripts, Ansible, Chef en Puppet.
-Dit maakt het mogelijk om met één \texttt{vagrant up}-commando zowel de virtuele infrastructuur (via Vagrant) als de configuratie van het gastbesturingssysteem (bijvoorbeeld via Ansible-playbooks) te automatiseren.\autocite{HashiCorp2026a}
+Voor provisioning kan Vagrant gebruik maken van verschillende configuratiebeheertools, waaronder shellscripts, Ansible, Chef en Puppet.
+Dit maakt het mogelijk om via het \texttt{vagrant up}-commando zowel de virtuele infrastructuur (via Vagrant) als de configuratie van het gastbesturingssysteem (bijvoorbeeld via Ansible playbooks) te automatiseren.\autocite{HashiCorp2026a}
 
-In deze bachelorproef wordt Vagrant ingezet om in een onderwijscontext snel identieke virtuele omgevingen uit te rollen waarin Ansible de verdere configuratie en deployment van software verzorgt.
+Binnen de opleiding \emph{Toegepaste Informatica} wordt Vagrant ingezet om snel identieke virtuele omgevingen uit te rollen waarin Ansible de verdere configuratie en deployment van software verzorgt.
 
 \begin{codeblock}
 \begin{lstlisting}
@@ -285,57 +287,62 @@ end
 
 \section{Configuration Management}%
 
-``Configuration management'' heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; op basis van dezelfde stappen wordt hetzelfde resultaat opgeleverd zonder afwijkingen, en vertoont het proces dus consistent gedrag. Deze manier van werken, analoog met het principe van ``Infrastructure-as-Code'', schaalt beter voor omgevingen met honderden of duizenden nodes, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
+\emph{Configuration management} is het principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en DNS-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; op basis van dezelfde stappen wordt hetzelfde resultaat opgeleverd zonder afwijkingen, en vertoont het proces dus consistent gedrag. Deze manier van werken, analoog met het principe van \emph{Infrastructure-as-Code}, schaalt beter voor omgevingen met honderden of duizenden nodes, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
 
-Als ``Infrastructure-as-Code'' een omgeving automatisch opzet, staat ``Configuration management'' met andere woorden in voor het configuratie-aspect.
+Als \emph{Infrastructure-as-Code} een omgeving automatisch opzet, staat \emph{configuration management} met andere woorden in voor het configuratie-aspect.
 
-Ansible, Puppet en Chef zijn drie open source tools die in de praktijk het meest gebruikt worden om ``configuration management'' toe te passen \autocite{Masek2018}.
+Ansible, Puppet en Chef zijn drie open-source tools die in de praktijk het meest gebruikt worden om \emph{configuration management} toe te passen \autocite{Masek2018}.
 
 \subsection{Ansible}%
 
-Ansible is een open-source automation- en configuration-managementtool die werkt zonder permanente agenten op de doelhosts: standaard maakt het verbinding via SSH om taken uit te voeren.
+Ansible is een open-source \emph{configuration management}-tool die werkt zonder permanente agenten op de doelhosts: standaard maakt het verbinding via SSH om taken uit te voeren.
 Beheerders beschrijven de gewenste configuratie in menselijk leesbare YAML-bestanden, zogenaamde \emph{playbooks}, die bestaan uit taken (\emph{tasks}) en herbruikbare rollen (\emph{roles}). \autocite{Ansible2025} 
 
-Elke taak maakt gebruik van een Ansible-module (bijvoorbeeld voor het beheren van packages, services, gebruikers, bestanden of firewallregels) die ernaar streeft idempotent te zijn: bij herhaalde uitvoering wordt een systeem enkel aangepast wanneer de huidige toestand afwijkt van de gewenste toestand.
-Dankzij een inventorybestand kan dezelfde playbooklogica toegepast worden op groepen van hosts, wat Ansible bijzonder geschikt maakt voor het configureren van tientallen of honderden servers in één keer. \autocite{Ansible2025}
+Taken maken gebruik van modules (ingebouwd of community-gedreven) om verscheidene systeem-gerelateerde objecten te beheren, zoals packages, services, gebruikers, bestanden en firewallregels.
+Hier is de kracht van Ansible dat men deze taken op declaratieve wijze kan schrijven in plaats van imperatief; men beschrijft \emph{wat} het eindresultaat moet zijn, niet \emph{hoe} men daar moet geraken. Ansible biedt hier dus de mogelijkheid om playbooks zo idempotent mogelijk te schrijven; bij herhaalde uitvoeringen krijgt men steeds hetzelfde (en verwachte) eindresultaat. \autocite{Stoeckl2025}
 
-Onderstaand voorbeeld toont een beknopte Ansible-playbook die een webserver installeert en start op alle hosts in de groep \texttt{webservers}:
+Dankzij een inventorybestand kunnen de taken van een playbook identiek uitgevoerd worden op groepen van meerdere hosts, wat Ansible bijzonder geschikt maakt voor het configureren van tientallen of honderden servers in één keer. \autocite{Ansible2025}
+
+Onderstaand voorbeeld toont een beknopte Ansible playbook die twee taken uitvoert: de webserver en databankserver updaten op alle hosts in de overeenkomende groepen (\texttt{webservers} en \texttt{databases}):
 
 \begin{codeblock}
 \begin{lstlisting}
 ---
-- name: Configureer webservers
+- name: Update web servers
   hosts: webservers
-  become: true
+  remote_user: root
 
   tasks:
-    - name: Installeer Nginx
-      ansible.builtin.apt:
-        name: nginx
-        state: present
-        update_cache: true
+  - name: Ensure apache is at the latest version
+    ansible.builtin.yum:
+      name: httpd
+      state: latest
 
-    - name: Plaats eenvoudige indexpagina
-      ansible.builtin.copy:
-        dest: /var/www/html/index.html
-        content: "Hello from Ansible!"
-        owner: www-data
-        group: www-data
-        mode: "0644"
+  - name: Write the apache config file
+    ansible.builtin.template:
+      src: /srv/httpd.j2
+      dest: /etc/httpd.conf
 
-    - name: Zorg dat Nginx draait en ingeschakeld is
-      ansible.builtin.service:
-        name: nginx
-        state: started
-        enabled: true
+- name: Update db servers
+  hosts: databases
+  remote_user: root
+
+  tasks:
+  - name: Ensure postgresql is at the latest version
+    ansible.builtin.yum:
+      name: postgresql
+      state: latest
+
+  - name: Ensure that postgresql is started
+    ansible.builtin.service:
+      name: postgresql
+      state: started
 \end{lstlisting}
-\caption[Eenvoudige Ansible-playbook voor een webserver]{}
+\caption[Voorbeeld Ansible playbook]{Voorbeeld van een eenvoudige Ansible playbook. \autocite{Ansible2025a}}
 \label{code:ansible_playbook_vb}
 \end{codeblock}
 
-Deze playbook kan herhaaldelijk uitgevoerd worden; zolang Nginx al geïnstalleerd en correct geconfigureerd is, zullen de taken geen wijzigingen meer rapporteren, wat het idempotente karakter van Ansible illustreert.
-
-<TODO: Toelichting Ansible-code en verdere afwerking \& nachecking>
+Deze playbook kan herhaaldelijk uitgevoerd worden en telkens hetzelfde resultaat opleveren, wat het potentiëel van Ansible qua idempotentie (zeker voor de ingebouwde modules) illustreert.
 
 \subsection{Puppet}%
 
@@ -416,11 +423,11 @@ Bij elke Chef-run wordt deze recipe opnieuw geëvalueerd; als \texttt{httpd} al 
 
 \section{Situering binnen ``Toegepaste Informatica'' (Opleiding)}%
 
-<TODO?: Algemene toelichting over de opleiding Toegepaste Informatica en haar OLODs (hoe deze correct citeren?)>
+<TODO?: Algemene toelichting over de opleiding \emph{Toegepaste Informatica} en haar OLODs (hoe deze correct citeren?)>
 
 \subsection{``IT infrastructure engineer'' (Keuzeprofiel)}%
 
-Er zijn drie noemenswaardige OLODs, binnen het keuzeprofiel ``IT infrastructure engineer'' in het derde jaar van de opleiding Toegepaste Informatica, die de nadruk leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools en deze visualiseren met UML-diagrammen. % keuzetraject ``System \& Network Administrator'' --> keuzeprofiel ``IT infrastructure engineer''
+Er zijn drie noemenswaardige OLODs, binnen het keuzeprofiel ``IT infrastructure engineer'' in het derde jaar van de opleiding \emph{Toegepaste Informatica}, die de nadruk leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools en deze visualiseren met UML-diagrammen. % keuzetraject ``System \& Network Administrator'' --> keuzeprofiel ``IT infrastructure engineer''
 
 \begin{itemize}
   \item ``Cybersecurity Advanced''
@@ -430,20 +437,20 @@ Er zijn drie noemenswaardige OLODs, binnen het keuzeprofiel ``IT infrastructure 
 
 \subsection{``Cybersecurity Advanced'' (OLOD)}%
 
-Het OLOD ``Cybersecurity Advanced'' introduceert het concept van ``blue-teaming'' binnen het gebied van cybersecurity aan de hand van een reeks virtuele labo's die individueel worden uitgevoerd. Het gebruik van ``configuration management'' of UML-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student wel een aanzienlijk voordeel aangezien deze zo de labo-omgeving reproduceerbaar en visueel overzichtelijk kan maken. Bovendien wordt de (basis-)opstelling alvast voorgesteld met een netwerkdiagram ontworpen via PlantUML.
+Het OLOD ``Cybersecurity Advanced'' introduceert het concept van ``blue-teaming'' binnen het gebied van cybersecurity aan de hand van een reeks virtuele labo's die individueel worden uitgevoerd. Het gebruik van \emph{configuration management} of UML-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student wel een aanzienlijk voordeel aangezien deze zo de labo-omgeving reproduceerbaar en visueel overzichtelijk kan maken. Bovendien wordt de (basis-)opstelling alvast voorgesteld met een netwerkdiagram ontworpen via \emph{PlantUML}.
 
 <TODO: Verdere toelichting met basis-netwerkdiagram, Ansible-code, ...>
 
 \subsection{``Infrastructure Automation'' (OLOD)}%
 
-Tot slot biedt het OLOD ``Infrastructure Automation'' een reeks virtuele labo's die verschillende tools (Jenkins\footnote{\url{https://www.jenkins.io/}}, Ansible, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}}) introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen.
+``Infrastructure Automation'' is een OLOD dat een reeks virtuele labo's bevat die verschillende tools (Jenkins\footnote{\url{https://www.jenkins.io/}}, Ansible, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}}) introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen.
 Zoals eerder vermeld wordt het gebruik van UML-diagrammen hierbij niet verplicht, maar aangeraden.
 
 <TODO: Verdere toelichting met Ansible-labo, Ansible-skeleton, roles van Bert Van Vreckem, ...>
 
 \subsection{``DevOps Project: Operations'' (OLOD)}%
 
-Tot slot is ``DevOps Project: Operations'' een OLOD dat het tweede luik vormt van een tweeledig groepsproject, het eerste luik zijnde ``Real-life Integrated Software Engineering'' voor de studenten binnen ``full stack developer''. Het doel van het ``operations-team'' in dit project, is om de backend van een webapplicatie (ontwikkeld door het ``development-team'') te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet automatisch kunnen opgezet worden via zowel ``Infrastructure-as-Code''- als ``configuration management''-tools (met in het bijzonder Ansible).
+Tot slot is ``DevOps Project: Operations'' een OLOD dat het tweede luik vormt van een tweeledig groepsproject, het eerste luik zijnde ``Real-life Integrated Software Engineering'' voor de studenten binnen ``full stack developer''. Het doel van het ``operations-team'' in dit project, is om de backend van een webapplicatie (ontwikkeld door het ``development-team'') te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet automatisch kunnen opgezet worden via zowel \emph{Infrastructure-as-Code}- als `\emph{configuration management}'-tools (met in het bijzonder Ansible).
 Om de onderliggende werking van deze omgeving te visualiseren voor al dan niet technische stakeholders, moet er ook een netwerkdiagram ontworpen worden met UML-modeling software.
 
 <TODO?: Verdere toelichting met representatief netwerkdiagram van finaal project (vermelding van concrete klantenopdracht (Ortho, HOGENT, etc.) nodig?)>

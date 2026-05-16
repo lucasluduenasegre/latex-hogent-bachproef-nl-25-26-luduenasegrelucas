@@ -19,8 +19,8 @@
 
 <TODO: Korte vergelijkende studie rond Ansible, Puppet en Chef>
 
-Na het overlopen van de verschillende tools met betrekking tot UML en ``configuration management'', is er besloten om te werken met Ansible en PlantUML.
-Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de stageplaats van de auteur), courant gebruikt worden binnen de IT-sector (in het bijzonder Ansible) en bovendien allebei gratis (in gebruik) en open source zijn.
+Na het overlopen van de verschillende tools met betrekking tot UML en \emph{configuration management}, is er besloten om te werken met Ansible en PlantUML.
+Dit zijn tools die voorkomen binnen de opleiding \emph{Toegepaste Informatica} (en de stageplaats van de auteur), courant gebruikt worden binnen de IT-sector (in het bijzonder Ansible) en bovendien allebei gratis (in gebruik) en open source zijn.
 
 \section{Ontwerp van de testomgeving}%
 
@@ -62,7 +62,7 @@ Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de s
 \begin{figure*}[htbp]
   \centering
   \includegraphics[width=\textwidth]{../graphics/nwdiag_test_env.png}
-  \caption=[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:test_env.png}Afbeeldingsformaat (\texttt{nwdiag\_test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
+  \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:test_env.png}Afbeeldingsformaat (\texttt{nwdiag\_test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
 \end{figure*}
 
 % \begin{figure*}[htbp]
@@ -74,18 +74,18 @@ Dit zijn tools die voorkomen binnen de opleiding Toegepaste Informatica (en de s
 % \end{figure*}
 
 
-Er zijn een aantal noemenswaardige beperkingen aan deze omgeving (en ter extensie, aan dit diagram):
+% Er zijn een aantal noemenswaardige beperkingen aan deze omgeving (en ter extensie, aan dit diagram):
 
-\begin{itemize}
-  \item Deze omgeving wordt lokaal opgezet via Vagrant. De Ansible-code die gegenereerd wordt zal dus rond deze backend gevormd zijn.
-  \item De virtuele machines in deze omgeving gebruiken AlmaLinux 9 als besturingssysteem.
-  De eenvoudige reden hiervoor is omdat de Ansible Roles van Bert Van Vreckem ontwikkeld zijn voor een verouderde versie van Ansible die niet wordt aangeboden op AlmaLinux 10.
-  Veel van de functionaliteit van deze roles wordt op AlmaLinux 10 beperkt en soms zelfs verhinderd.
-  Deze keuze heeft uiteraard duidelijke implicaties op vlak van de veiligheid van deze omgeving, maar dit is één van de afwegingen die gemaakt moest worden voor deze proof-of-concept.
-  \item Het diagram mag enkel nodes binnen de testomgeving (behalve de control node) voorstellen. 
-  % \item Voor deze proof-of-concept wordt er geen rekening gehouden met routering of switching. 
-  \item De hosts in deze omgeving bevinden zich onder het lokale (klasse B) IPv4-netwerk \texttt{172.26.0.0/16} (enkel IPv4 wordt ondersteund). Meerdere netwerken/subnets worden ondersteund, zolang ze zich binnen dit overkoepelende netwerk bevinden. De volledige omgeving moet toegankelijk zijn voor de control node (met IP-adres \texttt{172.26.0.2/16}).
-\end{itemize}
+% \begin{itemize}
+%   \item Deze omgeving wordt lokaal opgezet via Vagrant. De Ansible-code die gegenereerd wordt zal dus rond deze backend gevormd zijn.
+%   \item De virtuele machines in deze omgeving gebruiken \emph{AlmaLinux} 9 als besturingssysteem.
+%   De eenvoudige reden hiervoor is omdat de Ansible Roles van Bert Van Vreckem ontwikkeld zijn voor een verouderde versie van Ansible die niet wordt aangeboden op \emph{AlmaLinux} 10.
+%   Veel van de functionaliteit van deze roles wordt op \emph{AlmaLinux} 10 beperkt en soms zelfs verhinderd.
+%   Deze keuze heeft uiteraard duidelijke implicaties op vlak van de veiligheid van deze omgeving, maar dit is één van de afwegingen die gemaakt moest worden voor deze proof-of-concept.
+%   \item Het diagram mag enkel nodes binnen de testomgeving (behalve de control node) voorstellen. 
+%   % \item Voor deze proof-of-concept wordt er geen rekening gehouden met routering of switching. 
+%   \item De hosts in deze omgeving bevinden zich onder het lokale (klasse B) IPv4-netwerk \texttt{172.26.0.0/16} (enkel IPv4 wordt ondersteund). Meerdere netwerken/subnets worden ondersteund, zolang ze zich binnen dit overkoepelende netwerk bevinden. De volledige omgeving moet toegankelijk zijn voor de control node (met IP-adres \texttt{172.26.0.2/16}).
+% \end{itemize}
 
 \section{Implementatie van de testomgeving}%
 
@@ -128,6 +128,6 @@ network_beta:
     beta_workstation_2:
       ansible_host: 172.26.20.20
 \end{minted}
-\caption[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de testomgeving; de verwachte uitvoer voor de transpiler.}
+\caption[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de testomgeving; de verwachte uitvoer voor de converter.}
 \label{code:inventory_test_env.yml}
 \end{codeblock}

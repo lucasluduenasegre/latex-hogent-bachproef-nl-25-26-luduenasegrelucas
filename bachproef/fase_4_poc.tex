@@ -2,20 +2,106 @@
 %% Ontwikkeling van de Proof-of-Concept
 %%=============================================================================
 
-\chapter{Ontwikkeling van de proof-of-concept}%
+\chapter{Ontwikkeling van de proof-of-concept (PlantUML2Ansible)}%
 \label{ch:poc}
 
-\section{Vogelperspectief van de tool}%
+\section{Algemeen overzicht}%
+\label{sec:alg_overzicht}
 
-<TODO>
+De proof-of-concept bestaat uit een Python-script (\texttt{plantuml2ansible.py}) dat als invoer één of twee PlantUML-bestanden aanneemt (zijnde het netwerk- en/of implementatiediagram) en als uitvoer een gebruiksklare Vagrant- en/of Ansible-omgeving genereert, afhankelijk van het toegepaste gebruiksscenario (zie \autoref{sec:gebruiksscenarios}).
+
+Het proces om deze diagrammen om te zetten verloopt in de volgende overkoepelende stappen: %, zoals weergegeven in \autoref{fig:converter_stappenplan}:
+
+\begin{enumerate}
+    \item \textbf{Parsering}: de PlantUML-bronbestanden (netwerk- en/of implementatiediagram) worden ingelezen en de relevante data (hostnames, IP-adressen, \ldots) worden omgezet naar \emph{Python}-dictionaries), die in de volgende stappen worden verwerkt.
+    \item \textbf{Validatie} (enkel relevant voor \nameref{subsec:fullmode}): de \emph{Python}-dictionaries van beide diagrammen worden gecontroleerd op consistentie; er wordt afgecheckt of alle hosts uit het netwerkdiagram (met een `\texttt{managed = true}'-attribuut) ook effectief voorkomen in het implementatiediagram.
+    \item \textbf{Codegeneratie}: Op basis van de \emph{Python}-dictionaries worden de uitvoerbestanden gegenereerd via Jinja2-sjablonen en sentinels (zie \autoref{subsec:ontwerpkeuzes}). Dit zijn bestanden zoals de Ansible-inventory, Ansible playbook, hostvariabele-bestanden en `\emph{Ansible Galaxy}'-afhankelijkheden. \ldots
+    \item \textbf{Asset-kopiëring}: Statische bestanden genaamd ``assets'', waarvan hun inhoud niet afhankelijk is van variabelen uit de \emph{Python}-dictionaries,  worden naar de uitvoermap gekopieerd. Dit houdt bestanden in zoals de \texttt{Vagrantfile}, voorgedefinieerde Ansible-rollen, Grafana dashboards en provisioning-scripts.
+\end{enumerate}
+
+Om deze stappen tot een goed einde te brengen zijn er uiteraard ook helper-functies ontwikkeld, maar dit zijn de grote lijnen van het script.
+
+% TODO: zelfgemaakt stappenplan in als figuur
+% \begin{figure}[htbp]
+%     \centering
+%     \includegraphics[width=\textwidth]{../graphics/converter_stappenplan.png}
+%     \caption[Stappenplan van de converter]{\label{fig:converter_stappenplan}Schematische voorstelling van het stappenplan van \texttt{plantuml2ansible.py}.}
+% \end{figure}
 
 \subsection{Ontwerpkeuzes}%
+\label{subsec:ontwerpkeuzes}
 
-<TODO>
+\paragraph{Python (en Jinja2)}
+De converter is geïmplementeerd als een \emph{Python}-script, omwille van de uitgebreide libraries, de leesbaarheid van de code en de brede adoptie van de taal binnen de IT-sector en de opleiding \emph{Toegepaste Informatica}.
+Voor de codegeneratie wordt gebruikgemaakt van \emph{Jinja2}, een taal waarmee sjablonen mee gedefinieerd kunnen worden, die vervolgens door \emph{Python} geïnterpreteerd kunnen worden om finale bestanden mee te genereren.
 
-\subsection{Beperkingen}
+\paragraph{Reguliere expressies}
+De PlantUML-bestanden worden geparseerd aan de hand van reguliere expressies, eerder dan via een volwaardige parser.
+Dit is een bewuste keuze: de converter ondersteunt slechts een beperkt (maar welomschreven) deelverzameling van de PlantUML-syntax; namelijk uitsluitend netwerk- en implementatiediagrammen, met een relatief vaste structuur.
+Een volwaardige parser ontwikkelen ligt buiten de scope (en de specialisatierichting) van dit onderzoek, en zou bovendien onnodige complexiteit introduceren voor dit doeleinde. Het nadeel van deze aanpak is dat onverwachte of afwijkende PlantUML-syntax niet altijd even robuust kan worden afgehandeld; de verantwoordelijkheid voor correcte invoer ligt grotendeels bij de eindgebruiker.
 
-<TODO>
+\paragraph{\texttt{role-config.yml} als extern configuratiebestand}
+De koppeling tussen de vereenvoudigde rolidentificatoren (zoals gebruikt in de implementatiediagrammen) en hun volwaardige naam die Ansible gebruikt in de finale playbook (FQCN) wordt bijgehouden in een extern YAML-configuratiebestand (\texttt{role-config.yml}), in plaats van hardgecodeerd in het script zelf.
+Dit heeft als voordeel dat er een duidelijke scheiding is tussen het omzettingsproces en de componenten die tijdens dat proces kunnen gebruikt worden.
+In ideale omstandigheden zou de converter ontworpen kunnen worden zodat nieuwe rollen kunnen worden toegevoegd door enkel dit configuratiebestand aan te passen (zonder de originele broncode van het script te wijzigen), maar dat is in dit stadium niet het geval; veel van de logica achter deze rollen (zoals het definiëren DNS-zones en Prometheus scrape targets) moet nog opgevangen worden door het script.
+
+\paragraph{Sentinels voor diagramafhankelijke waarden}
+Bepaalde Ansible-variabelen kunnen pas worden ingevuld tijdens de omzetting, omdat hun waarden rechtstreeks worden afgeleid uit de diagraminhoud (bv. IP-adressen van DNS-servers, subnet masks of Prometheus scrape targets). Hiervoor wordt een \emph{sentinelpatroon} gebruikt: in \texttt{role-config.yml} worden dergelijke waarden aangeduid met een vaste naamgevingsconventie (\texttt{\_\_DIAGRAM\_*\_\_}), die op het moment van codegeneratie door de converter worden vervangen door de effectief afgeleide waarden.
+
+\subsection{Beperkingen}%
+\label{subsec:beperkingen_poc}
+
+De proof-of-concept kent een aantal beperkingen. Hier zijn er een aantal van (die in latere hoofdstukken in meer detail zullen worden toegelicht):
+
+\begin{enumerate}
+    \item De \nameref{subsec:fullmode} ondersteunt slechts één netwerk.
+    \item Meerdere netwerken zijn ondersteund voor \nameref{subsec:iaconlymode}, met een maximum van drie gedefinieerde IP-adressen per host. Routering wordt \textbf{niet} inbegrepen.
+    \item Een Ansible \texttt{control}-node wordt automatisch aangemaakt in ``full mode''.
+    \item De converter ondersteunt enkel \textbf{IPv4-adressering}.
+    \item Enkel \textbf{\emph{AlmaLinux} 9} wordt ondersteund als gastbesturingssysteem (met `\texttt{bento/almalinux-9}' als Vagrant base box).
+    \item De converter veronderstelt dat de aangeboden PlantUML-bestanden syntactisch correct zijn en een geldig diagram produceren.
+\end{enumerate}
+
+\section{Gebruiksscenario's}%
+\label{sec:gebruiksscenarios}
+
+De volgende twee secties zullen de twee ondersteunde gebruiksscenario's beschrijven, namelijk de \nameref{subsec:fullmode} en de \nameref{subsec:iaconlymode}, alsook sommige beperkingen nader toelichten.
+
+Een beperking van beide gebruiksscenario's is dat de virtuele machines in de geproduceerde omgeving enkel \emph{AlmaLinux} 9 als gastbesturingssysteem zullen ondersteunen (met `\texttt{bento/almalinux-9}' als Vagrant base box). De huidige configuratie van de rollen is afhankelijk van een aantal bestaande rollen die gebruikt worden binnen de opleiding \emph{Toegepaste Informatica}, en deze zijn enkel functioneel op \emph{AlmaLinux} 9 (ook in tegenstelling tot de nieuwere \emph{AlmaLinux} 10).
+
+\subsection{``Full mode'' (``volledige modus'')}%
+\label{subsec:fullmode}
+
+\begin{codeblock}
+\begin{lstlisting}
+python plantuml2ansible.py [--v | --verbose] [--nwdiag] <nwdiag_path> [--uml] <uml_path> [--role-config <role_config_path>] [[--output | -o] <output_path>]
+\end{lstlisting}
+\caption[CLI-gebruik ``full mode'']{CLI-gebruik voor het ``full mode''-gebruiksscenario}
+\label{code:cli_gebruik_full_mode}
+\end{codeblock}
+
+Dit is het primaire gebruiksscenario van dit script. Een netwerk- en (overeenkomend) implementatiediagram worden hier omgezet naar een omgeving die zowel opgezet wordt via Vagrant als geconfigureerd wordt via een inbegrepen Ansible \texttt{control} node, op basis van voorgedefinieerde rollen die aan de hosts zijn toegewezen. Het IP-adres van de \texttt{control}-node zal ingesteld worden als \textbf{het broadcast-adres van het netwerk - 2}, b.v. \texttt{172.16.255.253} voor het netwerk \texttt{172.16.0.0/16}.
+
+Voor deze use case kunnen alleen hosts binnen \textbf{één enkel netwerk} gedefinieerd worden in het implementatiediagram. De configuratie van routering (en de geïmpliceerde, complexere firewallregels) valt buiten de scope van deze proof-of-concept, dat tot doel heeft aan te tonen dat het mogelijk is om UML-diagrammen om te zetten naar `\emph{configuration management}'-code. Daarom krijgt elke VM internettoegang via zijn unieke NAT-interface, die standaard door Vagrant wordt geleverd.
+
+Standaard gebruikt het script het \texttt{role-config.yml}-bestand als configuratiebestand voor de voorgedefinieerde rollen. Je kunt desgewenst een eigen configuratiebestand opgeven met het `\texttt{--role-config}'-CLI-argument.
+
+\subsection{``IaC-only mode'' (``enkel-IaC-modus'')}%
+\label{subsec:iaconlymode}
+
+\begin{codeblock}
+\begin{lstlisting}
+python plantuml2ansible.py [--v | --verbose] [--nwdiag] <nwdiag_path> [[--output | -o] <output_path>]
+\end{lstlisting}
+\caption[CLI-gebruik ``Iac-only mode'']{CLI-gebruik voor het ``Iac-only mode''-gebruiksscenario}
+\label{code:cli_gebruik_iac_only_mode}
+\end{codeblock}
+
+Dit is niet de belangrijkste toepassing van dit script, maar het is wel handig als je een kant-en-klare Vagrant-omgeving wilt hebben, maar tegelijkertijd meer vrijheid wilt bij het opzetten van \emph{configuration management} (met of zonder Ansible). Daarom bevat deze omgeving geen Ansible \texttt{control}-node.
+
+Voor dit gebruiksscenario kunnen er \textbf{wel} meerdere netwerken worden opgegeven, zolang er geen hosts zijn met meer dan \textbf{drie} gedefinieerde IP-adressen. Dit is een technische limitatie die stemt van VirtualBox's maximum van vier netwerkinterfaces per virtuele machine, waarvan de eerste is vrijgehouden voor de NAT-interface waar Vagrant gebruik van maakt.
+
+Dit gebruiksscenario houdt nog steeds \textbf{geen} rekening met de routering/verbinding tussen de verschillende netwerken, maar laat wel zien dat het mogelijk is om deze met Vagrant te beheren, wat als basis dient voor toekomstige uitbreidingen aan dit project.
 
 \section{Invoer}%
 
@@ -29,11 +115,11 @@
 
 <TODO>
 
-\subsection{Definitie van de (custom) rollen}
+\subsection{(Voorgedefinieerde) rollen}
 
 <TODO>
 
-\section{Verwerking}%
+\section{Parsering}%
 
 <TODO>
 
@@ -42,6 +128,10 @@
 <TODO>
 
 \subsection{Parsering van het implementatiediagram}%
+
+<TODO>
+
+\section{Validatie}
 
 <TODO>
 
