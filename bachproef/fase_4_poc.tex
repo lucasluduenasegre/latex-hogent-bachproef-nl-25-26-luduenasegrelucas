@@ -8,14 +8,14 @@
 \section{Algemeen overzicht}%
 \label{sec:alg_overzicht}
 
-De proof-of-concept bestaat uit een Python-script (\texttt{plantuml2ansible.py}) dat als invoer één of twee PlantUML-bestanden aanneemt (zijnde het netwerk- en/of implementatiediagram) en als uitvoer een gebruiksklare Vagrant- en/of Ansible-omgeving genereert, afhankelijk van het toegepaste gebruiksscenario (zie \autoref{sec:gebruiksscenarios}).
+De proof-of-concept bestaat uit een Python-script (``\texttt{plantuml2ansible.py}'') dat als invoer één of twee PlantUML-bestanden aanneemt (zijnde het netwerk- en/of implementatiediagram) en als uitvoer een gebruiksklare Vagrant- en/of Ansible-omgeving genereert, afhankelijk van het toegepaste gebruiksscenario (zie \nameref{sec:gebruiksscenarios}). De volledige codebase van de converter kan op de \hyperlink{GitHub-repository}{https://github.com/lucasluduenasegre/plantuml2ansible} gevonden worden.
 
 Het proces om deze diagrammen om te zetten verloopt in de volgende overkoepelende stappen: %, zoals weergegeven in \autoref{fig:converter_stappenplan}:
 
 \begin{enumerate}
     \item \textbf{Parsering}: de PlantUML-bronbestanden (netwerk- en/of implementatiediagram) worden ingelezen en de relevante data (hostnames, IP-adressen, \ldots) worden omgezet naar \emph{Python}-dictionaries), die in de volgende stappen worden verwerkt.
     \item \textbf{Validatie} (enkel relevant voor \nameref{subsec:fullmode}): de \emph{Python}-dictionaries van beide diagrammen worden gecontroleerd op consistentie; er wordt afgecheckt of alle hosts uit het netwerkdiagram (met een `\texttt{managed = true}'-attribuut) ook effectief voorkomen in het implementatiediagram.
-    \item \textbf{Codegeneratie}: Op basis van de \emph{Python}-dictionaries worden de uitvoerbestanden gegenereerd via Jinja2-sjablonen en sentinels (zie \autoref{subsec:ontwerpkeuzes}). Dit zijn bestanden zoals de Ansible-inventory, Ansible playbook, hostvariabele-bestanden en `\emph{Ansible Galaxy}'-afhankelijkheden. \ldots
+    \item \textbf{Codegeneratie}: Op basis van de \emph{Python}-dictionaries worden de uitvoerbestanden gegenereerd via Jinja2-sjablonen en sentinels (zie \nameref{subsec:ontwerpkeuzes}). Dit zijn bestanden zoals de Ansible-inventory, Ansible playbook, hostvariabele-bestanden en ``\emph{Ansible Galaxy}''-afhankelijkheden. \ldots
     \item \textbf{Asset-kopiëring}: Statische bestanden genaamd ``assets'', waarvan hun inhoud niet afhankelijk is van variabelen uit de \emph{Python}-dictionaries,  worden naar de uitvoermap gekopieerd. Dit houdt bestanden in zoals de \texttt{Vagrantfile}, voorgedefinieerde Ansible-rollen, Grafana dashboards en provisioning-scripts.
 \end{enumerate}
 
@@ -46,7 +46,7 @@ Dit heeft als voordeel dat er een duidelijke scheiding is tussen het omzettingsp
 In ideale omstandigheden zou de converter ontworpen kunnen worden zodat nieuwe rollen kunnen worden toegevoegd door enkel dit configuratiebestand aan te passen (zonder de originele broncode van het script te wijzigen), maar dat is in dit stadium niet het geval; veel van de logica achter deze rollen (zoals het definiëren DNS-zones en Prometheus scrape targets) moet nog opgevangen worden door het script.
 
 \paragraph{Sentinels voor diagramafhankelijke waarden}
-Bepaalde Ansible-variabelen kunnen pas worden ingevuld tijdens de omzetting, omdat hun waarden rechtstreeks worden afgeleid uit de diagraminhoud (bv. IP-adressen van DNS-servers, subnet masks of Prometheus scrape targets). Hiervoor wordt een \emph{sentinelpatroon} gebruikt: in \texttt{role-config.yml} worden dergelijke waarden aangeduid met een vaste naamgevingsconventie (\texttt{\_\_DIAGRAM\_*\_\_}), die op het moment van codegeneratie door de converter worden vervangen door de effectief afgeleide waarden.
+Bepaalde Ansible-variabelen kunnen pas worden ingevuld tijdens de omzetting, omdat hun waarden rechtstreeks worden afgeleid uit de diagraminhoud (bijvoorbeeld IP-adressen van DNS-servers, subnet masks of Prometheus scrape targets). Hiervoor wordt een \emph{sentinelpatroon} gebruikt: in \texttt{role-config.yml} worden dergelijke waarden aangeduid met een vaste naamgevingsconventie (\texttt{\_\_DIAGRAM\_*\_\_}), die op het moment van codegeneratie door de converter worden vervangen door de effectief afgeleide waarden.
 
 \subsection{Beperkingen}%
 \label{subsec:beperkingen_poc}
@@ -80,11 +80,11 @@ python plantuml2ansible.py [--v | --verbose] [--nwdiag] <nwdiag_path> [--uml] <u
 \label{code:cli_gebruik_full_mode}
 \end{codeblock}
 
-Dit is het primaire gebruiksscenario van dit script. Een netwerk- en (overeenkomend) implementatiediagram worden hier omgezet naar een omgeving die zowel opgezet wordt via Vagrant als geconfigureerd wordt via een inbegrepen Ansible \texttt{control} node, op basis van voorgedefinieerde rollen die aan de hosts zijn toegewezen. Het IP-adres van de \texttt{control}-node zal ingesteld worden als \textbf{het broadcast-adres van het netwerk - 2}, b.v. \texttt{172.16.255.253} voor het netwerk \texttt{172.16.0.0/16}.
+Dit is het primaire gebruiksscenario van dit script. Een netwerk- en (overeenkomend) implementatiediagram worden hier omgezet naar een omgeving die zowel opgezet wordt via Vagrant als geconfigureerd wordt via een inbegrepen Ansible \texttt{control}-node, op basis van voorgedefinieerde rollen die aan de hosts zijn toegewezen. Het IP-adres van de \texttt{control}-node zal ingesteld worden als \textbf{het broadcast-adres van het netwerk - 2}, b.v. \texttt{172.16.255.253} voor het netwerk \texttt{172.16.0.0/16}.
 
 Voor deze use case kunnen alleen hosts binnen \textbf{één enkel netwerk} gedefinieerd worden in het implementatiediagram. De configuratie van routering (en de geïmpliceerde, complexere firewallregels) valt buiten de scope van deze proof-of-concept, dat tot doel heeft aan te tonen dat het mogelijk is om UML-diagrammen om te zetten naar `\emph{configuration management}'-code. Daarom krijgt elke VM internettoegang via zijn unieke NAT-interface, die standaard door Vagrant wordt geleverd.
 
-Standaard gebruikt het script het \texttt{role-config.yml}-bestand als configuratiebestand voor de voorgedefinieerde rollen. Je kunt desgewenst een eigen configuratiebestand opgeven met het `\texttt{--role-config}'-CLI-argument.
+Standaard gebruikt het script het \texttt{role-config.yml}-bestand als configuratiebestand voor de voorgedefinieerde rollen. De gebruiker kan desgewenst een eigen configuratiebestand opgeven met het `\texttt{--role-config}'-CLI-argument.
 
 \subsection{``IaC-only mode'' (``enkel-IaC-modus'')}%
 \label{subsec:iaconlymode}
@@ -97,27 +97,508 @@ python plantuml2ansible.py [--v | --verbose] [--nwdiag] <nwdiag_path> [[--output
 \label{code:cli_gebruik_iac_only_mode}
 \end{codeblock}
 
-Dit is niet de belangrijkste toepassing van dit script, maar het is wel handig als je een kant-en-klare Vagrant-omgeving wilt hebben, maar tegelijkertijd meer vrijheid wilt bij het opzetten van \emph{configuration management} (met of zonder Ansible). Daarom bevat deze omgeving geen Ansible \texttt{control}-node.
+Dit is niet de belangrijkste toepassing van dit script, maar het is wel nuttig als men een kant-en-klare Vagrant-omgeving en tegelijkertijd meer vrijheid wilt hebben bij het opzetten van \emph{configuration management} (met of zonder Ansible). Daarom bevat deze omgeving geen Ansible \texttt{control}-node.
 
 Voor dit gebruiksscenario kunnen er \textbf{wel} meerdere netwerken worden opgegeven, zolang er geen hosts zijn met meer dan \textbf{drie} gedefinieerde IP-adressen. Dit is een technische limitatie die stemt van VirtualBox's maximum van vier netwerkinterfaces per virtuele machine, waarvan de eerste is vrijgehouden voor de NAT-interface waar Vagrant gebruik van maakt.
 
 Dit gebruiksscenario houdt nog steeds \textbf{geen} rekening met de routering/verbinding tussen de verschillende netwerken, maar laat wel zien dat het mogelijk is om deze met Vagrant te beheren, wat als basis dient voor toekomstige uitbreidingen aan dit project.
 
 \section{Invoer}%
+\label{sec:invoer}
 
-<TODO>
+De converter accepteert maximum drie invoerbestanden: een netwerkdiagram, een implementatiediagram en, indien gewenst, een rolconfiguratiebestand. Welke bestanden vereist zijn, hangt af van het gewenste gebruiksscenario (zie \nameref{sec:gebruiksscenarios}); de ``full mode'' vereist beide diagrammen, terwijl de ``IaC-only mode'' enkel het netwerkdiagram nodig heeft.
+
+Zoals eerder vermeld gaat de converter ervan uit dat de ingevoerde PlantUML-diagrammen syntactisch correct zijn en dus effectief afbeeldingen renderen binnen die context. De converter zorgt voor een groot deel van de foutafhandeling om de gewenste omgeving nauwkeurig te produceren, maar de verantwoordelijkheid voor correcte invoer ligt grotendeels bij de eindgebruiker. De \texttt{.puml}-bestanden dienen daarom eerst gerendeerd te worden voordat het script wordt uitgevoerd.
 
 \subsection{Formaat van het netwerkdiagram}%
+\label{subsec:formaat_nwdiag}
 
-<TODO>
+Het netwerkdiagram wordt aangeboden als een PlantUML-bestand met de \texttt{@startnwdiag}-notatie. Dit is een diagramtype dat buiten de strikte UML-standaard valt, maar door PlantUML ondersteund wordt voor het visualiseren van netwerktopologieën \autocite{PlantUML2025}.
+
+Dit diagram geeft de logische topologie weer van netwerken en hardware-elementen (in dit geval Vagrant-VM's) in een gegeven omgeving, inclusief met hun respectievelijke netwerk- en IP-adressen. Binnen de context van deze converter kunnen ook optionele attributen zoals hardwarespecificaties (hoeveelheid RAM en aantal CPU-cores) worden vermeld.
+
+Meerdere netwerken \textbf{kunnen} gedefinieerd worden voor het \nameref{subsec:iaconlymode}-gebruiksscenario, zolang een host niet meer dan \textbf{3} gedefinieerde IP-adressen heeft.
+
+Hier volgt een voorbeeld van een mogelijk netwerkdiagram.
+
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+@startnwdiag test_env
+
+network test.lan {
+  address = "172.26.0.0/16"
+
+  unmanaged_router [address = "172.26.255.254", managed = false, shape = "node", color = LightSalmon]
+  web [description = "web", address = "172.26.0.10", shape = "node"]
+  dns [description = "dns", address = "172.26.0.20", shape = "node"]
+  mon [description = "monitoring", address = "172.26.0.30", cpus = 2, memory = 2048, shape = "node"]
+}
+
+network unmanaged.lan {
+  address = "192.168.26.0/24"
+  color = LightSalmon
+
+  unmanaged_router [address = "192.168.26.254", managed = false, shape = "node", color = LightSalmon]
+  unmanaged_workstation [address = "192.168.26.128", managed = false, shape = "node", color = LightSalmon]
+}
+
+@endnwdiag
+\end{lstlisting}
+\caption[Voorbeeld netwerkdiagram PlantUML]{Voorbeeld van een netwerkdiagram in PlantUML.}
+\label{code:vb_nwdiag}
+\end{codeblock}
+
+Aan het begin en het einde van het bestand worden ``\texttt{@startnwdiag}''- en ``\texttt{@endnwdiag}''-lijnen toegevoegd om het netwerkdiagram af te bakenen. Na ``\texttt{@startnwdiag}'' wordt ook de naam van het diagram meegegeven (in dit geval ``\texttt{text\_env}''); dit wordt standaard gebruikt als de naam voor de uitvoermap. Deze naam moet ook overeenkomen met die van het implementatiediagram, in geval van het \nameref{subsec:fullmode}-gebruiksscenario.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+@startnwdiag test_env
+'...
+@endnwdiag
+\end{lstlisting}
+\caption[Afbakening van netwerkdiagram]{Afbakening van het netwerkdiagram met \texttt{@startnwdiag} \& \texttt{@endnwdiag}.}
+\label{code:vb_nwdiag_afbakening}
+\end{codeblock}
+\end{codeblockfixed}
+
+Vervolgens wordt elk netwerk gedefinieerd met de naam van het netwerk (die onder andere gebruikt wordt voor de DNS-zone) en het netwerkadres (enkel IPv4 wordt ondersteund).
+
+``\texttt{color}'' is een optioneel, visueel attribuut die de kleur bepaalt die gerendeerd wordt door PlantUML, maar deze wordt genegeerd door de converter \autocite{PlantUML2026a}.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+'...
+network unmanaged.lan {
+  address = "192.168.26.0/24"
+  color = LightSalmon
+
+  '...
+}
+'...
+\end{lstlisting}
+\caption[Netwerkdefinitie in netwerkdiagram]{Definitie van een netwerk in het netwerkdiagram (met een optioneel ``\texttt{color}''-attribuut).}
+\label{code:vb_nwdiag_network}
+\end{codeblock}
+\end{codeblockfixed}
+
+Voor elk netwerk kunnen er hosts gedefinieerd worden met hun overeenkomend IP-adres (dit is ook het enige verplichte attribuut, en IPv4 wordt hier nogmaals enkel ondersteund).
+Indien een host meerdere IP-adressen heeft, moet deze host voor elk overeenkomend netwerk herdefinieerd worden.
+
+Standaard wordt het ``\texttt{description}''-attribuut (wat ook gerendeerd wordt door PlantUML) gebruikt als de uiteindelijke hostname; als deze niet is gedefinieerd, wordt het eerste woord van de lijn (de ``\emph{host identifier}'') gebruikt (bijvoorbeeld ``unmanaged\_router''). Wegens \emph{Unix}-richtlijnen worden in de hostname underscores omgezet naar koppeltekens.
+
+Hosts met het ``\texttt{managed = "false"}''-attribuut worden genegeerd door de converter maar worden wel gerendeerd door PlantUML. Dit is handig voor hosts en netwerken voor te stellen die niet door de converter in acht moeten genomen worden.
+
+Net zoals ``\texttt{color}'' is ``\texttt{shape}'' puur een visueel attribuut die de vorm (een PlantUML ``\emph{Deployment Diagram}''-element zoals ``\texttt{node}'', ``\texttt{database}'', ``\texttt{storage}'', \ldots) van een host bepaalt, maar genegeerd zal worden door de converter \autocite{PlantUML2025}.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+'...
+network test.lan {
+  address = "172.26.0.0/16"
+
+  unmanaged_router [address = "172.26.255.254", managed = false, shape = "node", color = LightSalmon]
+  web [description = "web", address = "172.26.0.10", shape = "node"]
+  dns [description = "dns", address = "172.26.0.20", shape = "node"]
+  mon [description = "monitoring", address = "172.26.0.30", cpus = 2, memory = 2048, shape = "node"]
+}
+'...
+\end{lstlisting}
+\caption[Hostdefinitie in netwerkdiagram]{Definitie van hosts in het netwerkdiagram (met optionele attributen).}
+\label{code:vb_nwdiag_hosts}
+\end{codeblock}
+\end{codeblockfixed}
+
+Deze bovenstaande, volledige code zal binnen PlantUML de volgende afbeelding renderen:
+
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{../graphics/vb_nwdiag.png}
+  \caption[Afbeeldingsformaat van voorbeeld netwerkdiagram PlantUML]{\label{fig:vb_nwdiag.png}Afbeeldingsformaat van het voorbeeld van een netwerkdiagram in PlantUML.}
+\end{figure*}
 
 \subsection{Formaat van het implementatiediagram}%
+\label{subsec:formaat_uml}
 
-<TODO>
+Het implementatiediagram wordt aangeboden als een PlantUML-bestand met de \texttt{@startuml}-notatie, ook bekend als een \emph{deployment diagram}.
 
-\subsection{(Voorgedefinieerde) rollen}
+In dit diagram wordt de configuratie van de hosts (hier aangeduid als ``nodes'') in een gegeven omgeving gerepresenteerd, zoals beschreven door hun componenten (in dit geval voorgedefinieerde Ansible-rollen) en hun onderlinge verbindingen. Zoals eerder vermeld, kunnen in dit diagram enkel hosts binnen \textbf{één netwerk} gedefinieerd worden voor het \nameref{subsec:fullmode}-gebruiksscenario.
 
-<TODO>
+Onderstaand voorbeeld illustreert een mogelijk implementatiediagram (dat overeenkomt met het netwerkdiagram uit \nameref{code:vb_nwdiag}).
+
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+@startuml test_env
+
+set separator .
+left to right direction
+
+node web as "web" {
+    component dns_client
+    component mysqld_exporter
+    component node_exporter
+    component web_server
+}
+
+node dns as "dns" {
+    component bind_exporter
+    component dns_client
+    component dns_server_primary
+    component node_exporter
+}
+
+node mon as "monitoring" {
+    component dns_client
+    component monitoring_server
+    component node_exporter
+}
+
+dns.dns_client -[#teal]-> dns.dns_server_primary
+
+mon.dns_client -[#teal]-> dns.dns_server_primary
+mon.monitoring_server -[#coral]-> dns.bind_exporter
+mon.monitoring_server -[#coral]-> dns.node_exporter
+mon.monitoring_server -[#coral]-> mon.node_exporter
+mon.monitoring_server -[#coral]-> web.mysqld_exporter
+mon.monitoring_server -[#coral]-> web.node_exporter
+
+web.dns_client -[#teal]-> dns.dns_server_primary
+
+@enduml
+\end{lstlisting}
+\caption[Voorbeeld implementatiediagram PlantUML]{Voorbeeld van een implementatiediagram in PlantUML.}
+\label{code:vb_uml}
+\end{codeblock}
+
+Analoog met \nameref{subsec:formaat_nwdiag}, worden de ``\texttt{@startuml}''- en ``\texttt{@enduml}''-lijnen toegevoegd aan het begin en het einde van het bestand om het implementatiediagram af te bakenen. Nogmaals de naam van het implementatiediagram moet hier overeenkomen met die van het netwerkdiagram.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+@startuml test_env
+'...
+@enduml
+\end{lstlisting}
+\caption[Afbakening van implementatiediagram]{Afbakening van het implementatiediagram met \texttt{@startuml} \& \texttt{@enduml}.}
+\label{code:vb_uml_afbakening}
+\end{codeblock}
+\end{codeblockfixed}
+
+De ``\texttt{set separator .}''-lijn is verplicht, om de namen van componenten correct te koppelen aan elke host. Dit voorkomt ook naamconflicten bij rollen die op meerdere hosts voorkomen (bijv. \texttt{dns.node\_exporter} versus \texttt{web.node\_exporter}). De ``\texttt{left to right direction}''-lijn is puur visueel en heeft geen invloed op het parseringsproces.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+'...
+set separator .
+left to right direction
+'...
+\end{lstlisting}
+\caption[``\texttt{set separator .}'' \& ``\texttt{left to right direction}'']{De ``\texttt{set separator .}''- en ``\texttt{left to right direction}''-lijnen.}
+\label{code:vb_uml_afbakening}
+\end{codeblock}
+\end{codeblockfixed}
+
+Voor de hosts (in deze context ``nodes'') wordt het woord direct na ``\texttt{as}'' gebruikt als de hostname (die moet overeenkomen met die van het netwerkdiagram). Indien deze niet wordt gedefinieerd, wordt het woord naast ``\texttt{node}'' gebruikt. Aangezien er voor deze proof-of-concept enkel gewerkt wordt met één netwerk bij hosts in implementatiediagrammen, moet dit netwerk niet hogerop gedefinieerd worden zoals bij het netwerkdiagram. 
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+'...
+node mon as "monitoring" {
+    '...
+}
+'...
+\end{lstlisting}
+\caption[Hostdefinitie in implementatiediagram]{Definitie van hosts in het implementatiediagram.}
+\label{code:vb_uml_hosts}
+\end{codeblock}
+\end{codeblockfixed}
+
+De voorgedefinieerde Ansible-rollen, die aan de hosts worden toegekend, worden gedefinieerd met het ``\texttt{component}''-sleutelwoord gevolgd door hun ``\emph{role identifier}'' (zie \nameref{sec:beschikbare_rollen}). % komt overeen met "Available roles" in het README.md-bestand van de plantuml2ansible-repository.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+'...
+node web as "web" {
+    component dns_client
+    component mysqld_exporter
+    component node_exporter
+    component web_server
+}
+'...
+\end{lstlisting}
+\caption[Roldefinitie in implementatiediagram]{Definitie van rollen in het implementatiediagram.}
+\label{code:vb_uml_rollen}
+\end{codeblock}
+\end{codeblockfixed}
+
+De verbindingen tussen rollen (in dit geval DNS-clients die queries sturen naar de DNS-server en de monitoringserver die exporters scrapet) worden altijd aangeduid met pijlen die van links naar rechts wijzen (bijvoorbeeld ``-->''). Deze kunnen echter wel opgemaakt worden volgens de toegelaten syntax van PlantUML \autocite{PlantUML2020}.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}[language=plantuml]
+mon.dns_client -[#teal]-> dns.dns_server_primary
+mon.monitoring_server -[#coral]-> dns.bind_exporter
+mon.monitoring_server -[#coral]-> dns.node_exporter
+mon.monitoring_server -[#coral]-> mon.node_exporter
+mon.monitoring_server -[#coral]-> web.mysqld_exporter
+mon.monitoring_server -[#coral]-> web.node_exporter
+\end{lstlisting}
+\caption[Rolverbindingen in implementatiediagram]{Definitie van rolverbindingen in het implementatiediagram.}
+\label{code:vb_uml_rolverbindingen}
+\end{codeblock}
+\end{codeblockfixed}
+
+\subsection{Rolconfiguratie}%
+\label{subsec:rolconfig}
+
+Er zijn een aantal vooraf gedefinieerde rollen (te vinden in ``\texttt{assets/ansible/roles}'', zie \nameref{sec:beschikbare_rollen}) die voor elke beheerde host in het implementatiediagram kunnen worden opgegeven.
+
+Deze rollen (samen met een aantal rollen die rechtstreeks van \emph{Ansible Galaxy} komen) worden toegereikt in het implementatiediagram aan de hand van vereenvoudigde rolidentificatoren. De koppeling tussen deze rolidentificatoren en de volwaardige Ansible-rollen wordt beheerd via een extern YAML-configuratiebestand genaamd ``\texttt{role-config.yml}'' (te vinden in dezelfde map als ``\texttt{plantuml2ansible.py}'').
+
+Het volgende codefragment geef als voorbeeld de definitie van de \\``\texttt{monitoring\_server}''-rol in ``\texttt{role-config.yml}''.
+
+\begin{codeblock}
+\begin{minted}{yaml}
+roles:
+#...
+  monitoring_server:
+    fqcn: monitoring_server
+    priority: 20
+    depends_on:
+      - dns_server_primary
+      - dns_server_secondary
+    galaxy_collections:
+      - prometheus.prometheus
+      - grafana.grafana
+    assets:
+      - ansible/files/grafana/default.yml
+    host_vars:
+      grafana_alerting: {}
+      grafana_dashboards_dir: /var/lib/grafana/dashboards
+      grafana_datasources:
+        - name: prometheus
+          type: prometheus
+          access: proxy
+          url: "http://localhost:9090"
+          basicAuth: false
+      grafana_provisioning_synced: true
+      grafana_security:
+        admin_user: admin
+        admin_password: root
+      prometheus_scrape_configs: __DIAGRAM_SCRAPE_CONFIGS__
+      rhbase_firewall_allow_ports:
+        - 53/tcp
+        - 53/udp
+        - 3000/tcp
+  #... (Andere rollen worden hiernaast gedefinieerd)
+\end{minted}
+\caption[Voorbeeld role-config.yml]{Vereenvoudigde rolinvoer in \texttt{role-config.yml}}
+\label{code:vb_roleconfig}
+\end{codeblock}
+
+Dit bestand definieert per rol de ``\texttt{fqcn}'' (``\emph{Fully Qualified Collection Name}''), die Ansible gebruikt in de playbook als rolnaam. Dit is tevens de enige verplichte key voor alle gedefinieerde rollen; alle anderen zijn optioneel.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}{yaml}
+roles:
+#...
+  monitoring_server:
+    fqcn: monitoring_server
+#...
+\end{minted}
+\caption[``\texttt{fqcn}'' in role-config.yml]{``\texttt{fqcn}''-key (``\emph{Fully Qualified Collection Name}'') van een rol in \texttt{role-config.yml}}
+\label{code:vb_roleconfig_fqcn}
+\end{codeblock}
+\end{codeblockfixed}
+
+``\texttt{priority}'' bepaalt de volgorde waarin de rol binnen de play van een host wordt uitgevoerd. Rollen met een lagere prioriteitswaarde worden als eerste uitgevoerd; de standaardwaarde is \texttt{100}.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}{yaml}
+roles:
+#...
+  monitoring_server:
+    #...
+    priority: 20
+#...
+\end{minted}
+\caption[``\texttt{priority}'' in role-config.yml]{``\texttt{priority}''-key van een rol in \texttt{role-config.yml}}
+\label{code:vb_roleconfig_priority}
+\end{codeblock}
+\end{codeblockfixed}
+
+``\texttt{depends\_on}'' bepaalt welke rollen op andere hosts moeten uitgevoerd worden voor de play van deze rol wordt uitgevoerd. Zo moeten hosts met de rol ``\texttt{dns\_server\_primary}'' of ``\texttt{dns\_server\_secondary}'' hun play eerst voltooien voordat de hosts met de rol ``\texttt{dns\_client}'' aan de beurt zijn.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}{yaml}
+roles:
+#...
+  monitoring_server:
+    #...
+    depends_on:
+      - dns_server_primary
+      - dns_server_secondary
+#...
+\end{minted}
+\caption[``\texttt{depends\_on}'' in role-config.yml]{``\texttt{depends\_on}''-key van een rol in \texttt{role-config.yml}}
+\label{code:vb_roleconfig_depends_on}
+\end{codeblock}
+\end{codeblockfixed}
+
+``\texttt{galaxy\_roles}'' en ``\texttt{galaxy\_collections}'' verwijzen naar de ``\emph{Ansible Galaxy}''-rollen en -collecties die op de Ansible \texttt{control}-node moeten zijn geïnstalleerd voor de uitvoer van het playbook.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}{yaml}
+roles:
+#...
+  monitoring_server:
+    #...
+    galaxy_collections:
+      - prometheus.prometheus
+      - grafana.grafana
+#...
+\end{minted}
+\caption[``\texttt{galaxy\_collections}'' in role-config.yml]{``\texttt{galaxy\_collections}''-key van een rol in \texttt{role-config.yml} (analoog met ``\texttt{galaxy\_roles}'')}
+\label{code:vb_roleconfig_galaxy_collections}
+\end{codeblock}
+\end{codeblockfixed}
+
+``\texttt{assets}'' verwijst naar de bestanden in de ``\texttt{assets/}''-map die naar de Ansible \texttt{control}-node moeten worden gekopieerd voor de uitvoer van het playbook.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}{yaml}
+roles:
+#...
+  monitoring_server:
+    #...
+    assets:
+      - ansible/files/grafana/default.yml
+#...
+\end{minted}
+\caption[``\texttt{assets}'' in role-config.yml]{``\texttt{assets}''-key van een rol in \texttt{role-config.yml}}
+\label{code:vb_roleconfig_assets}
+\end{codeblock}
+\end{codeblockfixed}
+
+De meeste gegevens die elke rol nodig heeft, worden afgeleid uit het netwerk- als het implementatiediagram en worden vervolgens verwerkt door de converter om ``\texttt{host\_vars}'' te genereren (variabelen die per host worden toegekend, ook gekend als \emph{hostvariabelen}). Deze worden weggeschreven naar het ``\texttt{host\_vars}''-bestand (in \emph{YAML}-formaat) van de host.
+Variabelen waarvan de waarde pas tijdens de omzetting bepaald kan worden op basis van de diagraminhoud -- zoals IP-adressen van DNS-servers of scrape targets voor de monitoring server -- worden in dit bestand aangeduid met een sentinel-waarde (bijvoorbeeld ``\texttt{\_\_DIAGRAM\_SCRAPE\_CONFIGS\_\_}'') (zie \nameref{subsec:ontwerpkeuzes}).
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}{yaml}
+roles:
+#...
+  monitoring_server:
+    #...
+    host_vars:
+      grafana_alerting: {}
+      grafana_dashboards_dir: /var/lib/grafana/dashboards
+      grafana_datasources:
+        - name: prometheus
+          type: prometheus
+          access: proxy
+          url: "http://localhost:9090"
+          basicAuth: false
+      grafana_provisioning_synced: true
+      grafana_security:
+        admin_user: admin
+        admin_password: root
+      prometheus_scrape_configs: __DIAGRAM_SCRAPE_CONFIGS__
+      rhbase_firewall_allow_ports:
+        - 53/tcp
+        - 53/udp
+        - 3000/tcp
+#...
+\end{minted}
+\caption[``\texttt{host\_vars}'' in role-config.yml]{``\texttt{host\_vars}''-key van een rol in \texttt{role-config.yml}}
+\label{code:vb_roleconfig_host_vars}
+\end{codeblock}
+\end{codeblockfixed}
+
+\section{Beschikbare rollen}%
+\label{sec:beschikbare_rollen}
+
+De volgende rollen kunnen worden opgegeven als \texttt{component}-elementen in het implementatiediagram (zie \nameref{subsec:formaat_uml}). De rolidentificator is de naam die na het \texttt{component}-sleutelwoord wordt opgegeven; de \emph{Fully Qualified Collection Name} (FQCN) is de naam die Ansible gebruikt in de playbook.
+
+\begin{table}[H]
+\centering
+\caption[Beschikbare rollen]{Overzicht van de beschikbare rollen}
+\label{tab:beschikbare_rollen}
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Rolidentificator} & \textbf{FQCN} \\
+\midrule
+\texttt{dhcp\_server}           & \texttt{bertvv.dhcp} \\
+\texttt{dns\_server\_primary}   & \texttt{dns\_server} \\
+\texttt{dns\_server\_secondary} & \texttt{dns\_server} \\
+\texttt{dns\_client}            & \texttt{dns\_client} \\
+\texttt{monitoring\_server}     & \texttt{monitoring\_server} \\
+\texttt{apache\_exporter}       & \texttt{prometheus.prometheus.apache\_exporter} \\
+\texttt{bind\_exporter}         & \texttt{prometheus.prometheus.bind\_exporter} \\
+\texttt{mysqld\_exporter}       & \texttt{prometheus.prometheus.mysqld\_exporter} \\
+\texttt{node\_exporter}         & \texttt{prometheus.prometheus.node\_exporter} \\
+\texttt{web\_server}            & \texttt{web\_server} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+De volgende subsecties beschrijven de kernfunctionaliteit van elke rol.
+
+\subsection{\texttt{dhcp\_server}}%
+\label{subsec:rol_dhcp_server}
+
+Configureert een ISC DHCP-server via de \texttt{bertvv.dhcp} Ansible Galaxy-rol. Het subnet, broadcastadres, netmasker, domeinnaam en DNS-serveradressen worden automatisch afgeleid uit het netwerkdiagram. Het bereik voor dynamische IP-adressen loopt altijd van het \textbf{middelpunt van het subnet} tot het \textbf{broadcastadres van het netwerk - 3} (b.v. \texttt{172.16.128.0}--\texttt{172.16.255.252} voor \texttt{172.16.0.0/16}). De standaard en maximale leasetijden worden ingesteld op 4 uur (14400 seconden). Poort \texttt{67/udp} wordt geopend in de firewall.
+
+Deze rol is afhankelijk van \texttt{dns\_server\_primary} en/of \texttt{dns\_server\_secondary}, die eerst geconfigureerd moeten zijn omdat hun IP-adressen worden gebruikt voor \texttt{dhcp\_global\_domain\_name\_servers}.
+
+\subsection{\texttt{dns\_server\_primary} \& \texttt{dns\_server\_secondary} (BIND9)}%
+\label{subsec:rol_dns_server}
+
+Configureert een primaire of secundaire autoritatieve DNS-server via de \texttt{bertvv.bind} Ansible Galaxy-rol, ingebakken in de aangepaste \texttt{dns\_server}-rol. De aangepaste rol opent ook TCP-poort 8053 in SELinux (\texttt{dns\_port\_t}) ter ondersteuning van de \texttt{bind\_exporter}.
+
+De zone-definities (forward en reverse) worden automatisch gegenereerd vanuit het netwerkdiagram via de sentinels \texttt{\_\_DIAGRAM\_BIND\_ZONES\_PRIMARY\_\_} en \texttt{\_\_DIAGRAM\_BIND\_ZONES\_SECONDARY\_\_}. DNSSEC is uitgeschakeld; recursie is ingeschakeld met \texttt{10.0.2.3} (de interne DNS van VirtualBox) en \texttt{1.1.1.1} als upstream resolvers. Zone-overdrachten worden beperkt tot de IP-adressen van eventuele secundaire DNS-servers in het diagram. Poorten \texttt{53/tcp} en \texttt{53/udp} worden geopend in de firewall.
+
+\subsection{\texttt{dns\_client}}%
+\label{subsec:rol_dns_client}
+
+Een lichte aangepaste rol die de host als DNS-client configureert door het \texttt{/etc/resolv.conf}-bestand aan te passen. Bestaande \texttt{nameserver}-vermeldingen worden verwijderd; het zoekdomein wordt ingesteld op de domeinnaam van het netwerk en de DNS-serveradressen worden afgeleid uit het diagram via de sentinel \texttt{\_\_DIAGRAM\_DNS\_SERVER\_IPS\_\_}. Deze rol wordt uitgevoerd nadat zowel \texttt{dns\_server\_primary} als \texttt{dns\_server\_secondary} geconfigureerd zijn.
+
+\subsection{\texttt{monitoring\_server} (Grafana + Prometheus)}%
+\label{subsec:rol_monitoring_server}
+
+Installeert een monitoringstack bestaande uit \emph{Prometheus} en \emph{Grafana}, via respectievelijk de \texttt{prometheus.prometheus}- en \texttt{grafana.grafana} Ansible Galaxy-collecties. Na het uitvoeren van beide upstream-rollen kopieert de aangepaste \texttt{monitoring\_server}-rol de Grafana-dashboardbestanden (op basis van de exporterrollen in het diagram) van de Ansible \texttt{control}-node naar de server.
+
+Grafana wordt vooraf geconfigureerd met Prometheus als databron (beschikbaar op \texttt{http://localhost:9090}), met gesynchroniseerde provisioning zodat dashboards automatisch worden geladen bij het opstarten. De standaard beheerdersgegevens zijn \texttt{admin}/\texttt{root}. De Prometheus-scrape-targets worden automatisch gegenereerd uit de verbindingen in het implementatiediagram via de sentinel \texttt{\_\_DIAGRAM\_SCRAPE\_CONFIGS\_\_}. Poorten \texttt{3000/tcp} (Grafana), \texttt{53/tcp} en \texttt{53/udp} worden geopend in de firewall.
+
+\subsection{Prometheus-exporters}%
+\label{subsec:rol_exporters}
+
+De exporterrollen behoren tot de \texttt{prometheus.prometheus} Ansible Galaxy-collectie en zijn lichtgewicht agents die naast hun respectieve diensten worden geïnstalleerd. Ze stellen metrieken beschikbaar op een specifieke poort, die door de Prometheus-instantie van de monitoringserver worden gescraped. Elke exporterrol definieert ook een vooraf gebouwd Grafana-dashboardbestand dat automatisch naar de monitoringserver wordt gekopieerd.
+
+\begin{description}
+\item[\texttt{apache\_exporter}] Stelt \emph{Apache HTTP server}-metrieken beschikbaar op \textbf{poort 9117/tcp} door het \texttt{mod\_status}-eindpunt te scrapen. Stelt ook \\\texttt{httpd\_status\_enable: true} in.
+\item[\texttt{bind\_exporter}] Stelt \emph{BIND9 DNS-server}-metrieken beschikbaar op \textbf{poort 9119/tcp}. Stelt \texttt{bind\_statistics\_channels: true} in zodat BIND zijn interne statistieken beschikbaar stelt.
+\item[\texttt{mysqld\_exporter}] Stelt \emph{MariaDB/MySQL}-metrieken beschikbaar op \textbf{poort 9104/tcp} via een Unix-socket (\texttt{/var/lib/mysql/mysql.sock}). Installeert ook \texttt{python3-PyMySQL} en activeert diverse InnoDB/processlist-collectors.
+\item[\texttt{node\_exporter}] Stelt algemene \emph{systeemmetrieken} (CPU, geheugen, schijf, netwerk, enz.) beschikbaar op \textbf{poort 9100/tcp}. Dit is doorgaans de meest breed toegepaste exporterrol in een omgeving.
+\end{description}
+
+\subsection{\texttt{web\_server} (Apache + MariaDB)}%
+\label{subsec:rol_web_server}
+
+Configureert een \emph{Apache HTTP-server} (optioneel met \emph{HTTPS}) en een \emph{MariaDB}-database via de \texttt{bertvv.httpd} Ansible Galaxy-rol, ingebakken in de aangepaste \texttt{web\_server}-rol. Bij de eerste uitvoering (gedetecteerd via een registerwijziging) worden \texttt{db.sql} geïmporteerd in de geconfigureerde database, een applicatiedatabasegebruiker (\texttt{appuser} op \texttt{appdb}) aangemaakt met volledige rechten, en een read-only \texttt{exporter}-gebruiker voor \texttt{mysqld\_exporter}.
+
+HTTPS via TLS wordt geconfigureerd aan de hand van \texttt{ca.crt} en \texttt{ca.key}, die handmatig aangemaakt moeten worden (zie \nameref{sec:invoer}). % Of verwijs naar een andere sectie indien relevant
+Poorten \texttt{80/tcp} (HTTP) en \texttt{443/tcp} (HTTPS) worden geopend in de firewall; de SELinux-boolean \texttt{httpd\_can\_network\_connect} wordt ingeschakeld.
 
 \section{Parsering}%
 
@@ -131,7 +612,7 @@ Dit gebruiksscenario houdt nog steeds \textbf{geen} rekening met de routering/ve
 
 <TODO>
 
-\section{Validatie}
+\section{Validatie}%
 
 <TODO>
 

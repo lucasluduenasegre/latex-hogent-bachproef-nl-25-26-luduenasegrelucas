@@ -73,7 +73,6 @@
   morecomment=[s]{/'}{'/},
   % Strings
   morestring=[b]",
-  morestring=[b]',
   sensitive=false,
 }
 
@@ -103,10 +102,19 @@
 
 \usepackage{caption}
 
-% Niet-zwevende omgeving die de listing-teller gebruikt (om zowel lstlistings als minted tegelijk te kunnen gebruiken)
+% "codeblock"; non-floating environment die de listing-teller gebruikt (om zowel lstlistings als minted tegelijk te kunnen gebruiken)
 \newenvironment{codeblock}{%
   \captionsetup{type=listing}%
 }{}
+
+\newenvironment{codeblockfixed}{%
+  \medskip\begin{minipage}{\linewidth}%
+}{%
+  \end{minipage}\medskip%
+}
+
+\def\lstlistingautorefname{codefragment}
+\def\listingautorefname{codefragment}
 
 %% Formatting for minted environments.
 \setminted{%
