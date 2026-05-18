@@ -453,7 +453,7 @@ roles:
 \end{codeblock}
 \end{codeblockfixed}
 
-``\texttt{galaxy\_roles}'' en ``\texttt{galaxy\_collections}'' verwijzen naar de ``\emph{Ansible Galaxy}''-rollen en -collecties die op de Ansible \texttt{control}-node moeten zijn geïnstalleerd voor de uitvoer van het playbook.
+``\texttt{galaxy\_roles}'' en ``\texttt{galaxy\_collections}'' verwijzen naar de ``\emph{Ansible Galaxy}''-rollen en -collections die op de Ansible \texttt{control}-node moeten zijn geïnstalleerd voor de uitvoer van het playbook.
 
 \begin{codeblockfixed}
 \begin{codeblock}
@@ -528,7 +528,8 @@ roles:
 \section{Beschikbare rollen}%
 \label{sec:beschikbare_rollen}
 
-De volgende rollen kunnen worden opgegeven als \texttt{component}-elementen in het implementatiediagram (zie \nameref{subsec:formaat_uml}). De rolidentificator is de naam die na het \texttt{component}-sleutelwoord wordt opgegeven; de \emph{Fully Qualified Collection Name} (FQCN) is de naam die Ansible gebruikt in de playbook.
+De volgende rollen kunnen worden opgegeven als \texttt{component}-elementen in het implementatiediagram (zie \nameref{subsec:formaat_uml}).
+De rolidentificator is de naam die na het \texttt{component}-sleutelwoord wordt opgegeven in het implementatiediagram en de \emph{Fully Qualified Collection Name} (FQCN) is de naam die Ansible vervolgens gebruikt in de playbook.
 
 \begin{table}[H]
 \centering
@@ -557,47 +558,54 @@ De volgende subsecties beschrijven de kernfunctionaliteit van elke rol.
 \subsection{\texttt{dhcp\_server}}%
 \label{subsec:rol_dhcp_server}
 
-Configureert een ISC DHCP-server via de \texttt{bertvv.dhcp} Ansible Galaxy-rol. Het subnet, broadcastadres, netmasker, domeinnaam en DNS-serveradressen worden automatisch afgeleid uit het netwerkdiagram. Het bereik voor dynamische IP-adressen loopt altijd van het \textbf{middelpunt van het subnet} tot het \textbf{broadcastadres van het netwerk - 3} (b.v. \texttt{172.16.128.0}--\texttt{172.16.255.252} voor \texttt{172.16.0.0/16}). De standaard en maximale leasetijden worden ingesteld op 4 uur (14400 seconden). Poort \texttt{67/udp} wordt geopend in de firewall.
+Deze rol configureert een \emph{ISC} DHCP-server via de ``\texttt{bertvv.dhcp}'' Ansible Galaxy-rol. Het subnet, broadcastadres, netmasker, domeinnaam en DNS-serveradressen worden automatisch afgeleid uit het netwerkdiagram tijdens het verwerkingsproces. Het bereik voor dynamische IP-adressen loopt altijd van het \textbf{middelpunt van het subnet} tot het \textbf{broadcastadres van het netwerk - 3}, bijvoorbeeld ``\texttt{172.16.128.0}'' tot en met ``\texttt{172.16.255.252}'' voor het netwerk ``\texttt{172.16.0.0/16}''). De standaard en maximale leasetijden worden ingesteld op 4 uur (14400 seconden). 
 
 Deze rol is afhankelijk van \texttt{dns\_server\_primary} en/of \texttt{dns\_server\_secondary}, die eerst geconfigureerd moeten zijn omdat hun IP-adressen worden gebruikt voor \texttt{dhcp\_global\_domain\_name\_servers}.
+
+Poort \texttt{67/udp} wordt geopend in de firewall.
 
 \subsection{\texttt{dns\_server\_primary} \& \texttt{dns\_server\_secondary} (BIND9)}%
 \label{subsec:rol_dns_server}
 
-Configureert een primaire of secundaire autoritatieve DNS-server via de \texttt{bertvv.bind} Ansible Galaxy-rol, ingebakken in de aangepaste \texttt{dns\_server}-rol. De aangepaste rol opent ook TCP-poort 8053 in SELinux (\texttt{dns\_port\_t}) ter ondersteuning van de \texttt{bind\_exporter}.
+Deze rollen configureren een primaire of secundaire autoritatieve \emph{BIND9} DNS-server via de ``\texttt{bertvv.bind}'' Ansible Galaxy-rol. Ze maken beiden gebruik van dezelfde onderliggende ``\texttt{dns\_server}''-rol, met verschillende hostvariabelen. Deze voorgedefinieerde rol opent ook TCP-poort \texttt{8053} in SELinux (``\texttt{dns\_port\_t}'') ter ondersteuning van de ``\texttt{bind\_exporter}''-rol.
 
-De zone-definities (forward en reverse) worden automatisch gegenereerd vanuit het netwerkdiagram via de sentinels \texttt{\_\_DIAGRAM\_BIND\_ZONES\_PRIMARY\_\_} en \texttt{\_\_DIAGRAM\_BIND\_ZONES\_SECONDARY\_\_}. DNSSEC is uitgeschakeld; recursie is ingeschakeld met \texttt{10.0.2.3} (de interne DNS van VirtualBox) en \texttt{1.1.1.1} als upstream resolvers. Zone-overdrachten worden beperkt tot de IP-adressen van eventuele secundaire DNS-servers in het diagram. Poorten \texttt{53/tcp} en \texttt{53/udp} worden geopend in de firewall.
+De zone-definities (forward en reverse) worden automatisch gegenereerd vanuit het netwerkdiagram via de sentinels ``\texttt{\_\_DIAGRAM\_BIND\_ZONES\_PRIMARY\_\_}'' en ``\texttt{\_\_DIAGRAM\_BIND\_ZONES\_SECONDARY\_\_}''. DNSSEC is uitgeschakeld. Recursie is ingeschakeld met ``\texttt{10.0.2.3}'' (de interne DNS van VirtualBox) en ``\texttt{1.1.1.1}'' als upstream resolvers. Zone-overdrachten worden beperkt tot de IP-adressen van eventuele secundaire DNS-servers in het diagram.
+
+Poorten \texttt{53/tcp} en \texttt{53/udp} worden geopend in de firewall.
 
 \subsection{\texttt{dns\_client}}%
 \label{subsec:rol_dns_client}
 
-Een lichte aangepaste rol die de host als DNS-client configureert door het \texttt{/etc/resolv.conf}-bestand aan te passen. Bestaande \texttt{nameserver}-vermeldingen worden verwijderd; het zoekdomein wordt ingesteld op de domeinnaam van het netwerk en de DNS-serveradressen worden afgeleid uit het diagram via de sentinel \texttt{\_\_DIAGRAM\_DNS\_SERVER\_IPS\_\_}. Deze rol wordt uitgevoerd nadat zowel \texttt{dns\_server\_primary} als \texttt{dns\_server\_secondary} geconfigureerd zijn.
+Dit is een kleine voorgedefinieerde rol die de host als DNS-client configureert door het ``\texttt{/etc/resolv.conf}''-bestand aan te passen. Bestaande ``\texttt{nameserver}''-vermeldingen worden verwijderd; het zoekdomein wordt ingesteld op de domeinnaam van het netwerk en de DNS-serveradressen worden afgeleid uit het diagram via de sentinel ``\texttt{\_\_DIAGRAM\_DNS\_SERVER\_IPS\_\_}''. Deze rol wordt pas uitgevoerd nadat zowel ``\texttt{dns\_server\_primary}'' als ``\texttt{dns\_server\_secondary}'' geconfigureerd zijn.
 
 \subsection{\texttt{monitoring\_server} (Grafana + Prometheus)}%
 \label{subsec:rol_monitoring_server}
 
-Installeert een monitoringstack bestaande uit \emph{Prometheus} en \emph{Grafana}, via respectievelijk de \texttt{prometheus.prometheus}- en \texttt{grafana.grafana} Ansible Galaxy-collecties. Na het uitvoeren van beide upstream-rollen kopieert de aangepaste \texttt{monitoring\_server}-rol de Grafana-dashboardbestanden (op basis van de exporterrollen in het diagram) van de Ansible \texttt{control}-node naar de server.
+Deze rol installeert een monitoringstack bestaande uit \emph{Prometheus} en \emph{Grafana}, via respectievelijk de ``\texttt{prometheus.prometheus}''- en ``\texttt{grafana.grafana}'' Ansible Galaxy-collections. Na het uitvoeren van beide upstream-rollen kopieert de voorgedefinieerde \texttt{monitoring\_server}-rol de Grafana-dashboardbestanden (op basis van de relevante exporterrollen in het diagram) van de Ansible \texttt{control}-node naar de server.
 
-Grafana wordt vooraf geconfigureerd met Prometheus als databron (beschikbaar op \texttt{http://localhost:9090}), met gesynchroniseerde provisioning zodat dashboards automatisch worden geladen bij het opstarten. De standaard beheerdersgegevens zijn \texttt{admin}/\texttt{root}. De Prometheus-scrape-targets worden automatisch gegenereerd uit de verbindingen in het implementatiediagram via de sentinel \texttt{\_\_DIAGRAM\_SCRAPE\_CONFIGS\_\_}. Poorten \texttt{3000/tcp} (Grafana), \texttt{53/tcp} en \texttt{53/udp} worden geopend in de firewall.
+Grafana wordt geconfigureerd met Prometheus als databron (beschikbaar op \texttt{http://localhost:9090}) en met provisioning op ``synchronised mode'' ingesteld, zodat dashboards automatisch worden geladen bij het opstarten. De standaard ingestelde admingegevens zijn ``\texttt{admin}'' als gebruikersnaam en ``\texttt{root}'' als wachtwoord. De Prometheus-scrape-targets worden automatisch gegenereerd uit de verbindingen in het implementatiediagram via de sentinel ``\texttt{\_\_DIAGRAM\_SCRAPE\_CONFIGS\_\_}'', wat resulteert in een lijst met jobs op basis van de exporterrollen die aan elke host zijn toegewezen (en hun overeenkomende poorten).
+
+Poorten \texttt{3000/tcp} (\emph{Grafana}), \texttt{53/tcp} en \texttt{53/udp} worden geopend in de firewall.
 
 \subsection{Prometheus-exporters}%
 \label{subsec:rol_exporters}
 
-De exporterrollen behoren tot de \texttt{prometheus.prometheus} Ansible Galaxy-collectie en zijn lichtgewicht agents die naast hun respectieve diensten worden geïnstalleerd. Ze stellen metrieken beschikbaar op een specifieke poort, die door de Prometheus-instantie van de monitoringserver worden gescraped. Elke exporterrol definieert ook een vooraf gebouwd Grafana-dashboardbestand dat automatisch naar de monitoringserver wordt gekopieerd.
+De exporterrollen behoren tot de ``\texttt{prometheus.prometheus}'' Ansible Galaxy-collectie en zijn lichtgewicht agents die naast hun respectieve diensten worden geïnstalleerd. Ze stellen metrieken beschikbaar op een specifieke poort, die door de Prometheus-instantie van de monitoringserver worden gescraped. Elke exporterrol definieert ook een vooraf gebouwd Grafana-dashboardbestand dat automatisch naar de monitoringserver wordt gekopieerd.
 
 \begin{description}
-\item[\texttt{apache\_exporter}] Stelt \emph{Apache HTTP server}-metrieken beschikbaar op \textbf{poort 9117/tcp} door het \texttt{mod\_status}-eindpunt te scrapen. Stelt ook \\\texttt{httpd\_status\_enable: true} in.
-\item[\texttt{bind\_exporter}] Stelt \emph{BIND9 DNS-server}-metrieken beschikbaar op \textbf{poort 9119/tcp}. Stelt \texttt{bind\_statistics\_channels: true} in zodat BIND zijn interne statistieken beschikbaar stelt.
-\item[\texttt{mysqld\_exporter}] Stelt \emph{MariaDB/MySQL}-metrieken beschikbaar op \textbf{poort 9104/tcp} via een Unix-socket (\texttt{/var/lib/mysql/mysql.sock}). Installeert ook \texttt{python3-PyMySQL} en activeert diverse InnoDB/processlist-collectors.
-\item[\texttt{node\_exporter}] Stelt algemene \emph{systeemmetrieken} (CPU, geheugen, schijf, netwerk, enz.) beschikbaar op \textbf{poort 9100/tcp}. Dit is doorgaans de meest breed toegepaste exporterrol in een omgeving.
+\item[\texttt{apache\_exporter}] stelt ``\emph{Apache HTTP server}''-metrieken beschikbaar op \textbf{poort \texttt{9117/tcp}} door het ``\texttt{mod\_status}''-eindpunt te scrapen. Deze stelt ook \\\texttt{httpd\_status\_enable: true} in.
+\item[\texttt{bind\_exporter}] stelt ``\emph{BIND9 DNS-server}''-metrieken beschikbaar op \textbf{poort \texttt{9119/tcp}}. Stelt ``\texttt{bind\_statistics\_channels: true}'' in zodat BIND zijn interne statistieken beschikbaar stelt.
+\item[\texttt{mysqld\_exporter}] stelt ``\emph{MariaDB/MySQL}''-metrieken beschikbaar op \textbf{poort \texttt{9104/tcp}} via een Unix-socket (``\texttt{/var/lib/mysql/mysql.sock}''). Deze installeert ook`` \texttt{python3-PyMySQL}'' en activeert diverse \emph{InnoDB}\emph{/processlist}-collectors.
+\item[\texttt{node\_exporter}] stelt algemene systeemmetrieken (CPU, geheugen, schijf, netwerk, enz.) beschikbaar op \textbf{poort \texttt{9100/tcp}}. Dit is doorgaans de meest breed toegepaste exporterrol in een omgeving.
 \end{description}
 
 \subsection{\texttt{web\_server} (Apache + MariaDB)}%
 \label{subsec:rol_web_server}
 
-Configureert een \emph{Apache HTTP-server} (optioneel met \emph{HTTPS}) en een \emph{MariaDB}-database via de \texttt{bertvv.httpd} Ansible Galaxy-rol, ingebakken in de aangepaste \texttt{web\_server}-rol. Bij de eerste uitvoering (gedetecteerd via een registerwijziging) worden \texttt{db.sql} geïmporteerd in de geconfigureerde database, een applicatiedatabasegebruiker (\texttt{appuser} op \texttt{appdb}) aangemaakt met volledige rechten, en een read-only \texttt{exporter}-gebruiker voor \texttt{mysqld\_exporter}.
+Deze rol configureert een \emph{Apache HTTP-server} (optioneel met \emph{HTTPS}) en een \emph{MariaDB}-database via de ``\texttt{bertvv.httpd}'' Ansible Galaxy-rol, omvangen door de voorgedefinieerde ``\texttt{web\_server}''-rol. Bij de eerste uitvoering (gedetecteerd via een registerwijziging) worden \texttt{db.sql} geïmporteerd in de geconfigureerde database, een applicatiedatabasegebruiker (\texttt{appuser} op \texttt{appdb}) aangemaakt met volledige rechten, en een read-only \texttt{exporter}-gebruiker voor \texttt{mysqld\_exporter}.
 
 HTTPS via TLS wordt geconfigureerd aan de hand van \texttt{ca.crt} en \texttt{ca.key}, die handmatig aangemaakt moeten worden (zie \nameref{sec:invoer}). % Of verwijs naar een andere sectie indien relevant
+
 Poorten \texttt{80/tcp} (HTTP) en \texttt{443/tcp} (HTTPS) worden geopend in de firewall; de SELinux-boolean \texttt{httpd\_can\_network\_connect} wordt ingeschakeld.
 
 \section{Parsering}%
