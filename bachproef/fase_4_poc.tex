@@ -638,7 +638,7 @@ Voorafgaand aan de eigenlijke parsering worden blokcommentaren (van de vorm \tex
 
 \begin{codeblockfixed}
 \begin{codeblock}
-\begin{minted}[language=Python]
+\begin{minted}{python}
 block_comment_re = re.compile(r"\/'[\s\S]*?'\/", re.DOTALL)
 \end{minted}
 \caption[Verwijdering van blokcommentaren]{Reguliere expressie voor het verwijderen van blokcommentaren. De \texttt{re.DOTALL}-vlag laat \texttt{.} ook newlines matchen, zodat meerregelige blokken worden gevat.}
@@ -655,7 +655,7 @@ Alle reguliere expressies worden eenmalig gecompileerd voor aanvang van de lus o
 
 \begin{codeblockfixed}
 \begin{codeblock}
-\begin{minted}[language=Python]
+\begin{minted}{python}
 comment_re     = re.compile(r"^\s*(?:'|//).*")
 start_re       = re.compile(r'@startnwdiag(?:\s+"?([\w-]+)"?)?')
 network_re     = re.compile(r'network\s+"?([\w.-]+)"?\s*\{')
@@ -682,7 +682,7 @@ Tot slot valideert de parser dat alle opgegeven IP-adressen effectief binnen hun
 
 \begin{codeblockfixed}
 \begin{codeblock}
-\begin{minted}[language=Python]
+\begin{minted}{python}
 network_obj = ipaddress.IPv4Network(f"{subnet}/{netmask}")
 if ipaddress.IPv4Address(host_ip) not in network_obj:
     # fout: IP valt buiten het subnet
@@ -701,7 +701,7 @@ De gebruikte reguliere expressies zijn de volgende:
 
 \begin{codeblockfixed}
 \begin{codeblock}
-\begin{minted}[language=Python]
+\begin{minted}{python}
 comment_re   = re.compile(r"^\s*(?:'|//).*")
 start_re     = re.compile(r"@startuml(?:\s+(\S+))?")
 node_re      = re.compile(
@@ -720,7 +720,7 @@ role_conn_re = re.compile(
 
 \texttt{node\_re} matcht een node-definitie en vangt de identifier, het optionele \texttt{as "label"} en de aanwezigheid van een openend accolade \texttt{\{} op (wat aangeeft of de node een body heeft). \texttt{component\_re} matcht roldefinities binnen een node-body. \texttt{close\_re} detecteert de sluitende accolade \texttt{\}} en zet de lopende node-context terug op \texttt{None}.
 
-Rolverbindingen (pijlen) worden gematcht door \texttt{role\_conn\_re}. Dit patroon ondersteunt diverse PlantUML-pijlnotaties (met of zonder kleurmodifier, dikte of label) door de pijlschacht via \texttt{(?:[\w]|\[?[^\]]*\]|-)*} flexibel te matchen. Elke verbinding wordt opgeslagen als een dictionary met de sleutels \texttt{from\_node}, \texttt{from\_role}, \texttt{to\_node} en \texttt{to\_role}.
+Rolverbindingen (pijlen) worden gematcht door \texttt{role\_conn\_re}. Dit patroon ondersteunt diverse PlantUML-pijlnotaties (met of zonder kleurmodifier, dikte of label) door de pijlschacht via \verb!(?:[\w]|\[?[^\]]*\]|-)*! flexibel te matchen. Elke verbinding wordt opgeslagen als een dictionary met de sleutels \texttt{from\_node}, \texttt{from\_role}, \texttt{to\_node} en \texttt{to\_role}.
 
 \section{Validatie}%
 \label{sec:validatie}
@@ -729,7 +729,7 @@ De validatiestap is enkel van toepassing op de ``full mode'' (zie \nameref{subse
 
 \begin{codeblockfixed}
 \begin{codeblock}
-\begin{minted}[language=Python]
+\begin{minted}{python}
 nwdiag_hosts = {
     hostname for net_data in networks.values()
     for hostname in net_data["hosts"]
