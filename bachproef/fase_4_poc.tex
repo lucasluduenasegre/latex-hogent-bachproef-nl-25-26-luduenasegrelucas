@@ -211,7 +211,7 @@ network test.lan {
 \end{codeblock}
 \end{codeblockfixed}
 
-Deze bovenstaande, volledige code zal binnen PlantUML de volgende afbeelding renderen:
+Deze bovenstaande, volledige code zal binnen PlantUML de volgende afbeelding renderen.
 
 \begin{figure*}[htbp]
   \centering
@@ -297,7 +297,7 @@ left to right direction
 '...
 \end{lstlisting}
 \caption[``\texttt{set separator .}'' \& ``\texttt{left to right direction}'']{De ``\texttt{set separator .}''- en ``\texttt{left to right direction}''-lijnen.}
-\label{code:vb_uml_afbakening}
+\label{code:vb_uml_separator}
 \end{codeblock}
 \end{codeblockfixed}
 
@@ -352,6 +352,14 @@ mon.monitoring_server -[#coral]-> web.node_exporter
 \label{code:vb_uml_rolverbindingen}
 \end{codeblock}
 \end{codeblockfixed}
+
+De volledige code hierboven zal binnen PlantUML het volgende diagram renderen.
+
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{../graphics/vb_uml.png}
+  \caption[Afbeeldingsformaat van voorbeeld implementatiediagram PlantUML]{\label{fig:vb_uml.png}Afbeeldingsformaat van het voorbeeld van een implementatiediagram in PlantUML.}
+\end{figure*}
 
 \subsection{Rolconfiguratie}%
 \label{subsec:rolconfig}
@@ -533,8 +541,6 @@ De rolidentificator is de naam die na het \texttt{component}-sleutelwoord wordt 
 
 \begin{table}[H]
 \centering
-\caption[Beschikbare rollen]{Overzicht van de beschikbare rollen}
-\label{tab:beschikbare_rollen}
 \begin{tabularx}{\textwidth}{l X}
 \toprule
 \textbf{Rolidentificator} & \textbf{FQCN} \\
@@ -551,6 +557,8 @@ De rolidentificator is de naam die na het \texttt{component}-sleutelwoord wordt 
 \texttt{web\_server}            & \texttt{web\_server} \\
 \bottomrule
 \end{tabularx}
+\caption[Beschikbare rollen]{Overzicht van de beschikbare rollen}
+\label{tab:beschikbare_rollen}
 \end{table}
 
 De volgende subsecties beschrijven de kernfunctionaliteit van elke rol.
@@ -602,27 +610,149 @@ De exporterrollen behoren tot de ``\texttt{prometheus.prometheus}'' Ansible Gala
 \subsection{\texttt{web\_server} (Apache + MariaDB)}%
 \label{subsec:rol_web_server}
 
-Deze rol configureert een \emph{Apache HTTP-server} (optioneel met \emph{HTTPS}) en een \emph{MariaDB}-database via de ``\texttt{bertvv.httpd}'' Ansible Galaxy-rol, omvangen door de voorgedefinieerde ``\texttt{web\_server}''-rol. Bij de eerste uitvoering (gedetecteerd via een registerwijziging) worden \texttt{db.sql} geïmporteerd in de geconfigureerde database, een applicatiedatabasegebruiker (\texttt{appuser} op \texttt{appdb}) aangemaakt met volledige rechten, en een read-only \texttt{exporter}-gebruiker voor \texttt{mysqld\_exporter}.
+Deze rol configureert een \emph{Apache HTTP-server} (optioneel met \emph{HTTPS}) en een \emph{MariaDB}-database via de ``\texttt{bertvv.httpd}'' Ansible Galaxy-rol, omvangen door de voorgedefinieerde ``\texttt{web\_server}''-rol.
 
-HTTPS via TLS wordt geconfigureerd aan de hand van \texttt{ca.crt} en \texttt{ca.key}, die handmatig aangemaakt moeten worden (zie \nameref{sec:invoer}). % Of verwijs naar een andere sectie indien relevant
+Er wordt door deze rol zowel een database als een \emph{PHP}-pagina gecreëerd, op basis van ``\texttt{ansible/files/db.sql}'' en ``\texttt{ansible/files/test.php}'' respectievelijk (deze bestanden worden door de converter gekopieerd naar de Ansible \texttt{control}-node). Een applicatiedatabasegebruiker ``\texttt{appuser}'' wordt aangemaakt voor de ``\texttt{appdb}''-database met volledige rechten, alsook een read-only ``\texttt{exporter}''-gebruiker voor de ``\texttt{mysqld\_exporter}''-rol.
+
+HTTPS via TLS kan geconfigureerd worden met gebruik van een self-signed certificate (``\texttt{ansible/files/ca.crt}'')- ondertekend door een private sleutel (``\texttt{ansible/files/ca.key}'') (als ze allebei beschikbaar zijn). Deze moeten handmatig aangemaakt worden, wat op de volgende manier kan gedaan worden via ``\texttt{openssl}''.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{lstlisting}
+openssl genpkey -algorithm rsa -out ca.key
+openssl req -new -x509 -key ca.key -out ca.crt -days 365
+\end{lstlisting}
+\caption[Generatie private key en self-signed certificate met ``\texttt{openssl}'']{Proces om een private key en self-signed certificate te creëeren via ``\texttt{openssl}''.}
+\label{code:webserver_openssl}
+\end{codeblock}
+\end{codeblockfixed}
 
 Poorten \texttt{80/tcp} (HTTP) en \texttt{443/tcp} (HTTPS) worden geopend in de firewall; de SELinux-boolean \texttt{httpd\_can\_network\_connect} wordt ingeschakeld.
 
 \section{Parsering}%
+\label{sec:parsering}
 
-<TODO>
+De parsering vormt de eerste stap in het omzettingsproces. Het netwerk- en implementatiediagram worden geparseerd via hun respectievelijke functies ``(\texttt{parse\_nwdiag()}'' en ``\texttt{parse\_uml()})'', die elk een \emph{Python}-dictionary teruggeven die in de volgende stappen wordt verwerkt.
+
+Voorafgaand aan de eigenlijke parsering worden blokcommentaren (van de vorm \texttt{/' \ldots '/}) uit de diagramtekst verwijderd via de volgende reguliere expressie:
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}[language=Python]
+block_comment_re = re.compile(r"\/'[\s\S]*?'\/", re.DOTALL)
+\end{minted}
+\caption[Verwijdering van blokcommentaren]{Reguliere expressie voor het verwijderen van blokcommentaren. De \texttt{re.DOTALL}-vlag laat \texttt{.} ook newlines matchen, zodat meerregelige blokken worden gevat.}
+\label{code:regex_block_comment}
+\end{codeblock}
+\end{codeblockfixed}
 
 \subsection{Parsering van het netwerkdiagram}%
+\label{subsec:parsering_nwdiag}
 
-<TODO>
+De functie \texttt{parse\_nwdiag()} verwerkt een \texttt{@startnwdiag}-bestand en geeft een tupel \texttt{(diagram\_name, networks)} terug. \texttt{networks} is een dictionary gekeyed op netwerknaam, waarbij elke entry het subnetadres, het netmasker en een dictionary van hosts bevat.
+
+Alle reguliere expressies worden eenmalig gecompileerd voor aanvang van de lus over de regels van het bestand, zoals vereist voor optimale prestaties bij herhaald gebruik:
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}[language=Python]
+comment_re     = re.compile(r"^\s*(?:'|//).*")
+start_re       = re.compile(r'@startnwdiag(?:\s+"?([\w-]+)"?)?')
+network_re     = re.compile(r'network\s+"?([\w.-]+)"?\s*\{')
+net_address_re = re.compile(r'address\s*=\s*"?([\\d.]+/\d+)"?')
+host_re        = re.compile(r"([\w-]+)\s*\[([^\]]+)\]")
+description_re = re.compile(r'description\s*=\s*"?([\w-]+)"?')
+managed_re     = re.compile(r'managed\s*=\s*"?(true|false)"?', re.I)
+host_address_re= re.compile(r'address\s*=\s*"?([\d.]+)"?')
+cpus_re        = re.compile(r'cpus\s*=\s*"?(\d+)"?')
+memory_re      = re.compile(r'memory\s*=\s*"?(\d+)"?')
+\end{minted}
+\caption[Reguliere expressies voor \texttt{parse\_nwdiag()}]{Reguliere expressies voor de parsering van het netwerkdiagram.}
+\label{code:regex_nwdiag}
+\end{codeblock}
+\end{codeblockfixed}
+
+De parser doorloopt het bestand regel per regel en past de patronen in volgorde toe. De \texttt{start\_re}-expressie vangt de diagramnaam op uit de \texttt{@startnwdiag}-lijn; \texttt{network\_re} detecteert het begin van een netwerkblok. Binnen elk netwerkblok wordt \texttt{net\_address\_re} gebruikt om het CIDR-adres te extraheren, dat daarna via \texttt{ipaddress.IPv4Network} wordt gevalideerd en omgezet naar subnetadres en netmasker.
+
+Hostdefinities worden herkend door \texttt{host\_re}, dat de host-identifier en de volledige attribuutenlijst tussen vierkante haakjes opvangt. Uit deze attribuutenlijst worden vervolgens de afzonderlijke attributen geëxtraheerd via respectievelijk \texttt{description\_re} (hostname), \texttt{managed\_re} (\texttt{managed}-vlag), \texttt{host\_address\_re} (IP-adres), \texttt{cpus\_re} en \texttt{memory\_re}.
+
+Hosts met \texttt{managed = false} worden stilzwijgend genegeerd; enkel beheerde hosts worden opgenomen in de resulterende \texttt{networks}-dictionary. Als een host in meerdere netwerken voorkomt (zoals toegelaten voor de ``IaC-only mode''), worden de bijkomende IP-adressen en netwerknamen eenvoudigweg toegevoegd aan de bestaande entry. Na afloop van de lus worden netwerken zonder hosts verwijderd en wordt voor elke host het correcte netmasker per netwerk toegevoegd.
+
+Tot slot valideert de parser dat alle opgegeven IP-adressen effectief binnen hun gedeclareerde subnet vallen, via \texttt{ipaddress.IPv4Address} en \texttt{IPv4Network}:
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}[language=Python]
+network_obj = ipaddress.IPv4Network(f"{subnet}/{netmask}")
+if ipaddress.IPv4Address(host_ip) not in network_obj:
+    # fout: IP valt buiten het subnet
+\end{minted}
+\caption[IP-adresvalidatie in \texttt{parse\_nwdiag()}]{Controle of het IP-adres van een host binnen het gedeclareerde subnet valt.}
+\label{code:nwdiag_ip_validation}
+\end{codeblock}
+\end{codeblockfixed}
 
 \subsection{Parsering van het implementatiediagram}%
+\label{subsec:parsering_uml}
 
-<TODO>
+De functie \texttt{parse\_uml()} verwerkt een \texttt{@startuml}-bestand en geeft een tupel \texttt{(diagram\_name, nodes, connections)} terug. \texttt{nodes} is een dictionary gekeyed op node-identifier, waarbij elke entry de hostnaam (label) en de lijst toegewezen rollen bevat. \texttt{connections} is een lijst van dictionaries die de rolverbindingen tussen hosts beschrijven.
+
+De gebruikte reguliere expressies zijn de volgende:
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}[language=Python]
+comment_re   = re.compile(r"^\s*(?:'|//).*")
+start_re     = re.compile(r"@startuml(?:\s+(\S+))?")
+node_re      = re.compile(
+    r"node\s+(\w+)(?:\s+<<\w+>>)?(?:\s+as\s+\"([^\"]+)\")?\s*(\{)?"
+)
+component_re = re.compile(r"component\s+(\w+)(?:\s+as\s+\"([^\"]+)\")?")
+close_re     = re.compile(r"^\}$")
+role_conn_re = re.compile(
+    r"(\w+)\.(\w+)\s+-(?:[\w]|\[?[^\]]*\]|-)*>\s+(\w+)\.(\w+)"
+)
+\end{minted}
+\caption[Reguliere expressies voor \texttt{parse\_uml()}]{Reguliere expressies voor de parsering van het implementatiediagram.}
+\label{code:regex_uml}
+\end{codeblock}
+\end{codeblockfixed}
+
+\texttt{node\_re} matcht een node-definitie en vangt de identifier, het optionele \texttt{as "label"} en de aanwezigheid van een openend accolade \texttt{\{} op (wat aangeeft of de node een body heeft). \texttt{component\_re} matcht roldefinities binnen een node-body. \texttt{close\_re} detecteert de sluitende accolade \texttt{\}} en zet de lopende node-context terug op \texttt{None}.
+
+Rolverbindingen (pijlen) worden gematcht door \texttt{role\_conn\_re}. Dit patroon ondersteunt diverse PlantUML-pijlnotaties (met of zonder kleurmodifier, dikte of label) door de pijlschacht via \texttt{(?:[\w]|\[?[^\]]*\]|-)*} flexibel te matchen. Elke verbinding wordt opgeslagen als een dictionary met de sleutels \texttt{from\_node}, \texttt{from\_role}, \texttt{to\_node} en \texttt{to\_role}.
 
 \section{Validatie}%
+\label{sec:validatie}
 
-<TODO>
+De validatiestap is enkel van toepassing op de ``full mode'' (zie \nameref{subsec:fullmode}), waarbij zowel een netwerkdiagram als een implementatiediagram worden aangeboden. De functie \texttt{validate\_diagrams()} controleert of de hosts in beide diagrammen consistent zijn: elke host in het implementatiediagram moet ook voorkomen in het netwerkdiagram, en omgekeerd.
+
+\begin{codeblockfixed}
+\begin{codeblock}
+\begin{minted}[language=Python]
+nwdiag_hosts = {
+    hostname for net_data in networks.values()
+    for hostname in net_data["hosts"]
+}
+uml_hosts = {node_data["label"] for node_data in nodes.values()}
+
+for hostname in sorted(uml_hosts - nwdiag_hosts):
+    errors.append(
+        f"Host '{hostname}' is in the deployment diagram but not in the network diagram."
+    )
+for hostname in sorted(nwdiag_hosts - uml_hosts):
+    errors.append(
+        f"Host '{hostname}' is in the network diagram but not in the deployment diagram."
+    )
+\end{minted}
+\caption[\texttt{validate\_diagrams()} -- consistentiecontrole]{Consistentiecontrole tussen het netwerk- en implementatiediagram in \texttt{validate\_diagrams()}.}
+\label{code:validate_diagrams}
+\end{codeblock}
+\end{codeblockfixed}
+
+Alle fouten worden eerst verzameld en daarna in één keer gerapporteerd, zodat de gebruiker alle inconsistenties in één pas kan oplossen. Bij fouten wordt het script beëindigd met een foutmelding via \texttt{sys.exit(1)}.
+
+Verder valideert de functie \texttt{validate\_templates()} vóór de codegeneratie of alle vereiste Jinja2-sjablonen aanwezig zijn in de \texttt{templates/}-map. Ook hier worden alle ontbrekende sjablonen in één melding gerapporteerd. Tot slot controleert de parser \texttt{parse\_nwdiag()} intern ook of elk IP-adres van een host effectief binnen het gedeclareerde subnet valt (zie \autoref{code:nwdiag_ip_validation}).
 
 \section{Uitvoer}%
 
