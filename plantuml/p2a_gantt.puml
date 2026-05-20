@@ -15,39 +15,39 @@ Project starts 2026-02-09
 printscale weekly with calendar date
 
 [Fase 1A: Literatuurstudie] starts 2026-02-09 and ends 2026-03-27
-[Fase 1A: Literatuurstudie] is colored in Orange
+[Fase 1A: Literatuurstudie] is colored in #FABC32
 
 [Fase 1B: Evaluatie bestaande tools] starts 2026-02-09 and ends 2026-02-20
-[Fase 1B: Evaluatie bestaande tools] is colored in Orange
+[Fase 1B: Evaluatie bestaande tools] is colored in #FABC32
 
 [Fase 2: Ontwerp van de testomgeving] starts 2026-02-23 and ends 2026-03-13
-[Fase 2: Ontwerp van de testomgeving] is colored in RoyalBlue
+[Fase 2: Ontwerp van de testomgeving] is colored in #4CA2D5
 [Fase 2: Ontwerp van de testomgeving] starts after [Fase 1B: Evaluatie bestaande tools]'s end
 
 [Indienen eerste draft BP (02/03/2026)] happens 2026-03-02
-[Indienen eerste draft BP (02/03/2026)] is colored in Crimson
+[Indienen eerste draft BP (02/03/2026)] is colored in #EF8767
 
 [Fase 3A: Implementatie van de testomgeving] starts 2026-03-16 and ends 2026-03-27
-[Fase 3A: Implementatie van de testomgeving] is colored in Lime
+[Fase 3A: Implementatie van de testomgeving] is colored in #A5CA72
 [Fase 3A: Implementatie van de testomgeving] starts after [Fase 2: Ontwerp van de testomgeving]'s end
 
 [Fase 3B: Opstellen van de testcases] starts 2026-03-16 and ends 2026-04-17
-[Fase 3B: Opstellen van de testcases] is colored in Lime
+[Fase 3B: Opstellen van de testcases] is colored in #A5CA72
 [Fase 3B: Opstellen van de testcases] starts after [Fase 2: Ontwerp van de testomgeving]'s end
 
 [Fase 4: Ontwikkeling van de proof-of-concept] starts 2026-03-30 and ends 2026-05-22
-[Fase 4: Ontwikkeling van de proof-of-concept] is colored in BlueViolet
+[Fase 4: Ontwikkeling van de proof-of-concept] is colored in #BB90BD
 [Fase 4: Ontwikkeling van de proof-of-concept] starts after [Fase 1A: Literatuurstudie]'s end
 [Fase 4: Ontwikkeling van de proof-of-concept] starts after [Fase 3A: Implementatie van de testomgeving]'s end
 
 [Fase 5: Uitvoeren van de testcases] starts 2026-04-20 and ends 2026-05-22
-[Fase 5: Uitvoeren van de testcases] is colored in Magenta
+[Fase 5: Uitvoeren van de testcases] is colored in #F19DA0
 [Fase 5: Uitvoeren van de testcases] starts after [Fase 3B: Opstellen van de testcases]'s end
 
 [Indienen finale draft BP (04/05/2026)] happens 2026-05-04
-[Indienen finale draft BP (04/05/2026)] is colored in Crimson
+[Indienen finale draft BP (04/05/2026)] is colored in #EF8767
 
 [Indienen bachelorproef (29/05/2026)] happens 2026-05-29
-[Indienen bachelorproef (29/05/2026)] is colored in Crimson
+[Indienen bachelorproef (29/05/2026)] is colored in #EF8767
 
 @endgantt

@@ -10,7 +10,7 @@
 
 De proof-of-concept bestaat uit een Python-script (``\texttt{plantuml2ansible.py}'') dat als invoer één of twee PlantUML-bestanden aanneemt (zijnde het netwerk- en/of implementatiediagram) en als uitvoer een gebruiksklare Vagrant- en/of Ansible-omgeving genereert, afhankelijk van het toegepaste gebruiksscenario (zie \nameref{sec:gebruiksscenarios}). De volledige codebase van de converter kan op de \hyperlink{GitHub-repository}{https://github.com/lucasluduenasegre/plantuml2ansible} gevonden worden.
 
-Het proces om deze diagrammen om te zetten verloopt in de volgende overkoepelende stappen: %, zoals weergegeven in \autoref{fig:converter_stappenplan}:
+Het proces om deze diagrammen om te zetten verloopt volgens de volgende overkoepelende stappen: %, zoals weergegeven in \autoref{fig:converter_stappenplan}:
 
 \begin{enumerate}
     \item \textbf{Parsering}: de PlantUML-bronbestanden (netwerk- en/of implementatiediagram) worden ingelezen en de relevante data (hostnames, IP-adressen, \ldots) worden omgezet naar \emph{Python}-dictionaries), die in de volgende stappen worden verwerkt.
@@ -19,7 +19,7 @@ Het proces om deze diagrammen om te zetten verloopt in de volgende overkoepelend
     \item \textbf{Asset-kopiëring}: Statische bestanden genaamd ``assets'', waarvan hun inhoud niet afhankelijk is van variabelen uit de \emph{Python}-dictionaries,  worden naar de uitvoermap gekopieerd. Dit houdt bestanden in zoals de \texttt{Vagrantfile}, voorgedefinieerde Ansible-rollen, Grafana dashboards en provisioning-scripts.
 \end{enumerate}
 
-Om deze stappen tot een goed einde te brengen zijn er uiteraard ook helper-functies ontwikkeld, maar dit zijn de grote lijnen van het script.
+Om deze stappen tot een goed einde te brengen zijn er uiteraard ook helper-functies ontwikkeld, maar dit hoofdstuk zal hoofdzakelijk de grote lijnen van het script bespreken.
 
 % TODO: zelfgemaakt stappenplan in als figuur
 % \begin{figure}[htbp]
@@ -614,7 +614,7 @@ Deze rol configureert een \emph{Apache HTTP-server} (optioneel met \emph{HTTPS})
 
 Er wordt door deze rol zowel een database als een \emph{PHP}-pagina gecreëerd, op basis van ``\texttt{ansible/files/db.sql}'' en ``\texttt{ansible/files/test.php}'' respectievelijk (deze bestanden worden door de converter gekopieerd naar de Ansible \texttt{control}-node). Een applicatiedatabasegebruiker ``\texttt{appuser}'' wordt aangemaakt voor de ``\texttt{appdb}''-database met volledige rechten, alsook een read-only ``\texttt{exporter}''-gebruiker voor de ``\texttt{mysqld\_exporter}''-rol.
 
-HTTPS via TLS kan geconfigureerd worden met gebruik van een self-signed certificate (``\texttt{ansible/files/ca.crt}'')- ondertekend door een private sleutel (``\texttt{ansible/files/ca.key}'') (als ze allebei beschikbaar zijn). Deze moeten handmatig aangemaakt worden, wat op de volgende manier kan gedaan worden via ``\texttt{openssl}''.
+HTTPS via TLS kan geconfigureerd worden met gebruik van een self-signed certificate (``\texttt{ansible/files/ca.crt}'')- ondertekend door een private key (``\texttt{ansible/files/ca.key}'') (als ze allebei beschikbaar zijn). Deze moeten handmatig aangemaakt worden, wat op de volgende manier kan gedaan worden via ``\texttt{openssl}''.
 
 \begin{codeblockfixed}
 \begin{codeblock}
@@ -632,16 +632,16 @@ Poorten \texttt{80/tcp} (HTTP) en \texttt{443/tcp} (HTTPS) worden geopend in de 
 \section{Parsering}%
 \label{sec:parsering}
 
-De parsering vormt de eerste stap in het omzettingsproces. Het netwerk- en implementatiediagram worden geparseerd via hun respectievelijke functies ``(\texttt{parse\_nwdiag()}'' en ``\texttt{parse\_uml()})'', die elk een \emph{Python}-dictionary teruggeven die in de volgende stappen wordt verwerkt.
+De parsering vormt de eerste stap in het proces van de converter. Het netwerk- en implementatiediagram worden lijn voor lijn geparseerd via hun respectievelijke functies ``(\texttt{parse\_nwdiag()}'' en ``\texttt{parse\_uml()})'', die elk een \emph{Python}-dictionary teruggeven die in de volgende stappen wordt verwerkt.
 
-Voorafgaand aan de eigenlijke parsering worden blokcommentaren (van de vorm \texttt{/' \ldots '/}) uit de diagramtekst verwijderd via de volgende reguliere expressie:
+Voorafgaand aan de parsering van elke lijn, worden eerst blokcommentaren (van de vorm ``\texttt{/' \ldots '/}'') uit de volledige diagramtekst verwijderd via de volgende reguliere expressie:
 
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{minted}{python}
 block_comment_re = re.compile(r"\/'[\s\S]*?'\/", re.DOTALL)
 \end{minted}
-\caption[Verwijdering van blokcommentaren]{Reguliere expressie voor het verwijderen van blokcommentaren. De \texttt{re.DOTALL}-vlag laat \texttt{.} ook newlines matchen, zodat meerregelige blokken worden gevat.}
+\caption[Verwijdering van blokcommentaren]{Reguliere expressie voor het verwijderen van blokcommentaren. De ``\texttt{re.DOTALL}''-vlag laat het ``\texttt{.}''-karakter ook newlines matchen, zodat meerregelige blokken worden gevat.}
 \label{code:regex_block_comment}
 \end{codeblock}
 \end{codeblockfixed}
@@ -649,7 +649,7 @@ block_comment_re = re.compile(r"\/'[\s\S]*?'\/", re.DOTALL)
 \subsection{Parsering van het netwerkdiagram}%
 \label{subsec:parsering_nwdiag}
 
-De functie \texttt{parse\_nwdiag()} verwerkt een \texttt{@startnwdiag}-bestand en geeft een tupel \texttt{(diagram\_name, networks)} terug. \texttt{networks} is een dictionary gekeyed op netwerknaam, waarbij elke entry het subnetadres, het netmasker en een dictionary van hosts bevat.
+De functie ``\texttt{parse\_nwdiag()}'' verwerkt een netwerkdiagram en geeft een tuple ``\texttt{(diagram\_name, networks)}'' terug. ``\texttt{networks}'' is een dictionary verdeeld volgens netwerknaam, waarbij elke entry het subnetadres, het netmasker en een geneste dictionary van hosts bevat.
 
 Alle reguliere expressies worden eenmalig gecompileerd voor aanvang van de lus over de regels van het bestand, zoals vereist voor optimale prestaties bij herhaald gebruik:
 
@@ -695,7 +695,7 @@ if ipaddress.IPv4Address(host_ip) not in network_obj:
 \subsection{Parsering van het implementatiediagram}%
 \label{subsec:parsering_uml}
 
-De functie \texttt{parse\_uml()} verwerkt een \texttt{@startuml}-bestand en geeft een tupel \texttt{(diagram\_name, nodes, connections)} terug. \texttt{nodes} is een dictionary gekeyed op node-identifier, waarbij elke entry de hostnaam (label) en de lijst toegewezen rollen bevat. \texttt{connections} is een lijst van dictionaries die de rolverbindingen tussen hosts beschrijven.
+De functie \texttt{parse\_uml()} verwerkt een \texttt{@startuml}-bestand en geeft een tuple \texttt{(diagram\_name, nodes, connections)} terug. \texttt{nodes} is een dictionary gekeyed op node-identifier, waarbij elke entry de hostnaam (label) en de lijst toegewezen rollen bevat. \texttt{connections} is een lijst van dictionaries die de rolverbindingen tussen hosts beschrijven.
 
 De gebruikte reguliere expressies zijn de volgende:
 
