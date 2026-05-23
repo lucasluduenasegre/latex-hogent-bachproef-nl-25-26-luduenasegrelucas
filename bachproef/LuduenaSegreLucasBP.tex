@@ -1,5 +1,5 @@
 %===============================================================================
-% LaTeX sjabloon voor de bachelorproef toegepaste informatica aan HOGENT
+% LaTeX sjabloon voor de bachelorproef toegepaste informatica aan \emph{HOGENT}
 % Meer info op https://github.com/HoGentTIN/latex-hogent-report
 %===============================================================================
 
@@ -41,6 +41,10 @@
     rulesepcolor=\color{gray},
     rulecolor=\color{black},
     backgroundcolor=\color{white},
+}
+% Schaalt een afbeelding naar de opgegeven breedte, maar nooit groter dan origineel
+\newcommand{\fitgraphics}[2][width=\linewidth]{%
+    \includegraphics[#1, keepaspectratio]{#2}%
 }
 
 % Listings-taal voor PlantUML
@@ -149,7 +153,7 @@
 \supervisor{Dhr. A. Veldeman}
 \cosupervisor{Dhr. Y. Rousseaux}
 \title[Onderzoek \& proof-of-concept]%
-    {Omzetten van UML-diagrammen\\(PlantUML) naar ``configuration\\management''-code (Ansible)}
+    {Omzetten van UML-diagrammen(PlantUML) naar ``configuration\\management''-code (Ansible)}
 \academicyear{\advance\year by -1 \the\year--\advance\year by 1 \the\year}
 \examperiod{2}
 \degreesought{\IfLanguageName{dutch}{Professionele bachelor in de toegepaste informatica}{Bachelor of applied computer science}}
@@ -256,7 +260,7 @@ Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat 
 \section*{Samenvatting}
 
 % Kopieer en plak hier de samenvatting (abstract) van je onderzoeksvoorstel.
-Op HOGENT, binnen de opleiding \emph{Toegepaste Informatica} en meerbepaald het keuzetraject ``System \& Network Administrator'', worden er OLODs (opleidingsonderdelen) gegeven die aan de hand van labo's bijdragen aan het leren beheren van serverinfrastructuren. Deze infrastructuren worden geïmplementeerd aan de hand van netwerk- en implementatiediagrammen, ontworpen met UML-modeling software.
+Op \emph{HOGENT}, binnen de opleiding \emph{Toegepaste Informatica} en meerbepaald het keuzetraject ``System \& Network Administrator'', worden er OLODs (opleidingsonderdelen) gegeven die aan de hand van labo's bijdragen aan het leren beheren van serverinfrastructuren. Deze infrastructuren worden geïmplementeerd aan de hand van netwerk- en implementatiediagrammen, ontworpen met UML-modeling software.
 De probleemstelling voor deze bachelorproef vertrekt vanuit het foutgevoelige en tijdrovende proces waarbij (complexe) UML-diagrammen eerst geïnterpreteerd en daarna manueel vertaald worden naar een configureerbare infrastructuur.
 De hoofdonderzoeksvraag is hoe men, voor een potentiële serverinfrastructuur, netwerk- en implementatiediagrammen (meerbepaald in tekstuele vorm via PlantUML/MermaidJS) met zo weinig mogelijk manuele interventie kan omzetten naar een overeenkomende, gebruiksklare omgeving ondersteund door `\emph{configuration management}'-code (zoals Ansible, Puppet of Chef).
 De doelstelling van dit onderzoek is om een proof-of-concept converter te ontwikkelen die gegeven netwerk- en implementatiediagrammen als invoer rechtstreeks kan vertalen naar `\emph{configuration management}'-code als uitvoer.

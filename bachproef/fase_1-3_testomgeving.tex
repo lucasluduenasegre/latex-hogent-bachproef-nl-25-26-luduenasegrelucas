@@ -54,24 +54,24 @@ Dit zijn tools die voorkomen binnen de opleiding \emph{Toegepaste Informatica} (
 % \end{lstlisting}
 
 \begin{codeblock}
-	\lstinputlisting[language=plantuml]{../plantuml/test_env/nwdiag_test_env.puml}
+	\lstinputlisting[language=plantuml]{../plantuml/input/test_env/nwdiag_test_env.puml}
   \caption[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (\texttt{nwdiag\_test\_env.puml}) van het netwerkdiagram van de testomgeving, uitgedrukt in PlantUML.}
   \label{code:nwdiag_test_env.puml}
 \end{codeblock}
 
-\begin{figure*}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{../graphics/nwdiag_test_env.png}
   \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{Afbeeldingsformaat (\texttt{nwdiag\_test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
-\end{figure*}
+\end{figure}
 
-% \begin{figure*}[htbp]
+% \begin{figure}[H]
 %   \centering
 %   \begin{plantuml}
 %     \input{../plantuml/test_env/nwdiag_test_env.puml}
 %   \end{plantuml}
 %   \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:test_env.png}Afbeeldingsformaat (\texttt{nwdiag\_test\_env.png}) van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
-% \end{figure*}
+% \end{figure}
 
 
 % Er zijn een aantal noemenswaardige beperkingen aan deze omgeving (en ter extensie, aan dit diagram):
@@ -91,43 +91,43 @@ Dit zijn tools die voorkomen binnen de opleiding \emph{Toegepaste Informatica} (
 
 <TODO: Implementatie verder toelichten>
 
-\lstset{
-  % language=yaml,
-  breaklines=true,
-  numbers=left,
-  frame=single,
-}
+% \lstset{
+%   % language=yaml,
+%   breaklines=true,
+%   numbers=left,
+%   frame=single,
+% }
 
-\begin{codeblock}
-\begin{minted}{yaml}
-all:
-# <network_name>
-network_alpha:
-  # Required vars for local testing with Vagrant
-  vars:
-    ansible_user: vagrant
-    ansible_ssh_password: vagrant
-    ansible_become: true
-  hosts:
-    # <hostname>
-    alpha_web_server:
-      # <ipv4_address>
-      ansible_host: 172.26.10.10
-    alpha_dns_server:
-      ansible_host: 172.26.10.20
-    alpha_monitoring_server:
-      ansible_host: 172.26.10.30
-network_beta:
-  vars:
-    ansible_user: vagrant
-    ansible_ssh_password: vagrant
-    ansible_become: true
-  hosts:
-    beta_workstation_1:
-      ansible_host: 172.26.20.10
-    beta_workstation_2:
-      ansible_host: 172.26.20.20
-\end{minted}
-\caption[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de testomgeving; de verwachte uitvoer voor de converter.}
-\label{code:inventory_test_env.yml}
-\end{codeblock}
+% \begin{codeblock}
+% \begin{minted}{yaml}
+% all:
+% # <network_name>
+% network_alpha:
+%   # Required vars for local testing with Vagrant
+%   vars:
+%     ansible_user: vagrant
+%     ansible_ssh_password: vagrant
+%     ansible_become: true
+%   hosts:
+%     # <hostname>
+%     alpha_web_server:
+%       # <ipv4_address>
+%       ansible_host: 172.26.10.10
+%     alpha_dns_server:
+%       ansible_host: 172.26.10.20
+%     alpha_monitoring_server:
+%       ansible_host: 172.26.10.30
+% network_beta:
+%   vars:
+%     ansible_user: vagrant
+%     ansible_ssh_password: vagrant
+%     ansible_become: true
+%   hosts:
+%     beta_workstation_1:
+%       ansible_host: 172.26.20.10
+%     beta_workstation_2:
+%       ansible_host: 172.26.20.20
+% \end{minted}
+% \caption[Ansible inventory-bestand testomgeving]{Het Ansible inventory-bestand (\texttt{inventory\_test\_env.yml}) van de testomgeving; de verwachte uitvoer voor de converter.}
+% \label{code:inventory_test_env.yml}
+% \end{codeblock}

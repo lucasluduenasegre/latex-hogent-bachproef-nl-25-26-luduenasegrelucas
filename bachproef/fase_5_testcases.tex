@@ -1,10 +1,232 @@
 %%=============================================================================
-%% Opstellen en uitvoeren van de testcases
+%% Opstelling en uitvoering van de testcases
 %%=============================================================================
 
-\chapter{Opstellen en uitvoeren van de testcases}%
+\chapter{Opstelling en uitvoering van de testcases}%
 \label{ch:testcases}
 
-\section{Cybersecurity Advanced (``full mode'')}
+Dit hoofdstuk beschrijft hoe de labo-omgevingen van de OLODs \emph{Cybersecurity Advanced} en \emph{Infrastructure Automation} zijn herontworpen als PlantUML-invoer (netwerk- en implementatiediagrammen) voor de converter. Hierna wordt dan ook telkens beschreven welke Vagrant- en Ansible-uitvoer hier telkens uit ontstaat. De selectie van hosts en rollen is gebaseerd op de originele Vagrant- en Ansible-configuraties van de betrokken labo's, maar er zullen daarin beperkingen zijn wegens de scope van de proof-of-concept.
 
-\section{Infrastructure Automation (``IaC-only mode'')}
+\section{Werkwijze}%
+\label{sec:werkwijze_testcases}
+
+Voor elke testcase worden eerst de beheerde hosts uit de betrokken labo-omgevingen geïdentificeerd (op basis van de originele ``\texttt{vagrant-hosts.yml}'' en ``\texttt{inventory.yml}'') en vervolgens in het netwerkdiagram gedefinieerd.
+Hosts die door de converter niet ondersteund worden of niet tot de beheerde infrastructuur behoren zoals routers, workstations, de laptop van de gebruiker en VirtualBox-specifieke netwerkinfrastructuur (``\texttt{virtualbox\_nat\_gateway}'', ``\texttt{virtualbox\_nat\_dns}''), worden als niet-beheerd gemarkeerd (via ``\texttt{managed = false}'') in het netwerkdiagram.
+
+Het implementatiediagram wordt daarna opgesteld via ``\texttt{node}''-definities voor elke beheerde host en ``\texttt{component}''-definities voor elke toegewezen rol.
+De Ansible-rollen worden gebaseerd op de originele hostvariabelen (``\texttt{host\_vars}'') en playbook (``\texttt{site.yml}'') van de labo-omgeving en vervolgens gedefinieerd via de \emph{role identifiers} die opgelijst staan in het ``\texttt{role-config.yml}''-bestand van de converter (zie \nameref{subsec:rolconfiguratie}).
+Pijlverbindingen tussen rollen worden enkel opgenomen wanneer de converter ze effectief herkent als mogelijke verbinding, namelijk DNS-verbindingen (bijvoorbeeld ``\texttt{web.dns\_client --> dns.dns\_server\_primary}'') en Prometheus scrape targets (bijvoorbeeld ``\texttt{mon.monitoring\_server --> web.node\_exporter}'').
+
+Ten slotte wordt de converter uitgevoerd op de opgestelde invoerbestanden en wordt de gegenereerde uitvoer beoordeeld aan de hand van de volgende criteria:
+\begin{itemize}
+\item Zijn alle beheerde hosts aanwezig in de gegenereerde ``\texttt{vagrant-hosts.yml}''- en ``\texttt{inventory.yml}''-bestanden?
+\item Zijn de gegenereerde hostvariabelen correct en volledig ingevuld?
+\item Is de gegenereerde playbook (``\texttt{site.yml}'') correct en sluit de uitvoervolgorde van de plays aan bij de verwachte afhankelijkheden?
+\item Kan de omgeving succesvol worden opgestart met het ``\texttt{vagrant up}''-commando zonder manuele aanpassingen achteraf?
+\end{itemize}
+
+\section{Testcase 1: IaC-only mode (Cybersecurity Advanced)}%
+\label{sec:testcase1}
+
+Het OLOD \emph{Cybersecurity Advanced} maakt gebruik van een labo-omgeving bestaande uit vier subnetten:
+
+\begin{itemize}
+    \item Een intern bedrijfsnetwerk (``\texttt{internal-company-lan}, ''\texttt{172.30.0.0/16})
+    \item Een gesimuleerd internetnetwerk (``\texttt{fake-internet}'', \texttt{192.168.62.0/24})
+    \item Een thuisnetwerk van een medewerker (``\texttt{employee-home-lan}'', \\``\texttt{172.10.10.0/24}'')
+    \item Een VirtualBox NAT-netwerk die louter didactisch wordt voorgesteld (``\texttt{virtualbox\_nat}'', ``(\texttt{10.0.2.0/24})'')
+\end{itemize}
+
+De beheerde hosts omvatten:
+
+\begin{itemize}
+    \item De routers ``\texttt{companyrouter}'', ``\texttt{isprouter}'' (enkel voor het ``\texttt{fake-internet}''-netwerk) en ``\texttt{homerouter}''
+    \item Een DNS-server ``\texttt{dns}''
+    \item een webserver ``\texttt{web}''
+    \item een databank ``\texttt{database}''
+    \item Twee werkstations ``\texttt{employee}'' en ``\texttt{remote-employee}''
+\end{itemize}
+
+Aangezien de \nameref{subsec:fullmode} slechts één beheerd subnet ondersteunt en de ``\texttt{role-config.yml}'' geen rollen voor routers of werkstations bevat, wordt deze testcase uitsluitend via de \nameref{subsec:iaconlymode} uitgevoerd. Deze modus produceert enkel een ``\texttt{vagrant-hosts.yml}''- en ``\texttt{Vagrantfile}''-bestand, zonder Ansible-configuratie. Bijgevolg wordt er hier dus géén implementatiediagram opgesteld. De host ``\texttt{your-laptop}'' en de VirtualBox-specifieke netwerkinfrastructuur worden als niet-beheerd gemarkeerd.
+
+\subsection{Invoer: netwerkdiagram}%
+\label{subsec:testcase1_invoer}
+
+Het opgestelde netwerkdiagram (\texttt{nwdiag\_cybersec\_adv\_env.puml}) bevat alle subnetten en (al dan niet beheerde) hosts uit de originele labo-omgeving.
+
+\begin{codeblock}
+\lstinputlisting[language=plantuml]{../plantuml/input/cybersec_adv_env/nwdiag_cybersec_adv_env.puml}
+\caption[Netwerkdiagram \emph{Cybersecurity Advanced} in tekstformaat (PlantUML)]{Tekstformaat (\texttt{nwdiag\_cybersec\_adv\_env.puml}) van het netwerkdiagram voor de \emph{Cybersecurity Advanced}-testcase.}
+\label{code:nwdiag_cybersec_adv}
+\end{codeblock}
+
+Dit bestand genereert via PlantUML de volgende afbeelding.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../graphics/nwdiag_cybersec_adv_env.png}
+\caption[Netwerkdiagram \emph{Cybersecurity Advanced} in afbeeldingsformaat (PlantUML)]{Afbeeldingsformaat van het netwerkdiagram voor testcase 1 (\emph{Cybersecurity Advanced}), gegenereerd door PlantUML.}
+\label{fig:nwdiag_cybersec_adv}
+\end{figure}
+
+\subsection{Gegenereerde bestanden}%
+\label{subsec:testcase1_gegenereerd}
+
+De converter genereert in de \nameref{subsec:iaconlymode} het ``\texttt{vagrant-hosts.yml}''-bestand. Dit bestand bevat voor elke beheerde host een entry met overeenkomend(e) IP-adres(sen) en werkgeheugen, afkomstig uit de ``\texttt{address}''- en ``\texttt{memory}''-attributen in het netwerkdiagram. De routers ``\texttt{companyrouter}'' en ``\texttt{homerouter}'' beschikken elk over meerdere netwerkinterfaces (één per subnet), wat resulteert in meerdere IP-adresregels per entry.
+
+\begin{codeblock}
+\inputminted{yaml}{../plantuml/output/cybersec_adv_env/vagrant-hosts.yml}
+\caption[Gegenereerde \texttt{vagrant-hosts.yml} voor \emph{Cybersecurity Advanced}]{De door de converter gegenereerde \texttt{vagrant-hosts.yml} voor testcase 1 (\emph{Cybersecurity Advanced}).}
+\label{code:vagrant_hosts_cybersec}
+\end{codeblock}
+
+\subsection{Gekopieerde assets}%
+\label{subsec:testcase1_assets}
+
+Naast het gegenereerde \texttt{vagrant-hosts.yml}-bestand kopieert de converter ook een vooraf opgesteld \texttt{Vagrantfile}-sjabloon naar de uitvoermap. Dit sjabloon leest de \texttt{vagrant-hosts.yml} in en voorziet voor elke entry de correcte Vagrant-VM-configuratie, inclusief de VirtualBox-netwerkinstellingen.
+
+\subsection{Beoordeling}%
+\label{subsec:testcase1_beoordeling}
+
+Alle beheerde hosts uit de originele labo-omgeving zijn aanwezig in de gegenereerde \texttt{vagrant-hosts.yml}. De \texttt{memory}-waarden zijn correct overgenomen uit de diagramattributen. De Vagrant-omgeving kan worden opgestart met \texttt{vagrant up} zonder manuele aanpassingen.
+
+De routers (\texttt{companyrouter}, \texttt{isprouter}, \texttt{homerouter}) worden wel als Vagrant-VM's aangemaakt, maar zonder enige Ansible-configuratie. De gegenereerde omgeving is bijgevolg niet functioneel equivalent aan de volledige originele labo-opzet: de subnetten zijn niet onderling gerouteerd en de firewall- en NAT-regels ontbreken. De tool laat echter wel toe om de Vagrant-omgeving als vertrekpunt te gebruiken, waarop manuele of aanvullende configuratie nadien kan worden toegepast.
+
+\section{Testcase 2: Full mode (Infrastructure Automation, labo 2)}%
+\label{sec:testcase2}
+
+Het tweede labo van het OLOD \emph{Infrastructure Automation} beschrijft het opzetten van een lokaal netwerk (\texttt{infra.lan}, \texttt{172.16.0.0/16}) met een primaire DNS-server (\texttt{srv001}), een secundaire DNS-server (\texttt{srv002}), een DHCP-server (\texttt{srv003}) en een webserver (\texttt{srv100}). De router \texttt{r001} en het werkstation \texttt{ws0001} worden niet door de converter beheerd.
+
+\subsection{Invoer: netwerk- en implementatiediagram}%
+\label{subsec:testcase2_invoer}
+
+Het netwerkdiagram (\texttt{nwdiag\_infra\_auto\_lab\_2\_env.puml}) bevat één beheerd subnet (\texttt{infra.lan}). De niet-beheerde hosts \texttt{r001}, \texttt{your-laptop} en \texttt{ws0001} zijn als \texttt{managed = false} gemarkeerd. Het volledige \texttt{virtualbox\_nat}-netwerk is eveneens als niet-beheerd aangeduid.
+
+\begin{codeblock}
+\lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_2_env/nwdiag_infra_auto_lab_2_env.puml}
+\caption[Netwerkdiagram \emph{Infrastructure Automation}, labo 2 in tekstformaat (PlantUML)]{Tekstformaat (\texttt{nwdiag\_infra\_auto\_lab\_2\_env.puml}) van het netwerkdiagram voor testcase 2 (\emph{Infrastructure Automation}, labo 2).}
+\label{code:nwdiag_infra_auto_lab2}
+\end{codeblock}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../graphics/nwdiag_infra_auto_lab_2_env.png}
+\caption[Netwerkdiagram \emph{Infrastructure Automation}, labo 2 in afbeeldingsformaat (PlantUML)]{Afbeeldingsformaat van het netwerkdiagram voor testcase 2 (\emph{Infrastructure Automation}, labo 2), gegenereerd door PlantUML.}
+\label{fig:nwdiag_infra_auto_lab2}
+\end{figure}
+
+Het implementatiediagram (\texttt{uml\_infra\_auto\_lab\_2\_env.puml}) definieert nodes voor de vier beheerde hosts. De pijlverbindingen vanuit \texttt{dns\_client} naar \texttt{dns\_server\_primary} en \texttt{dns\_server\_secondary} worden door de converter gebruikt om de DNS-serverconfiguratie en de DHCP-subnettendefinitie correct in te vullen.
+
+\begin{codeblock}
+\lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_2_env/uml_infra_auto_lab_2_env.puml}
+\caption[Implementatiediagram \emph{Infrastructure Automation}, labo 2 in tekstformaat (PlantUML)]{Tekstformaat (\texttt{uml\_infra\_auto\_lab\_2\_env.puml}) van het implementatiediagram voor testcase 2 (\emph{Infrastructure Automation}, labo 2).}
+\label{code:uml_infra_auto_lab2}
+\end{codeblock}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.55\textwidth]{../graphics/uml_infra_auto_lab_2_env.png}
+\caption[Implementatiediagram \emph{Infrastructure Automation}, labo 2 in afbeeldingsformaat (PlantUML)]{Afbeeldingsformaat van het implementatiediagram voor testcase 2 (\emph{Infrastructure Automation}, labo 2), gegenereerd door PlantUML.}
+\label{fig:uml_infra_auto_lab2}
+\end{figure}
+
+\subsection{Gegenereerde bestanden}%
+\label{subsec:testcase2_gegenereerd}
+
+De converter genereert in de \nameref{subsec:fullmode} de volgende bestanden: \texttt{vagrant-hosts.yml}, \texttt{ansible/inventory.yml}, \texttt{ansible/site.yml}, \texttt{ansible/host\_vars/srv001.yml}, \texttt{ansible/host\_vars/srv002.yml}, \texttt{ansible/host\_vars/srv003.yml}, \texttt{ansible/host\_vars/srv100.yml} en \texttt{ansible/requirements.yml}.
+
+De \texttt{site.yml} bevat plays in de volgorde bepaald door het topologisch sorteeralgoritme (zie \autoref{sec:codegeneratie}): hosts met \texttt{dns\_server\_primary} of \texttt{dns\_server\_secondary} worden vóór hosts met \texttt{dns\_client} geconfigureerd, overeenkomstig de \texttt{depends\_on}-relaties in \texttt{role-config.yml}.
+
+\begin{codeblock}
+\inputminted{yaml}{../plantuml/output/infra_auto_lab_2_env/ansible/site.yml}
+\caption[Gegenereerde \texttt{site.yml} voor \emph{Infrastructure Automation}, labo 2]{De door de converter gegenereerde \texttt{site.yml} voor testcase 2 (\emph{Infrastructure Automation}, labo 2).}
+\label{code:site_infra_auto_lab2}
+\end{codeblock}
+
+\subsection{Gekopieerde assets}%
+\label{subsec:testcase2_assets}
+
+Naast de gegenereerde bestanden kopieert de converter de volgende assets naar de uitvoermap:
+\begin{itemize}
+\item \texttt{Vagrantfile}: het standaard Vagrant-sjabloon
+\item \texttt{scripts/}: de Vagrant-provisioneringsscripts
+\item \texttt{ansible/roles/web\_server}, \texttt{ansible/roles/dns\_server} (tweemaal, voor primaire en secundaire DNS), \texttt{ansible/roles/dns\_client}: de lokale Ansible-rolmappen
+\item \texttt{ansible/files/ca.crt}, \texttt{ansible/files/ca.key}, \texttt{ansible/files/db.sql}, \texttt{ansible/files/test.php}: de statische bestanden benodigd voor de webserver-rol
+\end{itemize}
+
+\subsection{Beoordeling}%
+\label{subsec:testcase2_beoordeling}
+
+Alle vier beheerde hosts zijn aanwezig in de gegenereerde uitvoer. De DNS-zone-informatie, de DHCP-subnettendefinitie en de firewall-poortenlijsten zijn correct afgeleid uit de diagraminformatie en de \texttt{role-config.yml}-sjabloonvariabelen.
+
+De router \texttt{r001} is de voornaamste beperking van deze testcase: de host wordt door de converter niet ondersteund en is bijgevolg afwezig in de gegenereerde uitvoer. De beheerde hosts beschikken wel over internettoegang via hun eigen VirtualBox NAT-interface, maar onderlinge routering via \texttt{r001} is niet geconfigureerd. DNS-queries tussen de hosts onderling blijven wel functioneel, aangezien deze via de gegenereerde DNS-serverconfiguratie verlopen.
+
+\section{Testcase 3: Full mode (Infrastructure Automation, labo 3)}%
+\label{sec:testcase3}
+
+Labo 3 van \emph{Infrastructure Automation} bouwt verder op de omgeving van labo 2 door een monitoring-server (\texttt{srv004}) toe te voegen. Op \texttt{srv004} worden Prometheus en Grafana geïnstalleerd via de \texttt{monitoring\_server}-rol. Op alle hosts wordt \texttt{node\_exporter} geïnstalleerd; daarnaast worden dienst-specifieke exporters voorzien: \texttt{bind\_exporter} op \texttt{srv001} en \texttt{srv002}, \texttt{apache\_exporter} en \texttt{mysqld\_exporter} op \texttt{srv100}.
+
+\subsection{Invoer: netwerk- en implementatiediagram}%
+\label{subsec:testcase3_invoer}
+
+Het netwerkdiagram (\texttt{nwdiag\_infra\_auto\_lab\_3\_env.puml}) is een uitbreiding van het diagram uit testcase 2 met de toevoeging van \texttt{srv004} (met 2 vCPU's en 2048 MB geheugen).
+
+\begin{codeblock}
+\lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_3_env/nwdiag_infra_auto_lab_3_env.puml}
+\caption[Netwerkdiagram \emph{Infrastructure Automation}, labo 3 in tekstformaat (PlantUML)]{Tekstformaat (\texttt{nwdiag\_infra\_auto\_lab\_3\_env.puml}) van het netwerkdiagram voor testcase 3 (\emph{Infrastructure Automation}, labo 3).}
+\label{code:nwdiag_infra_auto_lab3}
+\end{codeblock}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../graphics/nwdiag_infra_auto_lab_3_env.png}
+\caption[Netwerkdiagram \emph{Infrastructure Automation}, labo 3 in afbeeldingsformaat (PlantUML)]{Afbeeldingsformaat van het netwerkdiagram voor testcase 3 (\emph{Infrastructure Automation}, labo 3), gegenereerd door PlantUML.}
+\label{fig:nwdiag_infra_auto_lab3}
+\end{figure}
+
+Het implementatiediagram (\texttt{uml\_infra\_auto\_lab\_3\_env.puml}) voegt aan elke node de exporterrollen toe. De pijlverbindingen vanuit \texttt{srv004.monitoring\_server} naar alle exporterrollen worden door de converter gebruikt om de \texttt{prometheus\_scrape\_configs}-variabele automatisch op te bouwen.
+
+\begin{codeblock}
+\lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_3_env/uml_infra_auto_lab_3_env.puml}
+\caption[Implementatiediagram \emph{Infrastructure Automation}, labo 3 in tekstformaat (PlantUML)]{Tekstformaat (\texttt{uml\_infra\_auto\_lab\_3\_env.puml}) van het implementatiediagram voor testcase 3 (\emph{Infrastructure Automation}, labo 3).}
+\label{code:uml_infra_auto_lab3}
+\end{codeblock}
+
+test
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.65\textwidth]{../graphics/uml_infra_auto_lab_3_env.png}
+\caption[Implementatiediagram \emph{Infrastructure Automation}, labo 3 in afbeeldingsformaat (PlantUML)]{Afbeeldingsformaat van het implementatiediagram voor testcase 3 (\emph{Infrastructure Automation}, labo 3), gegenereerd door PlantUML.}
+\label{fig:uml_infra_auto_lab3}
+\end{figure}
+
+\subsection{Gegenereerde bestanden}%
+\label{subsec:testcase3_gegenereerd}
+
+Ten opzichte van testcase 2 zijn de volgende extra bestanden gegenereerd: \texttt{ansible/host\_vars/srv004.yml} en een uitgebreide \texttt{ansible/requirements.yml} met de \texttt{prometheus.prometheus}- en \texttt{grafana.grafana}-collecties. De \texttt{host\_vars}-bestanden van \texttt{srv001}, \texttt{srv002} en \texttt{srv100} zijn uitgebreid met de configuratievariabelen voor respectievelijk \texttt{bind\_exporter} en \texttt{apache\_exporter}/\texttt{mysqld\_exporter}.
+
+Het \texttt{host\_vars}-bestand van \texttt{srv004} bevat de automatisch gegenereerde \texttt{prometheus\_scrape\_configs}-waarde, opgebouwd op basis van alle exporterverbindingen in het implementatiediagram.
+
+\begin{codeblock}
+\inputminted{yaml}{../plantuml/output/infra_auto_lab_3_env/ansible/host_vars/srv004.yml}
+\caption[Gegenereerde \texttt{host\_vars/srv004.yml} voor \emph{Infrastructure Automation}, labo 3]{De door de converter gegenereerde hostvariabelen voor \texttt{srv004}. De \texttt{prometheus\_scrape\_configs}-waarde is automatisch samengesteld op basis van de pijlverbindingen in het implementatiediagram.}
+\label{code:hostvars_srv004}
+\end{codeblock}
+
+\subsection{Gekopieerde assets}%
+\label{subsec:testcase3_assets}
+
+Ten opzichte van testcase 2 worden de volgende extra assets gekopieerd:
+\begin{itemize}
+\item \texttt{ansible/roles/monitoring\_server}: de lokale Ansible-rolmap voor de monitoring-server
+\item \texttt{ansible/files/grafana/default.yml}: de Grafana-provisioningconfiguratie
+\item \texttt{ansible/files/grafana/dashboards/bind\_exporter.json}, \texttt{node\_exporter.json}, \texttt{apache\_exporter.json}, \texttt{mysqld\_exporter.json}: de vooraf opgestelde Grafana-dashboards
+\end{itemize}
+
+\subsection{Beoordeling}%
+\label{subsec:testcase3_beoordeling}
+
+De uitvoer voor labo 3 is functioneel equivalent aan de manueel opgestelde Ansible-configuratie uit de originele labo-omgeving. Alle vijf beheerde hosts zijn aanwezig, de exporterconfiguraties zijn correct gegenereerd en de Prometheus scrape-configuratie reflecteert nauwkeurig de verbindingen uit het implementatiediagram.
+
+De beperking met betrekking tot \texttt{r001} geldt ook hier (zie \autoref{subsec:testcase2_beoordeling}). Daarnaast veronderstelt de gegenereerde \texttt{monitoring\_server}-configuratie dat de DNS-servers reeds operationeel zijn vóór de Prometheus-installatie; dit is gegarandeerd door de \texttt{depends\_on}-keten in \texttt{role-config.yml} en de resulterende volgorde in \texttt{site.yml}.

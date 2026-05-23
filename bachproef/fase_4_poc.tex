@@ -14,7 +14,7 @@ Het proces om deze diagrammen om te zetten verloopt volgens de volgende overkoep
 
 \begin{enumerate}
   \item \textbf{Parsering}: de PlantUML-bronbestanden (netwerk- en/of implementatiediagram) worden ingelezen en de relevante data (hostnames, IP-adressen, \ldots) worden omgezet naar \emph{Python}-dictionaries), die in de volgende stappen worden verwerkt.
-  \item \textbf{Validatie} (enkel relevant voor \nameref{subsec:fullmode}): de \emph{Python}-dictionaries van beide diagrammen worden gecontroleerd op consistentie; er wordt afgecheckt of alle hosts uit het netwerkdiagram (met een `\texttt{managed = true}'-attribuut) ook effectief voorkomen in het implementatiediagram.
+  \item \textbf{Validatie} (enkel relevant voor \nameref{subsec:fullmode}): de \emph{Python}-dictionaries van beide diagrammen worden gecontroleerd op consistentie; er wordt afgecheckt of alle hosts uit het netwerkdiagram (met het ``\texttt{managed = true}''-attribuut) ook effectief voorkomen in het implementatiediagram.
   \item \textbf{Codegeneratie}: Op basis van de \emph{Python}-dictionaries worden de uitvoerbestanden gegenereerd via \emph{Jinja2}-sjablonen en sentinelwaarden (zie \nameref{subsec:ontwerpkeuzes}). Dit zijn bestanden zoals de Ansible-inventory, Ansible playbook, hostvariabele-bestanden en ``\emph{Ansible Galaxy}''-afhankelijkheden. \ldots
   \item \textbf{Asset-kopiëring}: Statische bestanden genaamd ``assets'', waarvan hun inhoud niet afhankelijk is van variabelen uit de \emph{Python}-dictionaries,  worden naar de uitvoermap gekopieerd. Dit houdt bestanden in zoals de ``\texttt{Vagrantfile}'', voorgedefinieerde Ansible-rollen, \emph{Grafana}-dashboards en provisioning-scripts.
 \end{enumerate}
@@ -210,11 +210,11 @@ network test.lan {
 
 Deze bovenstaande, volledige code zal binnen PlantUML de volgende afbeelding renderen.
 
-\begin{figure*}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{../graphics/vb_nwdiag.png}
   \caption[Afbeeldingsformaat van voorbeeld netwerkdiagram PlantUML]{\label{fig:vb_nwdiag.png}Afbeeldingsformaat van het voorbeeld van een netwerkdiagram in PlantUML.}
-\end{figure*}
+\end{figure}
 
 \subsection{Formaat van het implementatiediagram}%
 \label{subsec:formaat_uml}
@@ -352,14 +352,14 @@ mon.monitoring_server -[#coral]-> web.node_exporter
 
 De volledige code hierboven zal binnen PlantUML het volgende diagram renderen.
 
-\begin{figure*}[htbp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{../graphics/vb_uml.png}
   \caption[Afbeeldingsformaat van voorbeeld implementatiediagram PlantUML]{\label{fig:vb_uml.png}Afbeeldingsformaat van het voorbeeld van een implementatiediagram in PlantUML.}
-\end{figure*}
+\end{figure}
 
 \subsection{Rolconfiguratie}%
-\label{subsec:rolconfig}
+\label{subsec:rolconfiguratie}
 
 Er zijn een aantal vooraf gedefinieerde rollen (te vinden in ``\texttt{assets/ansible/roles}'', zie \nameref{sec:beschikbare_rollen}) die voor elke beheerde host in het implementatiediagram kunnen worden opgegeven.
 
@@ -411,7 +411,6 @@ Dit bestand definieert per rol de ``\texttt{fqcn}'' (``\emph{Fully Qualified Col
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{minted}{yaml}
-roles:
 #...
   monitoring_server:
     fqcn: monitoring_server
@@ -427,7 +426,6 @@ roles:
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{minted}{yaml}
-roles:
 #...
   monitoring_server:
     #...
@@ -444,7 +442,6 @@ roles:
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{minted}{yaml}
-roles:
 #...
   monitoring_server:
     #...
@@ -463,7 +460,6 @@ roles:
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{minted}{yaml}
-roles:
 #...
   monitoring_server:
     #...
@@ -482,7 +478,6 @@ roles:
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{minted}{yaml}
-roles:
 #...
   monitoring_server:
     #...
@@ -501,7 +496,6 @@ Variabelen waarvan de waarde pas tijdens de omzetting bepaald kan worden op basi
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{minted}{yaml}
-roles:
 #...
   monitoring_server:
     #...
@@ -767,7 +761,7 @@ De converter produceert voor beide gebruiksscenarios twee soorten uitvoer: \text
 
 Een deel van de uitvoer bestaat uit statsische bestanden (genaamd ``assets''), waarvan de inhoud niet afhangt van het netwerk- en/of implementatiediagram en dus niet dynamisch gegenereerd hoeven te worden. Deze worden rechtstreeks gekopieerd vanuit de ``\texttt{assets/}''-map naar de uitvoermap. Voorbeelden hiervan zijn de ``\texttt{Vagrantfile}'', voorgedefinieerde Ansible-rollen, \emph{Grafana}-dashboardbestanden en provisioning-scripts.
 
-Welke assets worden gekopieerd, hangt af van het gebruiksscenario én van de rollen die in het implementatiediagram zijn opgegeven. Via de ``\texttt{assets}''-key in \texttt{role-config.yml} kan per rol worden opgegeven welke extra bestanden naar de uitvoermap moeten worden gekopieerd (zie \nameref{subsec:rolconfig}). Zo worden enkel de \emph{Grafana}-dashboards die relevant zijn voor de aanwezige exporterrollen effectief meegekopieerd.
+Welke assets worden gekopieerd, hangt af van het gebruiksscenario én van de rollen die in het implementatiediagram zijn opgegeven. Via de ``\texttt{assets}''-key in \texttt{role-config.yml} kan per rol worden opgegeven welke extra bestanden naar de uitvoermap moeten worden gekopieerd (zie \nameref{subsec:rolconfiguratie}). Zo worden enkel de \emph{Grafana}-dashboards die relevant zijn voor de aanwezige exporterrollen effectief meegekopieerd.
 
 \subsection{Dynamische bestanden}%
 \label{subsec:dynamische_bestanden}
@@ -779,7 +773,7 @@ Het grootste deel van de uitvoer zijn dynamische bestanden die gegenereerd worde
 De functie ``\texttt{build\_playbook()}'' stelt de volgorde van de hosts in het playbook vast aan de hand van een topologische sortering via Kahn's algoritme \autocite{Kahn1962}. Twee bronnen bepalen de afhankelijkheden tussen hosts:
 
 \begin{enumerate}
-    \item De ``\texttt{depends\_on}''-keys in ``\texttt{role-config.yml}'' (zie \nameref{subsec:rolconfig}).
+    \item De ``\texttt{depends\_on}''-keys in ``\texttt{role-config.yml}'' (zie \nameref{subsec:rolconfiguratie}).
     \item De pijlverbindingen uit het implementatiediagram, afgeleid via \\``\texttt{\_connections\_to\_host\_deps()}''.
 \end{enumerate}
 
