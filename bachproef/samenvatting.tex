@@ -49,19 +49,19 @@
 
 % Binnen de opleiding \emph{Toegepaste Informatica} op \emph{HOGENT} worden studenten geconfronteerd met infrastructuurlabo's waarbij een gegeven netwerkontwerp manueel moet worden omgezet naar een werkende, geconfigureerde omgeving. Dit proces is tijdrovend en foutgevoelig, en vereist een grondige kennis van zowel de gebruikte diagramnotatie als de onderliggende configuratiebeheerstools. Deze bachelorproef onderzoekt in welke mate dit omzettingsproces geautomatiseerd kan worden.
 
-Op \emph{HOGENT}, binnen de opleiding \emph{Toegepaste Informatica} en meerbepaald het keuzeprofiel ``System \& Network Administrator'', worden er OLODs (opleidingsonderdelen) gegeven die aan de hand van labo's bijdragen aan het leren van serverinfrastructuren beheren. Deze infrastructuren worden geïmplementeerd aan de hand van netwerk- en implementatiediagrammen, ontworpen met UML-modeling software.
+Op \emph{HOGENT}, binnen de opleiding \emph{Toegepaste Informatica} en meerbepaald het keuzeprofiel ``\emph{IT infrastructure engineer}'', worden er OLODs (opleidingsonderdelen) gegeven die aan de hand van labo's bijdragen aan het leren van serverinfrastructuren beheren. Deze infrastructuren worden geïmplementeerd aan de hand van netwerk- en implementatiediagrammen, ontworpen met UML-modeling software.
 De probleemstelling voor deze bachelorproef vertrekt vanuit het foutgevoelige en tijdrovende proces waarbij (complexe) UML-diagrammen eerst geïnterpreteerd en daarna manueel vertaald worden naar een configureerbare infrastructuur.
 
-De hoofdonderzoeksvraag luidt: Hoe kan men een gegeven netwerk- en implementatiediagram (in tekstuele vorm via bijvoorbeeld PlantUML\footnote{\url{https://plantuml.com/}}) van een infrastructuur met minimale menselijke interventie omzetten tot een overeenkomende, gebruiksklare `\emph{configuration management}'-ondersteunde (bijvoorbeeld met Ansible) omgeving?
+De hoofdonderzoeksvraag luidt: Hoe kan men een gegeven netwerk- en implementatiediagram (in tekstuele vorm via bijvoorbeeld PlantUML\footnote{\url{https://plantuml.com/}}) van een infrastructuur met minimale menselijke interventie omzetten tot een overeenkomende, gebruiksklare ``\emph{configuration management}''-ondersteunde (bijvoorbeeld met Ansible) omgeving?
 
 Om deze vraag te beantwoorden werd een proof-of-concept converter ontwikkeld genaamd \emph{PlantUML2Ansible}. Het script neemt PlantUML-diagrammen als invoer -- meer bepaald een netwerk- en implementatiediagram -- en produceert op basis daarvan een omgeving die volledig wordt ondersteund door Vagrant en Ansible.
-De converter ondersteunt twee gebruiksscenario's: een ``volledige modus'' die zowel `\emph{Infrastructure-as-Code}'- als `\emph{configuration management}'-uitvoer produceert, en een ``enkel-IaC-modus'' die zich enkel beperkt tot een Vagrant-omgeving.
+De converter ondersteunt twee gebruiksscenario's: een ``volledige modus'' die zowel `\emph{Infrastructure-as-Code}'- als ``\emph{configuration management}''-uitvoer produceert, en een ``enkel-IaC-modus'' die zich enkel beperkt tot een Vagrant-omgeving.
 
 De methodologie bestaat uit de volgende fasen: de literatuurstudie, het ontwerp en de implementatie van de testomgeving, de ontwikkeling van de converter, en de opstelling en uitvoering van testcases op basis van bestaande labo-omgevingen uit de opleidingsonderdelen \emph{Infrastructure Automation} en \emph{Cybersecurity Advanced}.
 
 De resultaten tonen aan dat het technisch haalbaar is om, op basis van PlantUML-bronbestanden, volledige en functionele omgevingen te genereren zonder manuele tussenkomst. De labo-omgeving van \emph{Cybersecurity Advanced} werd succesvol gereproduceerd via de ``enkel-IaC-modus'', en die van \emph{Infrastructure Automation} via de ``volledige modus'' (zonder routering).
 
 De proof-of-concept kent een aantal beperkingen: de volledige modus ondersteunt slechts één netwerk, enkel \emph{AlmaLinux} 9 wordt ondersteund als gastbesturingssysteem, en de diagrammen moeten vooraf voldoen aan een welomschreven deelverzameling van de PlantUML-syntax. 
-Deze beperkingen vormen echter potentiëel voor toekomstige uitbreidingen, alsook alternatieve IaC-backends en compatibiliteit met IPv6.
+Deze beperkingen vormen echter potentieel voor toekomstige uitbreidingen, alsook alternatieve IaC-backends en compatibiliteit met IPv6.
 
 De voornaamste meerwaarde van deze oplossing situeert zich in de educatieve context waarvoor ze ontworpen is. Docenten kunnen via deze tool hun labo-ontwerpen sneller effectief implementeren, terwijl studenten zo gemakkelijker en al experimenterend nieuwe infrastructuur-gerelateerde ideeën vorm kunnen geven.

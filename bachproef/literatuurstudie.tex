@@ -156,7 +156,7 @@ Deze definities worden doorgaans onder versiebeheer geplaatst, waardoor men infr
 
 De belangrijkste voordelen van IaC zijn reproduceerbaarheid (omgevingen kunnen opnieuw identiek worden uitgerold), consistentie (vermindering van menselijke fouten en configuratiedrift), en een hogere snelheid van oplevering doordat de provisioning sterk geautomatiseerd wordt \autocite{Artac2017}.
 
-IaC staat echter niet in voor het configureren van nodes, dat is de taak van `\emph{configuration management}'-tools zoals Ansible, Puppet en Chef.
+IaC staat echter niet in voor het configureren van nodes, dat is de taak van ``\emph{configuration management}''-tools zoals Ansible, Puppet en Chef.
 
 \textcite{Baer2025} onderscheidt grofweg twee benaderingen tot deze praktijk: een imperatieve stijl, waarin stap-voor-stap wordt beschreven welke acties er moeten worden uitgevoerd, en een declaratieve stijl, waarin enkel de gewenste eindsituatie van de infrastructuur wordt beschreven.
 Moderne IaC-tools zoals Terraform, OpenTofu en Vagrant volgen hoofdzakelijk een declaratief model.
@@ -295,7 +295,7 @@ Ansible, Puppet en Chef zijn drie open-source tools die in de praktijk het meest
 
 \subsection{Ansible}%
 
-Ansible is een open-source \emph{configuration management}-tool die werkt zonder permanente agenten op de doelhosts: standaard maakt het verbinding via SSH om taken uit te voeren.
+Ansible is een open-source ``\emph{configuration management}''-tool die werkt zonder permanente agenten op de doelhosts: standaard maakt het verbinding via SSH om taken uit te voeren.
 Beheerders beschrijven de gewenste configuratie in menselijk leesbare YAML-bestanden, zogenaamde \emph{playbooks}, die bestaan uit taken (\emph{tasks}) en herbruikbare rollen (\emph{roles}). \autocite{Ansible2025} 
 
 Taken maken gebruik van modules (ingebouwd of community-gedreven) om verscheidene systeem-gerelateerde objecten te beheren, zoals packages, services, gebruikers, bestanden en firewallregels.
@@ -342,7 +342,7 @@ Onderstaand voorbeeld toont een beknopte Ansible playbook die twee taken uitvoer
 \label{code:ansible_playbook_vb}
 \end{codeblock}
 
-Deze playbook kan herhaaldelijk uitgevoerd worden en telkens hetzelfde resultaat opleveren, wat het potentiëel van Ansible qua idempotentie (zeker voor de ingebouwde modules) illustreert.
+Deze playbook kan herhaaldelijk uitgevoerd worden en telkens hetzelfde resultaat opleveren, wat het potentieel van Ansible qua idempotentie (zeker voor de ingebouwde modules) illustreert.
 
 \subsection{Puppet}%
 
@@ -421,41 +421,87 @@ Bij elke Chef-run wordt deze recipe opnieuw geëvalueerd; als \texttt{httpd} al 
 
 <TODO: Toelichting Chef-code en verdere afwerking \& nachecking>
 
-\section{De opleiding Toegepaste Informatica)}%
+\section{De opleiding Toegepaste Informatica (HOGENT)}%
+\label{sec:opleiding}
 
-<TODO?: Algemene toelichting over de opleiding \emph{Toegepaste Informatica} op HOGENT en haar OLODs (hoe deze correct citeren?)>
+\emph{Toegepaste Informatica} is een professionele bacheloropleiding van drie jaar aan \emph{HOGENT}, aangeboden door het Departement IT \& Digitale Innovatie \autocite{HOGENT2024}. In het derde jaar kiezen studenten een keuzeprofiel dat aansluit bij hun interesse; voor studenten met een interesse in serverinfrastructuur, netwerken en automatisering is dat het keuzeprofiel ``\emph{IT infrastructure engineer}''.
 
 \subsection{``IT infrastructure engineer'' (Keuzeprofiel)}%
+\label{subsec:keuzeprofiel}
 
-Er zijn drie noemenswaardige OLODs, binnen het keuzeprofiel ``IT infrastructure engineer'' in het derde jaar van de opleiding \emph{Toegepaste Informatica}, die de nadruk leggen op het opzetten en configureren van (virtuele) serveromgevingen met configuration management tools en deze visualiseren met UML-diagrammen.
+Binnen dit keuzeprofiel zijn er drie OLODs die relevant zijn voor deze bachelorproef, omdat ze elk op hun manier het ontwerpen en/of implementeren van virtuele serverinfrastructuren centraal stellen:
 
 \begin{itemize}
-  \item ``Cybersecurity Advanced''
-  \item ``Infrastructure Automation''
-  \item ``DevOps Project: Operations''
+\item ``\emph{Cybersecurity Advanced}'' \autocite{HOGENT2025}
+\item ``\emph{Infrastructure Automation}'' \autocite{HOGENT2025a}
+\item ``\emph{DevOps Project: Operations}'' \autocite{HOGENT2025b}
 \end{itemize}
 
-\subsection{``Cybersecurity Advanced'' (OLOD)}%
+De twee eerstgenoemde OLODs stellen hierbij een initiële labo-omgeving beschikbaar via de GitHub-organisatie \emph{HoGentTIN} \autocite{HoGentTIN2025,HoGentTIN2025a}. In elk van deze OLODs wordt een basisinfrastructuur aangeboden waarop studenten verder bouwen; hoe deze infrastructuur opgezet, geconfigureerd en gedocumenteerd wordt, is telkens een kerndoelstelling van het OLOD.
 
-Het OLOD ``Cybersecurity Advanced'' introduceert het concept van ``blue-teaming'' binnen het gebied van cybersecurity aan de hand van een reeks virtuele labo's die individueel worden uitgevoerd. Het gebruik van \emph{configuration management} of UML-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student wel een aanzienlijk voordeel aangezien deze zo de labo-omgeving reproduceerbaar en visueel overzichtelijk kan maken. Bovendien wordt de (basis-)opstelling alvast voorgesteld met een netwerkdiagram ontworpen via \emph{PlantUML}.
+\subsection{``Cybersecurity Advanced'' (OLOD)}%
+\label{subsec:cybersec_adv}
+
+Het OLOD ``\emph{Cybersecurity Advanced}'' introduceert het concept van ``\emph{blue-teaming}'' -- het verdedigen van een netwerk tegen aanvallen -- aan de hand van een reeks virtuele labo's die individueel worden uitgevoerd \autocite{HOGENT2025}. De labo's draaien telkens rond een basisomgeving met meerdere virtuele machines die elk een specifieke rol opnemen (DNS-server, webserver, databankserver, \ldots).
+
+Het gebruik van \emph{configuration management} of UML-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student een aanzienlijk voordeel: de labo-omgeving is zo overzichtelijker en kan (na het manueel uitvoeren van elk labo) snel opnieuw opgezet worden met de relevante aanpassingen. De initiële labo-omgeving wordt alvast voorgesteld met een netwerkdiagram ontworpen via \emph{PlantUML} \autocite{HoGentTIN2025}, wat studenten een rechtstreekse link biedt tussen het diagram en de effectieve omgeving.
 
 <TODO: Verdere toelichting met basis-netwerkdiagram, Ansible-code, ...>
 
 \subsection{``Infrastructure Automation'' (OLOD)}%
+\label{subsec:infra_auto}
 
-``Infrastructure Automation'' is een OLOD dat een reeks virtuele labo's bevat die verschillende tools (Jenkins\footnote{\url{https://www.jenkins.io/}}, Ansible, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}}) introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen.
-Zoals eerder vermeld wordt het gebruik van UML-diagrammen hierbij niet verplicht, maar aangeraden.
+``\emph{Infrastructure Automation}'' is een OLOD dat een reeks labo's bevat die verschillende tools introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen, waaronder Ansible, Jenkins\footnote{\url{https://www.jenkins.io/}}, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}} \autocite{HOGENT2025a}. In tegenstelling tot ``Cybersecurity Advanced'' is het gebruik van \emph{configuration management} hier een centrale leerdoelstelling: de labo's vereisen dat studenten Ansible inzetten om de virtuele machines te configureren.
+
+De referentieomgeving voor dit OLOD is gebaseerd op de ``\emph{Ansible Skeleton}'' van \textcite{Vreckem2025}: een sjabloon voor Ansible-projecten met een geïntegreerde Vagrant-omgeving. Deze structuur -- met mappen zoals ``\texttt{ansible/}'', ``\texttt{ansible/host\_vars/}'', ``\texttt{ansible/group\_vars/}'' en een centraal ``\texttt{site.yml}''-playbook -- vormt ook de uitvoerstructuur van de converter die in deze bachelorproef wordt ontwikkeld \autocite{HoGentTIN2025a}.
 
 <TODO: Verdere toelichting met Ansible-labo, Ansible-skeleton, roles van Bert Van Vreckem, ...>
 
 \subsection{``DevOps Project: Operations'' (OLOD)}%
+\label{subsec:devops_ops}
 
-Tot slot is ``DevOps Project: Operations'' een OLOD dat het tweede luik vormt van een tweeledig groepsproject, het eerste luik zijnde ``Real-life Integrated Software Engineering'' voor de studenten binnen ``full stack developer''. Het doel van het ``operations-team'' in dit project, is om de backend van een webapplicatie (ontwikkeld door het ``development-team'') te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet automatisch kunnen opgezet worden via zowel \emph{Infrastructure-as-Code}- als `\emph{configuration management}'-tools (met in het bijzonder Ansible).
-Om de onderliggende werking van deze omgeving te visualiseren voor al dan niet technische stakeholders, moet er ook een netwerkdiagram ontworpen worden met UML-modeling software.
+``DevOps Project: Operations'' is een OLOD dat het tweede luik vormt van een tweeledig groepsproject \autocite{HOGENT2025b}, het eerste luik zijnde ``\emph{Real-life Integrated Software Engineering}'' (RISE) voor de studenten binnen het keuzetraject ``\emph{full stack developer}''.
+Het doel van het ``operations-team'' is om de backend van een webapplicatie (bijvoorbeeld een \emph{.NET}- of \emph{Android}-package) -- ontwikkeld door een parallel ``development-team'' -- te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet volledig geautomatiseerd kunnen opgezet worden via \emph{Infrastructure-as-Code}- en \emph{configuration management}-tools.
 
-<TODO?: Verdere toelichting met representatief netwerkdiagram van finaal project (vermelding van concrete klantenopdracht (Ortho, HOGENT, etc.) nodig?)>
+In tegenstelling tot de twee vorige OLODs is het gebruik van een netwerkdiagram hier verplicht: de onderliggende architectuur moet worden gevisualiseerd voor zowel technische als niet-technische stakeholders via UML-modelleringssoftware. Dit OLOD combineert daarmee twee aspecten die centraal staan in deze bachelorproef: het ontwerpen van een infrastructuur via (UML-)diagrammen, en het automatisch uitrollen ervan via IaC en \emph{configuration management}.
 
-\subsection{Gebruikte tools binnen de opleiding}
+<TODO: Verdere toelichting met representatief netwerkdiagram van finaal project (vermelding van concrete klantenopdracht (Ortho, HOGENT, etc.) nodig?)>
+
+\subsection{Ansible-rollen en Ansible Skeleton van Bert Van Vreckem}%
+\label{subsec:bertvv}
+
+Een aantal centrale bouwstenen binnen de bovenstaande OLODs -- en bij uitbreiding binnen de converter ontwikkeld in deze bachelorproef -- zijn de Ansible-rollen en \emph{Ansible Skeleton} van \textcite{Vreckem2025}.
+De \emph{Ansible Skeleton} is een sjabloon voor Vagrant- en Ansible-projecten dat een vaste mappenstructuur, een vooraf geconfigureerde ``\texttt{Vagrantfile}'' en hulpscripts omvat. Deze ``\texttt{Vagrantfile}'' is zo ontworpen zodat men enkel in een apart ``\texttt{vagrant-hosts.yml}''-bestand hosts moet definiëren om deze vervolgens eenvoudig op te starten met het ``\texttt{vagrant up}''-commando.
+
+Naast het skelet heeft \textcite{Vreckem2016} ook een reeks Ansible-rollen ontwikkeld die specifiek gericht zijn op \emph{RedHat}-gebaseerde distributies en die binnen de opleiding standaard worden ingezet:
+
+\begin{description}
+  \item[\texttt{bertvv.rh-base}] Basisinstallatie en -configuratie van een \emph{RedHat}-gebaseerde server: firewall, SELinux, gebruikersbeheer en algemene systeeminstellingen \autocite{Vreckem2016}.
+  \item[\texttt{bertvv.bind}] Installatie en configuratie van \emph{BIND9} als autoritatieve DNS-server \autocite{Vreckem2015}.
+  \item[\texttt{bertvv.dhcp}] Installatie en configuratie van \emph{ISC DHCP} als DHCP-server \autocite{Vreckem2015a}.
+  \item[\texttt{bertvv.httpd}] Installatie en configuratie van een \emph{Apache}-webserver \autocite{Vreckem2015b}.
+\end{description}
+
+\subsection{Gebruikte tools binnen de opleiding}%
+\label{subsec:tools_opleiding}
+
+De volgende tabel geeft een overzicht van de tools die binnen \emph{Toegepaste Informatica} (en meerbepaald het keuzeprofiel ``\emph{IT infrastructure engineer}'') worden ingezet, alsook de context waarin ze worden gebruikt:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Tool} & \textbf{Context} \\
+\midrule
+Visual Paradigm / draw.io & Ontwerp van netwerk- en UML-diagrammen (GUI-gebaseerd) \\
+PlantUML                  & Tekstueel diagramformaat (aangeraden in \emph{Cybersecurity Advanced}) \\
+Vagrant                   & \emph{IaC} voor lokale VM-omgevingen (via \emph{Ansible Skeleton}) \\
+Ansible                   & ``\emph{Configuration management}''-tool van virtuele machines\\
+\bottomrule
+\end{tabular}
+\caption[Overzicht van tools binnen \emph{Toegepaste Informatica}]{Overzicht van de voornaamste tools die worden ingezet binnen het keuzeprofiel ``\emph{IT infrastructure engineer}'' van de opleiding \emph{Toegepaste Informatica} op \emph{HOGENT}.}
+\label{tab:tools_opleiding}
+\end{table}
 
 \section{Compilers}%
 
@@ -463,9 +509,7 @@ Compilers vertalen de broncode van een high-level, menselijk leesbare taal (zoal
 
 <TODO: Concept van compilers veel verder uitwerken, hieronder uit te werken gebieden>
 
-\subsection{High-level talen V.S. Machinecode}%
-
-<TODO?: Verschil tussen high-level talen en machinecode toelichten ((überhaupt) uit te drukken als ``versus''?)>
+<TODO: Verschil tussen high-level talen en machinecode toelichten>
 
 \subsection{Fases}%
 

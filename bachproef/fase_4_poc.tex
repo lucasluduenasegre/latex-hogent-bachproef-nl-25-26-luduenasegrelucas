@@ -8,7 +8,7 @@
 \section{Algemeen overzicht}%
 \label{sec:alg_overzicht}
 
-De proof-of-concept bestaat uit een Python-script (``\texttt{plantuml2ansible.py}'') dat als invoer één of twee PlantUML-bestanden aanneemt (zijnde het netwerk- en/of implementatiediagram) en als uitvoer een gebruiksklare Vagrant- en/of Ansible-omgeving genereert, afhankelijk van het toegepaste gebruiksscenario (zie \nameref{sec:gebruiksscenarios}). De volledige codebase van de converter kan op de \hyperlink{GitHub-repository}{https://github.com/lucasluduenasegre/plantuml2ansible} gevonden worden.
+De proof-of-concept bestaat uit een Python-script (``\texttt{plantuml2ansible.py}'') dat als invoer één of twee PlantUML-bestanden aanneemt (zijnde het netwerk- en/of implementatiediagram) en als uitvoer een gebruiksklare Vagrant- en/of Ansible-omgeving genereert, afhankelijk van het toegepaste gebruiksscenario (zie \nameref{sec:gebruiksscenarios}). De volledige codebase van de converter kan op de GitHub-repository \hyperlink{PlantUML2Ansible}{https://github.com/lucasluduenasegre/plantuml2ansible} gevonden worden.
 
 Het proces om deze diagrammen om te zetten verloopt volgens de volgende overkoepelende stappen:
 
@@ -64,7 +64,7 @@ De proof-of-concept kent een aantal beperkingen. Hier zijn er een aantal van (di
 
 De volgende twee secties zullen de twee ondersteunde gebruiksscenario's beschrijven, namelijk de \nameref{subsec:fullmode} en de \nameref{subsec:iaconlymode}, alsook sommige beperkingen nader toelichten.
 
-Een beperking van beide gebruiksscenario's is dat de virtuele machines in de geproduceerde omgeving enkel \emph{AlmaLinux} 9 als gastbesturingssysteem zullen ondersteunen (met `\texttt{bento/almalinux-9}' als Vagrant base box). De huidige configuratie van de rollen is afhankelijk van een aantal bestaande rollen die gebruikt worden binnen de opleiding \emph{Toegepaste Informatica}, en deze zijn enkel functioneel op \emph{AlmaLinux} 9 (ook in tegenstelling tot de nieuwere \emph{AlmaLinux} 10).
+Een beperking van beide gebruiksscenario's is dat de virtuele machines in de geproduceerde omgeving enkel \emph{AlmaLinux} 9 als gastbesturingssysteem zullen ondersteunen (met `\texttt{bento/almalinux-9}' als Vagrant base box). De huidige configuratie van de rollen is afhankelijk van een aantal bestaande rollen die gebruikt worden binnen de opleiding \emph{Toegepaste Informatica} (zie \nameref{subsec:bertvv}), en deze zijn enkel functioneel op \emph{AlmaLinux} 9 (ook in tegenstelling tot de nieuwere \emph{AlmaLinux} 10).
 
 \subsection{``Full mode'' (``volledige modus'')}%
 \label{subsec:fullmode}
@@ -557,7 +557,7 @@ De volgende subsecties beschrijven de kernfunctionaliteit van elke rol.
 \subsection{\texttt{dhcp\_server}}%
 \label{subsec:rol_dhcp_server}
 
-Deze rol configureert een \emph{ISC} DHCP-server via de ``\texttt{bertvv.dhcp}'' Ansible Galaxy-rol. Het subnet, broadcastadres, subnet mask, domeinnaam en DNS-serveradressen worden automatisch afgeleid uit het netwerkdiagram tijdens het verwerkingsproces. Het bereik voor dynamische IP-adressen loopt altijd van het \textbf{middelpunt van het subnet} tot het \textbf{broadcastadres van het netwerk - 3}, bijvoorbeeld ``\texttt{172.16.128.0}'' tot en met ``\texttt{172.16.255.252}'' voor het netwerk ``\texttt{172.16.0.0/16}''). De standaard en maximale leasetijden worden ingesteld op 4 uur (14400 seconden). 
+Deze rol configureert een \emph{ISC} DHCP-server via de ``\texttt{bertvv.dhcp}'' ``\emph{Ansible Galaxy}''-rol. Het subnet, broadcastadres, subnet mask, domeinnaam en DNS-serveradressen worden automatisch afgeleid uit het netwerkdiagram tijdens het verwerkingsproces. Het bereik voor dynamische IP-adressen loopt altijd van het \textbf{middelpunt van het subnet} tot het \textbf{broadcastadres van het netwerk - 3}, bijvoorbeeld ``\texttt{172.16.128.0}'' tot en met ``\texttt{172.16.255.252}'' voor het netwerk ``\texttt{172.16.0.0/16}''). De standaard en maximale leasetijden worden ingesteld op 4 uur (14400 seconden). 
 
 Deze rol is afhankelijk van \texttt{dns\_server\_primary} en/of \texttt{dns\_server\_secondary}, die eerst geconfigureerd moeten zijn omdat hun IP-adressen worden gebruikt voor \texttt{dhcp\_global\_domain\_name\_servers}.
 
@@ -566,7 +566,7 @@ Poort \texttt{67/udp} wordt geopend in de firewall.
 \subsection{\texttt{dns\_server\_primary} \& \texttt{dns\_server\_secondary} (BIND9)}%
 \label{subsec:rol_dns_server}
 
-Deze rollen configureren een primaire of secundaire autoritatieve \emph{BIND9} DNS-server via de ``\texttt{bertvv.bind}'' Ansible Galaxy-rol. Ze maken beiden gebruik van dezelfde onderliggende ``\texttt{dns\_server}''-rol, met verschillende hostvariabelen. Deze voorgedefinieerde rol opent ook TCP-poort \texttt{8053} in SELinux (``\texttt{dns\_port\_t}'') ter ondersteuning van de ``\texttt{bind\_exporter}''-rol.
+Deze rollen configureren een primaire of secundaire autoritatieve \emph{BIND9} DNS-server via de ``\texttt{bertvv.bind}'' ``\emph{Ansible Galaxy}''-rol. Ze maken beiden gebruik van dezelfde onderliggende ``\texttt{dns\_server}''-rol, met verschillende hostvariabelen. Deze voorgedefinieerde rol opent ook TCP-poort \texttt{8053} in SELinux (``\texttt{dns\_port\_t}'') ter ondersteuning van de ``\texttt{bind\_exporter}''-rol.
 
 De zone-definities (forward en reverse) worden automatisch gegenereerd vanuit het netwerkdiagram via de sentinelwaarden ``\texttt{\_\_DIAGRAM\_BIND\_ZONES\_PRIMARY\_\_}'' en ``\texttt{\_\_DIAGRAM\_BIND\_ZONES\_SECONDARY\_\_}''. DNSSEC is uitgeschakeld. Recursie is ingeschakeld met ``\texttt{10.0.2.3}'' (de interne DNS van VirtualBox) en ``\texttt{1.1.1.1}'' als upstream resolvers. Zone-overdrachten worden beperkt tot de IP-adressen van eventuele secundaire DNS-servers in het diagram.
 
@@ -580,7 +580,7 @@ Dit is een kleine voorgedefinieerde rol die de host als DNS-client configureert 
 \subsection{\texttt{monitoring\_server} (Grafana + Prometheus)}%
 \label{subsec:rol_monitoring_server}
 
-Deze rol installeert een monitoringstack bestaande uit \emph{Prometheus} en \emph{Grafana}, via respectievelijk de ``\texttt{prometheus.prometheus}''- en ``\texttt{grafana.grafana}'' Ansible Galaxy-collections. Na het uitvoeren van beide upstream-rollen kopieert de voorgedefinieerde \texttt{monitoring\_server}-rol de \emph{Grafana}-dashboardbestanden (op basis van de relevante exporterrollen in het diagram) van de Ansible \texttt{control}-node naar de server.
+Deze rol installeert een monitoringstack bestaande uit \emph{Prometheus} en \emph{Grafana}, via respectievelijk de ``\texttt{prometheus.prometheus}''- en ``\texttt{grafana.grafana}'' ``\emph{Ansible Galaxy}''-collections. Na het uitvoeren van beide upstream-rollen kopieert de voorgedefinieerde \texttt{monitoring\_server}-rol de \emph{Grafana}-dashboardbestanden (op basis van de relevante exporterrollen in het diagram) van de Ansible \texttt{control}-node naar de server.
 
 \emph{Grafana} wordt geconfigureerd met Prometheus als databron (beschikbaar op \texttt{http://localhost:9090}) en met provisioning op ``synchronised mode'' ingesteld, zodat dashboards automatisch worden geladen bij het opstarten. De standaard ingestelde admingegevens zijn ``\texttt{admin}'' als gebruikersnaam en ``\texttt{root}'' als wachtwoord. De Prometheus-scrape-targets worden automatisch gegenereerd uit de verbindingen in het implementatiediagram via de sentinelwaarde ``\texttt{\_\_DIAGRAM\_SCRAPE\_CONFIGS\_\_}'', wat resulteert in een lijst met jobs op basis van de exporterrollen die aan elke host zijn toegewezen (en hun overeenkomende poorten).
 
@@ -589,7 +589,7 @@ Poorten \texttt{3000/tcp} (\emph{Grafana}), \texttt{53/tcp} en \texttt{53/udp} w
 \subsection{Prometheus-exporters}%
 \label{subsec:rol_exporters}
 
-De exporterrollen behoren tot de ``\texttt{prometheus.prometheus}'' Ansible Galaxy-collectie en zijn lichtgewicht agents die naast hun respectieve diensten worden geïnstalleerd. Ze stellen metrieken beschikbaar op een specifieke poort, die door de Prometheus-instantie van de monitoringserver worden gescraped. Elke exporterrol definieert ook een vooraf gebouwd \emph{Grafana}-dashboardbestand dat automatisch naar de monitoringserver wordt gekopieerd.
+De exporterrollen behoren tot de ``\texttt{prometheus.prometheus}'' ``\emph{Ansible Galaxy}''-collectie en zijn lichtgewicht agents die naast hun respectieve diensten worden geïnstalleerd. Ze stellen metrieken beschikbaar op een specifieke poort, die door de Prometheus-instantie van de monitoringserver worden gescraped. Elke exporterrol definieert ook een vooraf gebouwd \emph{Grafana}-dashboardbestand dat automatisch naar de monitoringserver wordt gekopieerd.
 
 \begin{description}
 \item[\texttt{apache\_exporter}] stelt ``\emph{Apache HTTP server}''-metrieken beschikbaar op \textbf{poort \texttt{9117/tcp}} door het ``\texttt{mod\_status}''-eindpunt te scrapen. Deze stelt ook \\\texttt{httpd\_status\_enable: true} in.
@@ -601,7 +601,7 @@ De exporterrollen behoren tot de ``\texttt{prometheus.prometheus}'' Ansible Gala
 \subsection{\texttt{web\_server} (Apache + MariaDB)}%
 \label{subsec:rol_web_server}
 
-Deze rol configureert een \emph{Apache HTTP-server} (optioneel met \emph{HTTPS}) en een \emph{MariaDB}-database via de ``\texttt{bertvv.httpd}'' Ansible Galaxy-rol, omvangen door de voorgedefinieerde ``\texttt{web\_server}''-rol.
+Deze rol configureert een \emph{Apache HTTP-server} (optioneel met \emph{HTTPS}) en een \emph{MariaDB}-database via de ``\texttt{bertvv.httpd}'' ``\emph{Ansible Galaxy}''-rol, omvangen door de voorgedefinieerde ``\texttt{web\_server}''-rol.
 
 Er wordt door deze rol zowel een database als een \emph{PHP}-pagina gecreëerd, op basis van ``\texttt{ansible/files/db.sql}'' en ``\texttt{ansible/files/test.php}'' respectievelijk (deze bestanden worden door de converter gekopieerd naar de Ansible \texttt{control}-node). Een applicatiedatabasegebruiker ``\texttt{appuser}'' wordt aangemaakt voor de ``\texttt{appdb}''-database met volledige rechten, alsook een read-only ``\texttt{exporter}''-gebruiker voor de ``\texttt{mysqld\_exporter}''-rol.
 

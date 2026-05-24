@@ -19,13 +19,13 @@
 \section{Conclusie}%
 \label{sec:conclusie}
 
-Om op de centrale onderzoeksvraag van deze bachelorproef te antwoorden, is een proof-of-concept converter ontwikkeld genaamd PlantUML2Ansible, die netwerk- en implementatiediagrammen, geschreven in PlantUML-code, als invoer aanneemt en een volledig IaC- en `\emph{configuration management}'-ondersteunde omgeving (aangeboden door Vagrant en Ansible, respectievelijk) als uitvoer produceert.
+Om op de centrale onderzoeksvraag van deze bachelorproef te antwoorden, is een proof-of-concept converter ontwikkeld genaamd PlantUML2Ansible, die netwerk- en implementatiediagrammen, geschreven in PlantUML-code, als invoer aanneemt en een volledig IaC- en ``\emph{configuration management}''-ondersteunde omgeving (aangeboden door Vagrant en Ansible, respectievelijk) als uitvoer produceert.
 
 Naast dit primaire gebruiksscenario (\nameref{subsec:fullmode}) is er ook een alternatief scenario ontwikkeld om enkel een Vagrant-omgeving te produceren (\nameref{subsec:iaconlymode}).
 
 Bestaande labo-omgevingen uit bepaalde OLODS binnen de opleiding \emph{Toegepaste Informatica} (\emph{Cybersecurity Advanced} en \emph{Infrastructure Automation}) zijn herwerkt als bruikbare invoer voor de converter (zijnde netwerk- en/of implementatiediagrammen) en zijn, binnen de beperkingen van het script, met succes omgezet naar functionele omgevingen.
-De initiële labo-omgeving van \emph{Cybersecurity Advanced} is via de ``IaC-only mode'' volledig gereproduceerd kunnen worden als  een Vagrant-ondersteunde omgeving.
-De labo's 2 en 3 uit \emph{Infrastructure Automation} zijn ook via de ``full mode'' gerecreëerd als Vagrant- en Ansible-ondersteunde omgeving, maar zonder de router \texttt{r001}.
+De initiële labo-omgeving van \emph{Cybersecurity Advanced} is via de ``IaC-only mode'' volledig gereproduceerd kunnen worden als een Vagrant-ondersteunde omgeving.
+De labo's 2 en 3 uit \emph{Infrastructure Automation} zijn ook via de ``full mode'' gerecreëerd als Vagrant- en Ansible-ondersteunde omgeving, met uitzondering van de router \texttt{r001} (zie \autoref{subsec:testcase2_beoordeling}).
 
 Deze resultaten tonen dus aan dat het technisch haalbaar is om, op basis van PlantUML-bronbestanden, volledige en functionele omgevingen te genereren -- zonder manuele tussenkomst van de gebruiker.
 
@@ -49,7 +49,7 @@ Het huidige \texttt{role-config.yml}-bestand bevat momenteel slechts een beperkt
 Andere, minder cruciale uitbreidingen zouden de volgende kunnen inhouden:
 \begin{itemize}
     \item Compatibiliteit met IPv6
-    \item Ondersteuning voor andere IaC- (Terraform, OpenTofu, \ldots) en `\emph{configuration management}'-backends (Puppet, Chef, \ldots)
+    \item Ondersteuning voor andere IaC- (Terraform, OpenTofu, \ldots) en ``\emph{configuration management}''-backends (Puppet, Chef, \ldots)
     % \item Grafische gebruikersinterface of integraties met IDE's via plugins (bijvoorbeeld een `\emph{Visual Studio Code}'-extensie)
     \item Formele validatie van de PlantUML-invoer en de Vagrant- en Ansible-uitvoer via geïntegreerde linters
 \end{itemize}
