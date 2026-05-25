@@ -53,7 +53,10 @@
 %   \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
 % \end{table}
 
+Dit hoofdstuk biedt de theoretische onderbouwing voor de facetten  die aan bod komen tijdens de ontwikkeling van de proof-of-concept.
+
 \section{Unified Modeling Language (UML)}%
+\label{sec:uml}
 
 ``Unified Modeling Language'', of afgekort UML, is een taal/framework die binnen de softwareontwikkeling-discipline geaccepteerd is als de standaard voor het weergeven van object-georiënteerde modellen. UML wordt hoofdzakelijk gebruikt in de industrie-, business- en IT-sector, met als doel om de ontwerp- en implementatiefase te ondersteunen met verscheidene diagrammen. Deze kunnen door zowel business als technische stakeholders geïnterpreteerd worden voor hun respectievelijke doeleinden. \autocite{Koc2021}
 
@@ -116,7 +119,7 @@ node1 == node5
 
 \subsection{\emph{MermaidJS}}%
 
-\emph{MermaidJS} is een gelijkaardige, open-source tool (gebaseerd op JavaScript), die tekstuele, Markdown-geïnspireerde syntax (met ``\texttt{.mermaid}'' als bestandsextensie) omzet naar diagrammen in afbeeldingsformaatformaat.
+\emph{MermaidJS} is een gelijkaardige, open-source tool (gebaseerd op \emph{JavaScript}), die tekstuele, Markdown-geïnspireerde syntax (met ``\texttt{.mermaid}'' als bestandsextensie) omzet naar diagrammen in afbeeldingsformaat.
 
 Het wordt vaak gebruikt om documentatie in Markdown (bijvoorbeeld in README-bestanden op repositories) te verrijken met flowcharts, sequence diagrams, class diagrams, state diagrams en Gantt-charts zonder een zware grafische editor te hoeven openen. \autocite{Mermaid2019}
 
@@ -166,11 +169,11 @@ Moderne IaC-tools zoals Terraform, OpenTofu en Vagrant volgen hoofdzakelijk een 
 Terraform is een open-source Infrastructure-as-Code tool van HashiCorp, ontworpen om infrastructuur geautomatiseerd te provisioneren en te beheren over (meerdere) cloud- en on-premises platformen.
 In plaats van infrastructuur handmatig aan te maken in een webconsole, definieert men de gewenste toestand in configuratiebestanden, waarna Terraform aan de hand van verscheidene API's voor de betrokken platformen de nodige resources aanmaakt, wijzigt of verwijdert. \autocite{HashiCorp2024} 
 
-De configuraties worden geschreven in HashiCorp Configuration Language (HCL) (met \texttt{.tf} als bestandsextensie), een menselijk leesbare, declaratieve taal waarin men verschillende zaken kan definiëren zoals resources (zoals al dan niet virtuele nodes, maar ook bijvoorbeeld netwerken of DNS-records), data sources (om externe data aan te reiken) en modules (sets van configuratiebestanden). \autocite{HashiCorp2025}
+De configuraties worden geschreven in HashiCorp Configuration Language (HCL) (met ``\texttt{.tf}'' als bestandsextensie), een menselijk leesbare, declaratieve taal waarin men verschillende zaken kan definiëren zoals resources (zoals al dan niet virtuele nodes, maar ook bijvoorbeeld netwerken of DNS-records), data sources (om externe data aan te reiken) en modules (sets van configuratiebestanden). \autocite{HashiCorp2025}
 
 Terraform ondersteunt honderden providers; dit varieert van providers ontwikkeld door officiële partners (zoals IBM en Ansible) tot providers van third-party bedrijven (zoals Amazon AWS, Microsoft Azure, Google Cloud, \ldots), wat het bijzonder flexibel maakt voor multi-cloud- en hybride omgevingen. \autocite{HashiCorp2025a} 
 
-Het volgende codefragment licht de structuur van HCL toe via een eenvoudige topologie voor Amazon Web Services.
+Het volgende codefragment licht de structuur van HCL toe via een eenvoudige topologie voor een AWS-gebaseerde omgeving.
 
 \begin{codeblock}
 \begin{lstlisting}
@@ -227,8 +230,6 @@ resource "aws_subnet" "az" {
 \label{code:terraform_vb}
 \end{codeblock}
 
-<TODO: Toelichting Terraform-code en verdere afwerking \& nachecking>
-
 \subsection{OpenTofu}%
 
 OpenTofu is een relatief recente speler, ontstaan als een community-gedreven fork van Terraform in 2023. De drijfveer achter deze fork is de keuze van HashiCorp om een licentiewijziging naar het \emph{Business Source License} (afgekort BSL) voor Terraform door te voeren. Dit bracht het bestuur in gevaar voor de bestaande community, die op lange termijn eerder leveranciersonafhankelijk willen blijven. \autocite{Gaddam2023}
@@ -240,16 +241,18 @@ De tool ondersteunt dus dezelfde concepten (providers, resources, modules en sta
 
 \subsection{Vagrant}%
 
-Vagrant is een tool van HashiCorp voor het bouwen en beheren van (lokale) virtuele omgevingen via een eenvoudig, tekstueel configuratiebestand (\texttt{Vagrantfile}).
+Vagrant is een tool van HashiCorp voor het bouwen en beheren van (lokale) virtuele omgevingen via een eenvoudig, tekstueel configuratiebestand (``\texttt{Vagrantfile}'').
 Het doel van Vagrant is om lichte, reproduceerbare en draagbare ontwikkel- en testomgevingen te creëren die met één commando kunnen worden opgestart, geprovisioneerd en opnieuw vernietigd. \autocite{HashiCorp2026} 
 
-In een \texttt{Vagrantfile} specificeert men voor elke virtuele machine, onder andere, de base box (of het gastbesturingssysteem zoals \emph{AlmaLinux}, Alpine Linux, Ubuntu), de hoeveelheid CPU en werkgeheugen, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
+In de ``\texttt{Vagrantfile}'' specificeert men voor elke virtuele machine, onder andere, de base box (of het gastbesturingssysteem zoals \emph{AlmaLinux}, Alpine Linux, Ubuntu), de hoeveelheid CPU en werkgeheugen, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
 Standaard ondersteunt Vagrant providers zoals \emph{VirtualBox}, Hyper-V en Docker, maar via plug-ins kunnen ook andere platformen worden aangestuurd, waaronder VMware of publieke cloudproviders. \autocite{HashiCorp2026a} 
 
 Voor provisioning kan Vagrant gebruik maken van verschillende configuratiebeheertools, waaronder shellscripts, Ansible, Chef en Puppet.
-Dit maakt het mogelijk om via het \texttt{vagrant up}-commando zowel de virtuele infrastructuur (via Vagrant) als de configuratie van het gastbesturingssysteem (bijvoorbeeld via Ansible playbooks) te automatiseren.\autocite{HashiCorp2026a}
+Dit maakt het mogelijk om via het``\texttt{vagrant up}''-commando zowel de virtuele infrastructuur (via Vagrant) als de configuratie van het gastbesturingssysteem (bijvoorbeeld via Ansible playbooks) te automatiseren.\autocite{HashiCorp2026a}
 
 Binnen de opleiding \emph{Toegepaste Informatica} wordt Vagrant ingezet om snel identieke virtuele omgevingen uit te rollen waarin Ansible de verdere configuratie en deployment van software verzorgt.
+
+Het volgende codefragment licht een mogelijke, eenvoudige ``\texttt{Vagrantfile}'' toe.
 
 \begin{codeblock}
 \begin{lstlisting}
@@ -279,11 +282,9 @@ Vagrant.configure("2") do |config|
   SHELL
 end
 \end{lstlisting}
-\caption[Voorbeeld Vagrantfile]{Voorbeeld van een eenvoudige Vagrantfile \autocite{HashiCorp2024a}.}
+\caption[Voorbeeld ``\texttt{Vagrantfile}'']{Voorbeeld van een eenvoudige ``\texttt{Vagrantfile}'' \autocite{HashiCorp2024a}.}
 \label{code:vagrantfile_vb}
 \end{codeblock}
-
-<TODO: Toelichting Vagrantfile en verdere afwerking \& nachecking>
 
 \section{Configuration Management}%
 
@@ -303,7 +304,7 @@ Hier is de kracht van Ansible dat men deze taken op declaratieve wijze kan schri
 
 Dankzij een inventorybestand kunnen de taken van een playbook identiek uitgevoerd worden op groepen van meerdere hosts, wat Ansible bijzonder geschikt maakt voor het configureren van tientallen of honderden servers in één keer. \autocite{Ansible2025}
 
-Onderstaand voorbeeld toont een beknopte Ansible playbook die twee taken uitvoert: de webserver en databankserver updaten op alle hosts in de overeenkomende groepen (\texttt{webservers} en \texttt{databases}):
+Onderstaand voorbeeld toont een beknopte Ansible playbook die twee taken uitvoert: de webserver en databankserver updaten op alle hosts in de overeenkomende groepen (``\texttt{webservers}'' en ``\texttt{databases}'').
 
 \begin{codeblock}
 \begin{lstlisting}
@@ -380,14 +381,12 @@ service { 'ntpd':
 
 Wanneer de agent dit manifest meerdere keren toepast, zal Puppet enkel wijzigingen maken als de werkelijke toestand (bijvoorbeeld ontbrekende bestanden of een gestopte service) afwijkt van de beschreven gewenste toestand.
 
-<TODO: Toelichting Puppet-code en verdere afwerking \& nachecking>
-
 \subsection{Chef}%
 
 Chef is een configuration-management- en automatiseringsplatform dat infrastructuur als code benadert via een Ruby-gebaseerde DSL.
-Configuratie wordt georganiseerd in \emph{cookbooks}, die één of meerdere \emph{recipes} bevatten; een recipe beschrijft met behulp van resources (zoals \texttt{package}, \texttt{file} en \texttt{service}) de gewenste toestand van een node.  \autocite{ProgressSoftware2026} 
+Configuratie wordt georganiseerd in \emph{cookbooks}, die één of meerdere \emph{recipes} bevatten; een recipe beschrijft met behulp van resources (zoals ``\texttt{package}'', ``\texttt{file}'' en ``\texttt{service}'') de gewenste toestand van een node.  \autocite{ProgressSoftware2026} 
 
-In een typische opstelling communiceren Chef-clients op de beheerde nodes met een centrale Chefserver, die cookbooks, policies en run lists beheert.{<Chef-recipes-do>,<Chef-overview>} 
+In een typische opstelling communiceren Chef-clients op de beheerde nodes met een centrale Chefserver, die cookbooks, policies en run lists beheert.
 Tijdens een run vraagt de client zijn run list op, convergeert het systeem naar de in de recipes gedefinieerde toestand en rapporteert het resultaat terug, wat een idempotente, herhaalbare configuratieworkflow oplevert. \autocite{ProgressSoftware2026a} 
 
 Onderstaande vereenvoudigde recipe installeert een Apache webserver, kiest op willekeurige basis tussen PHP or Perl als scriptingtaal, en installeert deze vervolgens.
@@ -417,14 +416,14 @@ end
 \label{code:chefvb}
 \end{codeblock}
 
-Bij elke Chef-run wordt deze recipe opnieuw geëvalueerd; als \texttt{httpd} al geïnstalleerd is en de client overeenkomt met de gewenste toestand, zullen er geen wijzigingen meer worden doorgevoerd, in lijn met het idempotente karakter van configuration management. Als bij de volgende run een andere scriptingtaal wordt gekozen, dan zullen de wijzigingen op basis daarvan uitgevoerd worden (de deinstallatie van de oude scriptingtaal, gevolgd door installatie van de nieuwe scriptingtaal).
-
-<TODO: Toelichting Chef-code en verdere afwerking \& nachecking>
+Bij elke Chef-run wordt deze recipe opnieuw geëvalueerd; als ``\texttt{httpd}'' al geïnstalleerd is en de client overeenkomt met de gewenste toestand, zullen er geen wijzigingen meer worden doorgevoerd, in lijn met het idempotente karakter van configuration management. Als bij de volgende run een andere scriptingtaal wordt gekozen, dan zullen de wijzigingen op basis daarvan uitgevoerd worden (de deinstallatie van de oude scriptingtaal, gevolgd door installatie van de nieuwe scriptingtaal).
 
 \section{De opleiding Toegepaste Informatica (HOGENT)}%
 \label{sec:opleiding}
 
 \emph{Toegepaste Informatica} is een professionele bacheloropleiding van drie jaar aan \emph{HOGENT}, aangeboden door het Departement IT \& Digitale Innovatie \autocite{HOGENT2024}. In het derde jaar kiezen studenten een keuzeprofiel dat aansluit bij hun interesse; voor studenten met een interesse in serverinfrastructuur, netwerken en automatisering is dat het keuzeprofiel ``\emph{IT infrastructure engineer}''.
+
+De volgende subsecties beschrijven achtereenvolgend het relevante keuzeprofiel (``\emph{IT infrastructure engineer}''), de drie OLODs (opleidingsonderdelen) die centraal staan in deze bachelorproef, de Ansible-rollen en de \emph{Ansible Skeleton} van Bert Van Vreckem, en tot slot een algemeen overzicht van de voornaamste tools die binnen de OLODs in dit keuzeprofiel worden ingezet.
 
 \subsection{``IT infrastructure engineer'' (Keuzeprofiel)}%
 \label{subsec:keuzeprofiel}
@@ -446,16 +445,12 @@ Het OLOD ``\emph{Cybersecurity Advanced}'' introduceert het concept van ``\emph{
 
 Het gebruik van \emph{configuration management} of UML-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student een aanzienlijk voordeel: de labo-omgeving is zo overzichtelijker en kan (na het manueel uitvoeren van elk labo) snel opnieuw opgezet worden met de relevante aanpassingen. De initiële labo-omgeving wordt alvast voorgesteld met een netwerkdiagram ontworpen via \emph{PlantUML} \autocite{HoGentTIN2025}, wat studenten een rechtstreekse link biedt tussen het diagram en de effectieve omgeving.
 
-<TODO: Verdere toelichting met basis-netwerkdiagram, Ansible-code, ...>
-
 \subsection{``Infrastructure Automation'' (OLOD)}%
 \label{subsec:infra_auto}
 
 ``\emph{Infrastructure Automation}'' is een OLOD dat een reeks labo's bevat die verschillende tools introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen, waaronder Ansible, Jenkins\footnote{\url{https://www.jenkins.io/}}, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}} \autocite{HOGENT2025a}. In tegenstelling tot ``Cybersecurity Advanced'' is het gebruik van \emph{configuration management} hier een centrale leerdoelstelling: de labo's vereisen dat studenten Ansible inzetten om de virtuele machines te configureren.
 
-De referentieomgeving voor dit OLOD is gebaseerd op de ``\emph{Ansible Skeleton}'' van \textcite{Vreckem2025}: een sjabloon voor Ansible-projecten met een geïntegreerde Vagrant-omgeving. Deze structuur -- met mappen zoals ``\texttt{ansible/}'', ``\texttt{ansible/host\_vars/}'', ``\texttt{ansible/group\_vars/}'' en een centraal ``\texttt{site.yml}''-playbook -- vormt ook de uitvoerstructuur van de converter die in deze bachelorproef wordt ontwikkeld \autocite{HoGentTIN2025a}.
-
-<TODO: Verdere toelichting met Ansible-labo, Ansible-skeleton, roles van Bert Van Vreckem, ...>
+De labo-omgeving voor dit OLOD is gebaseerd op de ``\emph{Ansible Skeleton}'' van \textcite{Vreckem2025}: een sjabloon voor Ansible-projecten met een geïntegreerde Vagrant-omgeving. Deze structuur -- met mappen zoals ``\texttt{ansible/}'', ``\texttt{ansible/host\_vars/}'', ``\texttt{ansible/group\_vars/}'' en een centraal ``\texttt{site.yml}''-playbook -- vormt ook de uitvoerstructuur van de converter die in deze bachelorproef wordt ontwikkeld \autocite{HoGentTIN2025a}.
 
 \subsection{``DevOps Project: Operations'' (OLOD)}%
 \label{subsec:devops_ops}
@@ -464,8 +459,6 @@ De referentieomgeving voor dit OLOD is gebaseerd op de ``\emph{Ansible Skeleton}
 Het doel van het ``operations-team'' is om de backend van een webapplicatie (bijvoorbeeld een \emph{.NET}- of \emph{Android}-package) -- ontwikkeld door een parallel ``development-team'' -- te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet volledig geautomatiseerd kunnen opgezet worden via \emph{Infrastructure-as-Code}- en \emph{configuration management}-tools.
 
 In tegenstelling tot de twee vorige OLODs is het gebruik van een netwerkdiagram hier verplicht: de onderliggende architectuur moet worden gevisualiseerd voor zowel technische als niet-technische stakeholders via UML-modelleringssoftware. Dit OLOD combineert daarmee twee aspecten die centraal staan in deze bachelorproef: het ontwerpen van een infrastructuur via (UML-)diagrammen, en het automatisch uitrollen ervan via IaC en \emph{configuration management}.
-
-<TODO: Verdere toelichting met representatief netwerkdiagram van finaal project (vermelding van concrete klantenopdracht (Ortho, HOGENT, etc.) nodig?)>
 
 \subsection{Ansible-rollen en Ansible Skeleton van Bert Van Vreckem}%
 \label{subsec:bertvv}
@@ -476,20 +469,20 @@ De \emph{Ansible Skeleton} is een sjabloon voor Vagrant- en Ansible-projecten da
 Naast het skelet heeft \textcite{Vreckem2016} ook een reeks Ansible-rollen ontwikkeld die specifiek gericht zijn op \emph{RedHat}-gebaseerde distributies en die binnen de opleiding standaard worden ingezet:
 
 \begin{description}
-  \item[\texttt{bertvv.rh-base}] Basisinstallatie en -configuratie van een \emph{RedHat}-gebaseerde server: firewall, SELinux, gebruikersbeheer en algemene systeeminstellingen \autocite{Vreckem2016}.
-  \item[\texttt{bertvv.bind}] Installatie en configuratie van \emph{BIND9} als autoritatieve DNS-server \autocite{Vreckem2015}.
-  \item[\texttt{bertvv.dhcp}] Installatie en configuratie van \emph{ISC DHCP} als DHCP-server \autocite{Vreckem2015a}.
-  \item[\texttt{bertvv.httpd}] Installatie en configuratie van een \emph{Apache}-webserver \autocite{Vreckem2015b}.
+  \item[``\texttt{bertvv.rh-base}''] Basisinstallatie en -configuratie van een \emph{RedHat}-gebaseerde server: firewall, SELinux, gebruikersbeheer en algemene systeeminstellingen \autocite{Vreckem2016}.
+  \item[``\texttt{bertvv.bind}''] Installatie en configuratie van \emph{BIND9} als autoritatieve DNS-server \autocite{Vreckem2015}.
+  \item[``\texttt{bertvv.dhcp}''] Installatie en configuratie van \emph{ISC DHCP} als DHCP-server \autocite{Vreckem2015a}.
+  \item[`\texttt{bertvv.httpd}'] Installatie en configuratie van een \emph{Apache}-webserver \autocite{Vreckem2015b}.
 \end{description}
 
-\subsection{Gebruikte tools binnen de opleiding}%
-\label{subsec:tools_opleiding}
+\subsection{Overzicht voornaamste tools}%
+\label{subsec:overzicht_tools}
 
-De volgende tabel geeft een overzicht van de tools die binnen \emph{Toegepaste Informatica} (en meerbepaald het keuzeprofiel ``\emph{IT infrastructure engineer}'') worden ingezet, alsook de context waarin ze worden gebruikt:
+De volgende tabel geeft een algemeen overzicht van de voornaamste tools die voor de bovenstaande OLODS (binnen het keuzeprofiel ``\emph{IT infrastructure engineer}'') worden ingezet, alsook de context waarin ze worden gebruikt:
 
 \begin{table}[H]
 \centering
-\begin{tabular}{ll}
+\begin{tabularx}{\textwidth}{l X}
 \toprule
 \textbf{Tool} & \textbf{Context} \\
 \midrule
@@ -497,56 +490,58 @@ Visual Paradigm / draw.io & Ontwerp van netwerk- en UML-diagrammen (GUI-gebaseer
 PlantUML                  & Tekstueel diagramformaat (aangeraden in \emph{Cybersecurity Advanced}) \\
 Vagrant                   & \emph{IaC} voor lokale VM-omgevingen (via \emph{Ansible Skeleton}) \\
 Ansible                   & ``\emph{Configuration management}''-tool van virtuele machines\\
+Git / GitHub              & Versiebeheer van code en documentatie voor projecten en labo's \\
 \bottomrule
-\end{tabular}
-\caption[Overzicht van tools binnen \emph{Toegepaste Informatica}]{Overzicht van de voornaamste tools die worden ingezet binnen het keuzeprofiel ``\emph{IT infrastructure engineer}'' van de opleiding \emph{Toegepaste Informatica} op \emph{HOGENT}.}
-\label{tab:tools_opleiding}
+\end{tabularx}
+\caption[Overzicht van voornaamste tools binnen keuzeprofiel ``\emph{IT infrastructure engineer}'']{Overzicht van de voornaamste tools die worden ingezet binnen de OLODS uit het keuzeprofiel ``\emph{IT infrastructure engineer}''.}
+\label{tab:overzicht_tools}
 \end{table}
 
 \section{Compilers}%
+\label{sec:compilers}
 
-Compilers vertalen de broncode van een high-level, menselijk leesbare taal (zoals Java\footnote{\url{https://www.java.com/}} of C\#\footnote{\url{https://dotnet.microsoft.com/en-us/languages/csharp}}) tot equivalente instructies in een andere, vaak low-level taal of machinecode \autocite{Seidl2012}.
-
-<TODO: Concept van compilers veel verder uitwerken, hieronder uit te werken gebieden>
-
-<TODO: Verschil tussen high-level talen en machinecode toelichten>
+Compilers vertalen de broncode van een high-level, menselijk leesbare taal (zoals \emph{Java}\footnote{\url{https://www.java.com/}} of \emph{C\#}\footnote{\url{https://dotnet.microsoft.com/en-us/languages/csharp}}) tot equivalente instructies in een andere, vaak low-level taal of machinecode \autocite{Seidl2012}. Dit proces verloopt in meerdere opeenvolgende fases, waarbij elke fase de uitvoer van de vorige als invoer neemt.
 
 \subsection{Fases}%
-
-<TODO: Verschillende fases van compilers toelichten>
+\label{subsec:compilerfases}
 
 \subsubsection{Lexicale analyse}%
+
+De eerste fase, de \emph{lexicale analyse} (ook wel ``\emph{scanning}'' of ``\emph{tokenisatie}'' genoemd), leest de broncode karakter per karakter en groepeert deze in betekenisvolle eenheden of ``\emph{tokens}'' \autocite{Seidl2012}. Voorbeelden van tokens zijn sleutelwoorden (``\texttt{if}'', ``\texttt{while}''), identifiers, operatoren en literals. Witruimte en commentaar wordt hier doorgaans geen rekening mee gehouden, tenzij de brontaal in kwestie bijvoorbeeld wel witruimte-gevoelig is (zoals bij \emph{Python}).
+
 \subsubsection{Parsen/ontleden}%
+
+De \emph{parser} neemt de tokens van de vorige fase als invoer en controleert of deze voldoen aan de grammaticale regels van de brontaal \autocite{Seidl2012}. Het resultaat is een \emph{parse tree}, die de hiërarchische structuur van de broncode weergeeft (zie \nameref{subsec:parsetree}). Als de tokens niet grammaticaal correct zijn, ontstaat er in de parser een syntaxfout.
+
 \subsubsection{Semantische analyse}%
+
+Waar de parser enkel de syntactische correctheid controleert, gaat de \emph{semantische analyse} na of de code ook effectief betekenisvol is \autocite{Seidl2012}. Typische controles zijn typeverificatie, scopecontrole en het oplossen van namen. Het resultaat is doorgaans een verrijkte \emph{abstracte syntaxboom} (of AST, zie \nameref{subsec:ast}).
+
 \subsubsection{Optimalisatie}%
+
+De optionele \emph{optimalisatiefase} transformeert de tussentijdse representatie om de efficiëntie van de gegenereerde code te verbeteren, zonder de semantiek te wijzigen \autocite{Seidl2012}. Voorbeelden zijn \emph{constant folding}, het elimineren van dode code en het inlinen van kleine functies.
+
 \subsubsection{Codegeneratie}%
 
-\section{Transpilers}%
+De laatste fase zet de (al dan niet geoptimaliseerde) tussentijdse representatie om naar de doeltaal \autocite{Seidl2012}. Voor traditionele compilers is dit machinecode of assembler; voor andere compilers kan dit ook een andere high-level taal zijn. In dat laatste geval spreekt men van een \emph{transpiler}, wat in \nameref{sec:transpilers} verder wordt toegelicht.
 
-``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn compilers die code geschreven in één high-level (programmeer-)taal als invoer aannemen en deze omzetten naar code in een andere high-level taal als uitvoer. De use cases voor deze software kunnen zich ook uitbreiden tot het optimaliseren of omzetten van code naar een andere/nieuwere versie van eenzelfde taal. \autocite{Ilyushin2016}
+\subsection{Abstract Syntax Tree (AST)}%
+\label{subsec:ast}
 
-\subsection{Doel}%
-\subsection{Abstract Syntax Tree}%
+Een \emph{Abstract Syntax Tree} (afgekort AST) is een boomstructuur die de logische, abstracte structuur van de broncode weergeeft, zonder overbodige grammaticale details zoals haakjes of scheidingstekens \autocite{Freitas2025}. Elke knoop in de boom stelt een constructie uit de broncode voor (zoals een expressie of declaratie), terwijl de bladeren de concrete waarden bevatten. Compilers gebruiken de AST als centrale tussentijdse representatie: de invoertaal wordt geparsed naar een AST, getransformeerd, en vervolgens gegenereerd naar de doeltaal.
+
 \subsection{Parse Tree}%
+\label{subsec:parsetree}
 
-<TODO?: Veel van de onderstaande subsecties weet ik nog niet of ik ze (überhaupt) onder ``Compilers'' or ``Transpilers'' zal/zou zetten, aangezien de terminologie soms wat verwarrend is. In hoeverre kan ik dit soort voorbeelden toelichten, als ik allicht niet deze specifieke tools zal toepassen in mijn proof-of-concept?>
+Een \emph{parse tree} (ook wel \emph{concrete syntaxboom}) is het directe resultaat van het parsen van broncode en bevat \emph{alle} grammaticale informatie, inclusief interpunctie en andere syntactische details die voor de betekenis niet relevant zijn \autocite{Freitas2025}. Een AST is in de praktijk een vereenvoudigde versie van de parse tree waarbij de overbodige knopen zijn weggelaten. De AST is voor transpilers de voorkeur, omdat transformaties erop eenvoudiger en minder foutgevoelig zijn.
 
-\subsection{``ANTLR''}%
+\section{Transpilers}%
+\label{sec:transpilers}
+``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn compilers die broncode geschreven in één high-level taal omzetten naar code in een andere high-level taal \autocite{Freitas2025}. Bekende toepassingen zijn de omzetting van moderne \emph{JavaScript} (ES2022+) naar oudere versies voor browsercompatibiliteit (via tools zoals \emph{Babel}\footnote{\url{https://babeljs.io/}}) \autocite{Nicolini2024}, de compilatie van TypeScript naar \emph{JavaScript}, en de omzetting van C/C++ naar WebAssembly (via \emph{Emscripten}\footnote{\url{https://emscripten.org/}}). Voor het automatisch genereren van lexers en parsers bestaan er gespecialiseerde tools zoals \emph{ANTLR}\footnote{\url{https://www.antlr.org/}} of ingebouwde Unix-tools zoals \emph{Lex} en \emph{Yacc}.
 
-<TODO: ANTLR is een parser-generator>
+\section{Converters}%
+\label{sec:converters}
 
-\subsection{``Lex''}%
+Waar een transpiler een formele pipeline doorloopt (lexicale analyse, parsing, AST-opbouw en codegeneratie), volstaat een \emph{converter} met een patroongebaseerde transformatie van het ene bestandsformaat naar het andere, zonder een volledige semantische analyse van de invoer \autocite{Plaisted2013}. Het doel is functionele equivalentie: de uitvoer moet de informatie uit de invoer correct weergeven in het doelformaat, maar het pad ernaartoe hoeft niet via een formele grammatica te lopen.
 
-<TODO: Lex is een lexical analyzer generator voor C, standaard op veel Unix-systemen>
-
-\subsection{``Yacc''}%
-
-<TODO: Yacc is een (LALR) parser generator voor C, ook standaard op veel Unix-systemen>
-
-\subsection{``Babel''}%
-
-<TODO: Javascript transpiler voor backwards compatible JS-code (voor o.a. oudere browsers) te genereren>
-
-\subsection{``Emscripten''}
-
-<TODO: C/C++ naar WebAssembly transpiler>
+Een converter kan bijvoorbeeld op basis van reguliere expressies of patroonherkenning relevante elementen uit een tekstbestand extraheren en deze omzetten naar een andere structuur. Dit is een pragmatische aanpak die goed werkt wanneer de invoertaal een beperkte, voorspelbare syntax heeft en er geen volledige semantische analyse vereist is.
