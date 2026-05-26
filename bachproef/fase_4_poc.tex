@@ -18,7 +18,7 @@ Het proces om deze diagrammen om te zetten verloopt volgens de volgende overkoep
   \item \textbf{Parsering}: de PlantUML-bronbestanden (netwerk- en/of implementatiediagram) worden ingelezen en de relevante data (hostnames, IP-adressen, \ldots) worden omgezet naar \emph{Python}-dictionaries), die in de volgende stappen worden verwerkt.
   \item \textbf{Validatie} (enkel relevant voor \nameref{subsec:fullmode}): de \emph{Python}-dictionaries van beide diagrammen worden gecontroleerd op consistentie; er wordt afgecheckt of alle hosts uit het netwerkdiagram (met het ``\texttt{managed = true}''-attribuut) ook effectief voorkomen in het implementatiediagram.
   \item \textbf{Codegeneratie}: Op basis van de \emph{Python}-dictionaries worden de uitvoerbestanden gegenereerd via \emph{Jinja2}-sjablonen en sentinelwaarden (zie \nameref{subsec:ontwerpkeuzes}). Dit zijn bestanden zoals de Ansible-inventory, Ansible playbook, hostvariabele-bestanden en ``\emph{Ansible Galaxy}''-afhankelijkheden. \ldots
-  \item \textbf{Asset-kopiëring}: Statische bestanden genaamd ``assets'', waarvan hun inhoud niet afhankelijk is van variabelen uit de \emph{Python}-dictionaries,  worden naar de uitvoermap gekopieerd. Dit houdt bestanden in zoals de ``\texttt{Vagrantfile}'', voorgedefinieerde Ansible-rollen, \emph{Grafana}-dashboards en provisioning-scripts.
+  \item \textbf{Asset-kopiëring}: Statische bestanden genaamd ``assets'', waarvan hun inhoud niet afhankelijk is van variabelen uit de \emph{Python}-dictionaries,  worden naar de uitvoermap gekopieerd. Dit houdt bestanden in zoals de ``\texttt{Vagrantfile}'', voorgedefinieerde \emph{Ansible}-rollen, \emph{Grafana}-dashboards en provisioning-scripts.
 \end{enumerate}
 
 Om deze stappen tot een goed einde te brengen zijn er uiteraard ook helper-functies ontwikkeld, maar dit hoofdstuk zal hoofdzakelijk de grote lijnen van het script bespreken.
@@ -56,8 +56,8 @@ De proof-of-concept kent een aantal beperkingen. Hier zijn er een aantal van (di
     \item De \nameref{subsec:fullmode} ondersteunt slechts één netwerk.
     \item Meerdere netwerken zijn ondersteund voor \nameref{subsec:iaconlymode}, met een maximum van drie gedefinieerde IP-adressen per host. Routering wordt \textbf{niet} inbegrepen.
     \item Een Ansible ``\texttt{control}''-node wordt automatisch aangemaakt in ``full mode''.
-    \item De converter ondersteunt enkel \textbf{IPv4-adressering}.
-    \item Enkel \textbf{\emph{AlmaLinux} 9} wordt ondersteund als gastbesturingssysteem (met ``\texttt{bento/almalinux-9}'' als Vagrant base box).
+    \item De converter ondersteunt enkel IPv4-adressering.
+    \item Enkel \emph{AlmaLinux} 9 wordt ondersteund als gastbesturingssysteem (met ``\texttt{bento/almalinux-9}'' als Vagrant base box).
     \item De converter veronderstelt dat de aangeboden PlantUML-bestanden syntactisch correct zijn en een geldig diagram produceren.
 \end{enumerate}
 
@@ -118,7 +118,7 @@ Dit diagram geeft de logische topologie weer van netwerken en hardware-elementen
 
 Meerdere netwerken \textbf{kunnen} gedefinieerd worden voor het \nameref{subsec:iaconlymode}-gebruiksscenario, zolang een host niet meer dan \textbf{3} gedefinieerde IP-adressen heeft.
 
-Hier volgt een voorbeeld van een mogelijk netwerkdiagram.
+Hier volgt een voorbeeld van een mogelijk netwerkdiagram. Ten opzichte van de manuele testomgeving bevat dit diagram een tweede, onbeheerd netwerk (``\texttt{192.168.26.0/24}'') met een workstation en een router. Dit netwerk dient louter als demonstratie van het ``\texttt{managed = false}''-attribuut, wat later nog aan bod komt.
 
 \begin{codeblock}
 \begin{lstlisting}[language=plantuml]
@@ -128,9 +128,9 @@ network test.lan {
   address = "172.26.0.0/16"
 
   unmanaged_router [address = "172.26.255.254", managed = false, shape = "node", color = LightSalmon]
-  web [description = "web", address = "172.26.0.10", shape = "node"]
-  dns [description = "dns", address = "172.26.0.20", shape = "node"]
-  mon [description = "monitoring", address = "172.26.0.30", cpus = 2, memory = 2048, shape = "node"]
+  web [address = "172.26.0.10", shape = "node"]
+  dns [address = "172.26.0.20", shape = "node"]
+  mon [address = "172.26.0.30", description = "monitoring", cpus = 2, memory = 2048, shape = "node"]
 }
 
 network unmanaged.lan {
@@ -143,7 +143,7 @@ network unmanaged.lan {
 
 @endnwdiag
 \end{lstlisting}
-\caption[Voorbeeld netwerkdiagram PlantUML]{Voorbeeld van een netwerkdiagram in PlantUML.}
+\caption[Tekstformaat voorbeeld netwerkdiagram (PlantUML)]{Tekstformaat van het voorbeeld van een netwerkdiagram in PlantUML.}
 \label{code:vb_nwdiag}
 \end{codeblock}
 
@@ -177,17 +177,17 @@ network unmanaged.lan {
 }
 '...
 \end{lstlisting}
-\caption[Netwerkdefinitie in netwerkdiagram]{Definitie van een netwerk in het netwerkdiagram (met een optioneel ``\texttt{color}''-attribuut).}
+\caption[Netwerkdefinitie in netwerkdiagram (PlantUML)]{Definitie van een netwerk in het netwerkdiagram (met een optioneel ``\texttt{color}''-attribuut) in PlantUML.}
 \label{code:vb_nwdiag_network}
 \end{codeblock}
 \end{codeblockfixed}
 
-Voor elk netwerk kunnen er hosts gedefinieerd worden met hun overeenkomend IP-adres (dit is ook het enige verplichte attribuut, en IPv4 wordt hier nogmaals enkel ondersteund).
-Indien een host meerdere IP-adressen heeft, moet deze host voor elk overeenkomend netwerk herdefinieerd worden.
+Voor elk netwerk kunnen er hosts gedefinieerd worden met hun overeenkomend IP-adres via het ``\texttt{address}''-attribuut (dit is ook het enige verplichte attribuut, en hier wordt nogmaals enkel IPv4 ondersteund).
+Indien een host meerdere IP-adressen heeft, moet deze host voor elk overeenkomend netwerk geherdefinieerd worden.
 
-Standaard wordt het ``\texttt{description}''-attribuut (wat ook gerendeerd wordt door PlantUML) gebruikt als de uiteindelijke hostname; als deze niet is gedefinieerd, wordt het eerste woord van de lijn (de ``\emph{host identifier}'') gebruikt (bijvoorbeeld ``unmanaged\_router''). Wegens \emph{Unix}-richtlijnen worden in de hostname underscores omgezet naar koppeltekens.
+Standaard wordt het ``\texttt{description}''-attribuut (wat ook gerendeerd wordt door PlantUML) gebruikt als de uiteindelijke hostname; als deze niet is gedefinieerd, wordt het eerste woord van de lijn (de ``\emph{host identifier}'') gebruikt (bijvoorbeeld ``\texttt{unmanaged\_router}''). Wegens \emph{Unix}-richtlijnen worden in de hostname underscores omgezet naar koppeltekens.
 
-Hosts met het ``\texttt{managed = "false"}''-attribuut worden genegeerd door de converter maar worden wel gerendeerd door PlantUML. Dit is handig voor hosts en netwerken voor te stellen die niet door de converter in acht moeten genomen worden.
+Hosts met het ``\texttt{managed = "false"}''-attribuut worden gerendeerd door PlantUML maar worden wel genegeerd door de converter bij het genereren van Ansible- en Vagrant-uitvoer. Dit is handig voor hosts en netwerken voor te stellen die niet door de converter in acht moeten genomen worden.
 
 Net zoals ``\texttt{color}'' is ``\texttt{shape}'' puur een visueel attribuut die de vorm (een PlantUML ``\emph{Deployment Diagram}''-element zoals ``\texttt{node}'', ``\texttt{database}'', ``\texttt{storage}'', \ldots) van een host bepaalt, maar genegeerd zal worden door de converter \autocite{PlantUML2025}.
 
@@ -199,9 +199,9 @@ network test.lan {
   address = "172.26.0.0/16"
 
   unmanaged_router [address = "172.26.255.254", managed = false, shape = "node", color = LightSalmon]
-  web [description = "web", address = "172.26.0.10", shape = "node"]
-  dns [description = "dns", address = "172.26.0.20", shape = "node"]
-  mon [description = "monitoring", address = "172.26.0.30", cpus = 2, memory = 2048, shape = "node"]
+  web [address = "172.26.0.10", shape = "node"]
+  dns [address = "172.26.0.20", shape = "node"]
+  mon [address = "172.26.0.30", description = "monitoring", cpus = 2, memory = 2048, shape = "node"]
 }
 '...
 \end{lstlisting}
@@ -223,25 +223,26 @@ Deze bovenstaande, volledige code zal binnen PlantUML de volgende afbeelding ren
 
 Het implementatiediagram wordt aangeboden als een PlantUML-bestand met de ``\texttt{@startuml}''-notatie, ook bekend als een \emph{deployment diagram}.
 
-In dit diagram wordt de configuratie van de hosts (hier aangeduid als ``nodes'') in een gegeven omgeving gerepresenteerd, zoals beschreven door hun componenten (in dit geval voorgedefinieerde Ansible-rollen) en hun onderlinge verbindingen. Zoals eerder vermeld, kunnen in dit diagram enkel hosts binnen \textbf{één netwerk} gedefinieerd worden voor het \nameref{subsec:fullmode}-gebruiksscenario.
+In dit diagram wordt de configuratie van de hosts (hier aangeduid als ``nodes'') in een gegeven omgeving gerepresenteerd, zoals beschreven door hun componenten (in dit geval voorgedefinieerde \emph{Ansible}-rollen) en hun onderlinge verbindingen. Zoals eerder vermeld, kunnen in dit diagram enkel hosts binnen \textbf{één netwerk} gedefinieerd worden voor het \nameref{subsec:fullmode}-gebruiksscenario.
 
 Onderstaand voorbeeld illustreert een mogelijk implementatiediagram (dat overeenkomt met het netwerkdiagram uit \nameref{code:vb_nwdiag}).
 
 \begin{codeblock}
 \begin{lstlisting}[language=plantuml]
 @startuml test_env
-
 set separator .
+
 left to right direction
 
-node web as "web" {
+node web {
+    component apache_exporter
     component dns_client
     component mysqld_exporter
     component node_exporter
     component web_server
 }
 
-node dns as "dns" {
+node dns {
     component bind_exporter
     component dns_client
     component dns_server_primary
@@ -260,6 +261,7 @@ mon.dns_client -[#teal]-> dns.dns_server_primary
 mon.monitoring_server -[#coral]-> dns.bind_exporter
 mon.monitoring_server -[#coral]-> dns.node_exporter
 mon.monitoring_server -[#coral]-> mon.node_exporter
+mon.monitoring_server -[#coral]-> web.apache_exporter
 mon.monitoring_server -[#coral]-> web.mysqld_exporter
 mon.monitoring_server -[#coral]-> web.node_exporter
 
@@ -267,7 +269,7 @@ web.dns_client -[#teal]-> dns.dns_server_primary
 
 @enduml
 \end{lstlisting}
-\caption[Voorbeeld implementatiediagram PlantUML]{Voorbeeld van een implementatiediagram in PlantUML.}
+\caption[Tekstformaat voorbeeld implementatiediagram (PlantUML)]{Tekstformaat van het voorbeeld van een implementatiediagram in PlantUML.}
 \label{code:vb_uml}
 \end{codeblock}
 
@@ -316,13 +318,14 @@ node mon as "monitoring" {
 \end{codeblock}
 \end{codeblockfixed}
 
-De voorgedefinieerde Ansible-rollen, die aan de hosts worden toegekend, worden gedefinieerd met het ``\texttt{component}''-sleutelwoord gevolgd door hun ``\emph{role identifier}'' (zie \nameref{sec:beschikbare_rollen}). % komt overeen met "Available roles" in het README.md-bestand van de plantuml2ansible-repository.
+De voorgedefinieerde \emph{Ansible}-rollen, die aan de hosts worden toegekend, worden gedefinieerd met het ``\texttt{component}''-sleutelwoord gevolgd door hun ``\emph{role identifier}'' (zie \nameref{sec:beschikbare_rollen}). % komt overeen met "Available roles" in het README.md-bestand van de plantuml2ansible-repository.
 
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{lstlisting}[language=plantuml]
 '...
-node web as "web" {
+node web {
+    component apache_exporter
     component dns_client
     component mysqld_exporter
     component node_exporter
@@ -335,17 +338,20 @@ node web as "web" {
 \end{codeblock}
 \end{codeblockfixed}
 
-De verbindingen tussen rollen (in dit geval DNS-clients die queries sturen naar de DNS-server en de monitoringserver die exporters scrapet) worden altijd aangeduid met pijlen die van links naar rechts wijzen (bijvoorbeeld ``-->''). Deze kunnen echter wel opgemaakt worden volgens de toegelaten syntax van PlantUML \autocite{PlantUML2020}.
+De verbindingen tussen rollen (in dit geval DNS-clients die queries sturen naar de DNS-server en de monitoringserver die exporters scrapet) worden altijd aangeduid met pijlen die van links naar rechts wijzen (bijvoorbeeld ``\texttt{-->}''). Deze kunnen echter wel opgemaakt worden volgens de toegelaten syntax van PlantUML \autocite{PlantUML2020}.
 
 \begin{codeblockfixed}
 \begin{codeblock}
 \begin{lstlisting}[language=plantuml]
+'...
 mon.dns_client -[#teal]-> dns.dns_server_primary
 mon.monitoring_server -[#coral]-> dns.bind_exporter
 mon.monitoring_server -[#coral]-> dns.node_exporter
 mon.monitoring_server -[#coral]-> mon.node_exporter
+mon.monitoring_server -[#coral]-> web.apache_exporter
 mon.monitoring_server -[#coral]-> web.mysqld_exporter
 mon.monitoring_server -[#coral]-> web.node_exporter
+'...
 \end{lstlisting}
 \caption[Rolverbindingen in implementatiediagram]{Definitie van rolverbindingen in het implementatiediagram.}
 \label{code:vb_uml_rolverbindingen}
@@ -357,7 +363,7 @@ De volledige code hierboven zal binnen PlantUML het volgende diagram renderen.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{../graphics/vb_uml.png}
-  \caption[Afbeeldingsformaat van voorbeeld implementatiediagram PlantUML]{\label{fig:vb_uml.png}Afbeeldingsformaat van het voorbeeld van een implementatiediagram in PlantUML.}
+  \caption[Afbeeldingsformaat voorbeeld implementatiediagram (PlantUML)]{\label{fig:vb_uml.png}Afbeeldingsformaat van het voorbeeld van een implementatiediagram in PlantUML.}
 \end{figure}
 
 \subsection{Rolconfiguratie}%
@@ -365,7 +371,7 @@ De volledige code hierboven zal binnen PlantUML het volgende diagram renderen.
 
 Er zijn een aantal vooraf gedefinieerde rollen (te vinden in ``\texttt{assets/ansible/roles}'', zie \nameref{sec:beschikbare_rollen}) die voor elke beheerde host in het implementatiediagram kunnen worden opgegeven.
 
-Deze rollen (samen met een aantal rollen die rechtstreeks van \emph{Ansible Galaxy} komen) worden toegereikt in het implementatiediagram aan de hand van vereenvoudigde \emph{role identifiers}. De koppeling tussen deze \emph{role identifiers} en de volwaardige Ansible-rollen wordt beheerd via een extern YAML-configuratiebestand genaamd ``\texttt{role-config.yml}'' (te vinden in dezelfde map als ``\texttt{plantuml2ansible.py}'').
+Deze rollen (samen met een aantal rollen die rechtstreeks van \emph{Ansible Galaxy} komen) worden toegereikt in het implementatiediagram aan de hand van vereenvoudigde \emph{role identifiers}. De koppeling tussen deze \emph{role identifiers} en de volwaardige \emph{Ansible}-rollen wordt beheerd via een extern YAML-configuratiebestand genaamd ``\texttt{role-config.yml}'' (te vinden in dezelfde map als ``\texttt{plantuml2ansible.py}'').
 
 Het volgende codefragment geef als voorbeeld de definitie van de \\``\texttt{monitoring\_server}''-rol in ``\texttt{role-config.yml}''.
 
@@ -572,7 +578,7 @@ Deze rollen configureren een primaire of secundaire autoritatieve \emph{BIND9} D
 
 De zone-definities (forward en reverse) worden automatisch gegenereerd vanuit het netwerkdiagram via de sentinelwaarden ``\texttt{\_\_DIAGRAM\_BIND\_ZONES\_PRIMARY\_\_}'' en ``\texttt{\_\_DIAGRAM\_BIND\_ZONES\_SECONDARY\_\_}''. DNSSEC is uitgeschakeld. Recursie is ingeschakeld met ``\texttt{10.0.2.3}'' (de interne DNS van VirtualBox) en ``\texttt{1.1.1.1}'' als upstream resolvers. Zone-overdrachten worden beperkt tot de IP-adressen van eventuele secundaire DNS-servers in het diagram.
 
-In tegenstelling tot de manuele testomgeving (zie \nameref{ch:testomgeving}) kunnen de hosts hier enkel via DNS aangeroepen worden via hun \textbf{hostnaam + het domein als suffix}, bijvoorbeeld ``\texttt{web.test.lan}'', en krijgen deze dus geen extra aliassen.
+In tegenstelling tot de manuele testomgeving (zie \nameref{ch:testomgeving}) kunnen de hosts hier enkel door DNS aangeroepen worden via hun \textbf{hostnaam + het domein als suffix}, bijvoorbeeld ``\texttt{web.test.lan}'', en krijgen deze dus geen extra aliassen.
 
 Poorten ``\texttt{53/tcp}'' en ``\texttt{53/udp}'' worden geopend in de firewall.
 
@@ -765,7 +771,7 @@ De converter produceert voor beide gebruiksscenarios twee soorten uitvoer: \text
 \subsection{Statische bestanden}%
 \label{subsec:statische_bestanden}
 
-Een deel van de uitvoer bestaat uit statsische bestanden (genaamd ``assets''), waarvan de inhoud niet afhangt van het netwerk- en/of implementatiediagram en dus niet dynamisch gegenereerd hoeven te worden. Deze worden rechtstreeks gekopieerd vanuit de ``\texttt{assets/}''-map naar de uitvoermap. Voorbeelden hiervan zijn de ``\texttt{Vagrantfile}'', voorgedefinieerde Ansible-rollen, \emph{Grafana}-dashboardbestanden en provisioning-scripts.
+Een deel van de uitvoer bestaat uit statsische bestanden (genaamd ``assets''), waarvan de inhoud niet afhangt van het netwerk- en/of implementatiediagram en dus niet dynamisch gegenereerd hoeven te worden. Deze worden rechtstreeks gekopieerd vanuit de ``\texttt{assets/}''-map naar de uitvoermap. Voorbeelden hiervan zijn de ``\texttt{Vagrantfile}'', voorgedefinieerde \emph{Ansible}-rollen, \emph{Grafana}-dashboardbestanden en provisioning-scripts.
 
 Welke assets worden gekopieerd, hangt af van het gebruiksscenario én van de rollen die in het implementatiediagram zijn opgegeven. Via de ``\texttt{assets}''-key in ``\texttt{role-config.yml}'' kan per rol worden opgegeven welke extra bestanden naar de uitvoermap moeten worden gekopieerd (zie \nameref{subsec:rolconfiguratie}). Zo worden enkel de \emph{Grafana}-dashboards die relevant zijn voor de aanwezige exporterrollen effectief meegekopieerd.
 

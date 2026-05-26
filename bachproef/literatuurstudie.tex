@@ -423,7 +423,7 @@ Bij elke Chef-run wordt deze recipe opnieuw geëvalueerd; als ``\texttt{httpd}''
 
 \emph{Toegepaste Informatica} is een professionele bacheloropleiding van drie jaar aan \emph{HOGENT}, aangeboden door het Departement IT \& Digitale Innovatie \autocite{HOGENT2024}. In het derde jaar kiezen studenten een keuzeprofiel dat aansluit bij hun interesse; voor studenten met een interesse in serverinfrastructuur, netwerken en automatisering is dat het keuzeprofiel ``\emph{IT infrastructure engineer}''.
 
-De volgende subsecties beschrijven achtereenvolgend het relevante keuzeprofiel (``\emph{IT infrastructure engineer}''), de drie OLODs (opleidingsonderdelen) die centraal staan in deze bachelorproef, de Ansible-rollen en de \emph{Ansible Skeleton} van Bert Van Vreckem, en tot slot een algemeen overzicht van de voornaamste tools die binnen de OLODs in dit keuzeprofiel worden ingezet.
+De volgende subsecties beschrijven achtereenvolgend het relevante keuzeprofiel (``\emph{IT infrastructure engineer}''), de drie OLODs (opleidingsonderdelen) die centraal staan in deze bachelorproef, de \emph{Ansible}-rollen en de \emph{Ansible Skeleton} van Bert Van Vreckem, en tot slot een algemeen overzicht van de voornaamste tools die binnen de OLODs in dit keuzeprofiel worden ingezet.
 
 \subsection{``IT infrastructure engineer'' (Keuzeprofiel)}%
 \label{subsec:keuzeprofiel}
@@ -460,13 +460,13 @@ Het doel van het ``operations-team'' is om de backend van een webapplicatie (bij
 
 In tegenstelling tot de twee vorige OLODs is het gebruik van een netwerkdiagram hier verplicht: de onderliggende architectuur moet worden gevisualiseerd voor zowel technische als niet-technische stakeholders via UML-modelleringssoftware. Dit OLOD combineert daarmee twee aspecten die centraal staan in deze bachelorproef: het ontwerpen van een infrastructuur via (UML-)diagrammen, en het automatisch uitrollen ervan via IaC en \emph{configuration management}.
 
-\subsection{Ansible-rollen en Ansible Skeleton van Bert Van Vreckem}%
+\subsection{\emph{Ansible}-rollen en Ansible Skeleton van Bert Van Vreckem}%
 \label{subsec:bertvv}
 
-Een aantal centrale bouwstenen binnen de bovenstaande OLODs -- en bij uitbreiding binnen de converter ontwikkeld in deze bachelorproef -- zijn de Ansible-rollen en \emph{Ansible Skeleton} van \textcite{Vreckem2025}.
+Een aantal centrale bouwstenen binnen de bovenstaande OLODs -- en bij uitbreiding binnen de converter ontwikkeld in deze bachelorproef -- zijn de \emph{Ansible}-rollen en \emph{Ansible Skeleton} van \textcite{Vreckem2025}.
 De \emph{Ansible Skeleton} is een sjabloon voor Vagrant- en Ansible-projecten dat een vaste mappenstructuur, een vooraf geconfigureerde ``\texttt{Vagrantfile}'' en hulpscripts omvat. Deze ``\texttt{Vagrantfile}'' is zo ontworpen zodat men enkel in een apart ``\texttt{vagrant-hosts.yml}''-bestand hosts moet definiëren om deze vervolgens eenvoudig op te starten met het ``\texttt{vagrant up}''-commando.
 
-Naast het skelet heeft \textcite{Vreckem2016} ook een reeks Ansible-rollen ontwikkeld die specifiek gericht zijn op \emph{RedHat}-gebaseerde distributies en die binnen de opleiding standaard worden ingezet:
+Naast het skelet heeft \textcite{Vreckem2016} ook een reeks \emph{Ansible}-rollen ontwikkeld die specifiek gericht zijn op \emph{RedHat}-gebaseerde distributies en die binnen de opleiding standaard worden ingezet:
 
 \begin{description}
   \item[``\texttt{bertvv.rh-base}''] Basisinstallatie en -configuratie van een \emph{RedHat}-gebaseerde server: firewall, SELinux, gebruikersbeheer en algemene systeeminstellingen \autocite{Vreckem2016}.

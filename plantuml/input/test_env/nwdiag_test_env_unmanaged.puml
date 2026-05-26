@@ -1,0 +1,20 @@
+@startnwdiag test_env
+
+network test.lan {
+  address = "172.26.0.0/16"
+
+  unmanaged_router [address = "172.26.255.254", managed = false, shape = "node", color = LightSalmon]
+  web [address = "172.26.0.10", shape = "node"]
+  dns [address = "172.26.0.20", shape = "node"]
+  mon [address = "172.26.0.30", description = "monitoring", cpus = 2, memory = 2048, shape = "node"]
+}
+
+network unmanaged.lan {
+  address = "192.168.26.0/24"
+  color = LightSalmon
+
+  unmanaged_router [address = "192.168.26.254", managed = false, shape = "node", color = LightSalmon]
+  unmanaged_workstation [address = "192.168.26.128", managed = false, shape = "node", color = LightSalmon]
+}
+
+@endnwdiag
