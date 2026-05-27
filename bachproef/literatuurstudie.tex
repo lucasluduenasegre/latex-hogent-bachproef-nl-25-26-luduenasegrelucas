@@ -81,7 +81,7 @@ Volgens \textcite{Padmanabhan2012} worden binnen UML er veertien diagramtypen on
 
 \emph{PlantUML} is een open-source tool waarmee UML- en aanverwante diagrammen gegenereerd kunnen worden op basis een van declaratief en menselijk leesbaar tekstformaat \autocite{PlantUML2026}.
 
-De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele UML-diagrammen (Class Diagrams, Deployment Diagrams, Activity Diagrams, \ldots), maar dus ook notaties die niet strikt genomen onder UML vallen zoals netwerkdiagrammen, mindmaps en GANTT-diagrammen \autocite{PlantUML2025}. 
+De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele UML-diagrammen (Class Diagrams, Deployment Diagrams, Activity Diagrams, \ldots), maar dus ook notaties die niet strikt genomen onder UML vallen zoals netwerkdiagrammen, mindmaps en GANTT-diagrammen \autocite{PlantUML2025}.
 
 \emph{PlantUML} kan op verschillende manieren gebruikt worden; via de online webinterface\footnote{https://www.plantuml.com/plantuml}, een lokale installatie of een Docker-container. Er worden ook verscheidene integraties aangeboden zoals plugins voor gangbare IDE's (Visual Studio Code, IntelliJ IDEA en Eclipse) en documentatie- en wiki-tools (Confluence en Markdown).
 
@@ -90,7 +90,7 @@ Aangezien de diagramdefinities gewone tekstbestanden zijn (met ``\texttt{.puml}'
 Het volgende codefragment stelt een voorbeeld van een implementatiediagram voor, met vijf nodes en hun bijhorende connecties.
 
 \begin{codeblock}
-\begin{lstlisting}[language=plantuml]
+  \begin{lstlisting}[language=plantuml]
 @startuml
 
 node node1
@@ -105,8 +105,8 @@ node1 == node5
 
 @enduml
 \end{lstlisting}
-\caption[Voorbeeld implementatiediagram in tekstformaat (PlantUML)]{Tekstformaat voor een voorbeeld van een implementatiediagram, uitgedrukt in \emph{PlantUML} \autocite{PlantUML2025}.}
-\label{code:depdiag_vb_puml}
+  \caption[Voorbeeld implementatiediagram in tekstformaat (PlantUML)]{Tekstformaat voor een voorbeeld van een implementatiediagram, uitgedrukt in \emph{PlantUML} \autocite{PlantUML2025}.}
+  \label{code:depdiag_vb_puml}
 \end{codeblock}
 
 \emph{PlantUML} verwerkt vervolgens deze tekst en genereert op basis hiervan de volgende afbeelding.
@@ -139,8 +139,8 @@ architecture-beta
     disk1:T -- B:server
     disk2:T -- B:db
   \end{lstlisting}
-\caption[Eenvoudig infrastructuurdiagram in \emph{MermaidJS}]{Tekstformaat voor een voorbeeld van een architectuurplan, uitgedrukt in \emph{MermaidJS}. \autocite{Mermaid2026}}
-\label{code:archplan_vb_mermaid}
+  \caption[Eenvoudig infrastructuurdiagram in \emph{MermaidJS}]{Tekstformaat voor een voorbeeld van een architectuurplan, uitgedrukt in \emph{MermaidJS}. \autocite{Mermaid2026}}
+  \label{code:archplan_vb_mermaid}
 \end{codeblock}
 
 Mermaid rendeert vervolgens op basis van deze code de volgende afbeelding.
@@ -167,16 +167,16 @@ Moderne IaC-tools zoals Terraform, OpenTofu en Vagrant volgen hoofdzakelijk een 
 \subsection{Terraform}%
 
 Terraform is een open-source Infrastructure-as-Code tool van HashiCorp, ontworpen om infrastructuur geautomatiseerd te provisioneren en te beheren over (meerdere) cloud- en on-premises platformen.
-In plaats van infrastructuur handmatig aan te maken in een webconsole, definieert men de gewenste toestand in configuratiebestanden, waarna Terraform aan de hand van verscheidene API's voor de betrokken platformen de nodige resources aanmaakt, wijzigt of verwijdert. \autocite{HashiCorp2024} 
+In plaats van infrastructuur handmatig aan te maken in een webconsole, definieert men de gewenste toestand in configuratiebestanden, waarna Terraform aan de hand van verscheidene API's voor de betrokken platformen de nodige resources aanmaakt, wijzigt of verwijdert. \autocite{HashiCorp2024}
 
 De configuraties worden geschreven in HashiCorp Configuration Language (HCL) (met ``\texttt{.tf}'' als bestandsextensie), een menselijk leesbare, declaratieve taal waarin men verschillende zaken kan definiëren zoals resources (zoals al dan niet virtuele nodes, maar ook bijvoorbeeld netwerken of DNS-records), data sources (om externe data aan te reiken) en modules (sets van configuratiebestanden). \autocite{HashiCorp2025}
 
-Terraform ondersteunt honderden providers; dit varieert van providers ontwikkeld door officiële partners (zoals IBM en Ansible) tot providers van third-party bedrijven (zoals Amazon AWS, Microsoft Azure, Google Cloud, \ldots), wat het bijzonder flexibel maakt voor multi-cloud- en hybride omgevingen. \autocite{HashiCorp2025a} 
+Terraform ondersteunt honderden providers; dit varieert van providers ontwikkeld door officiële partners (zoals IBM en Ansible) tot providers van third-party bedrijven (zoals Amazon AWS, Microsoft Azure, Google Cloud, \ldots), wat het bijzonder flexibel maakt voor multi-cloud- en hybride omgevingen. \autocite{HashiCorp2025a}
 
 Het volgende codefragment licht de structuur van HCL toe via een eenvoudige topologie voor een AWS-gebaseerde omgeving.
 
 \begin{codeblock}
-\begin{lstlisting}
+  \begin{lstlisting}
 terraform {
   required_providers {
     aws = {
@@ -226,8 +226,8 @@ resource "aws_subnet" "az" {
   cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 4, count.index+1)
 }
 \end{lstlisting}
-\caption[Voorbeeld Terraform-configuratie]{Voorbeeld van een eenvoudige Terraform-configuratie \autocite{HashiCorp2025}.}
-\label{code:terraform_vb}
+  \caption[Voorbeeld Terraform-configuratie]{Voorbeeld van een eenvoudige Terraform-configuratie \autocite{HashiCorp2025}.}
+  \label{code:terraform_vb}
 \end{codeblock}
 
 \subsection{OpenTofu}%
@@ -242,10 +242,10 @@ De tool ondersteunt dus dezelfde concepten (providers, resources, modules en sta
 \subsection{Vagrant}%
 
 Vagrant is een tool van HashiCorp voor het bouwen en beheren van (lokale) virtuele omgevingen via een eenvoudig, tekstueel configuratiebestand (``\texttt{Vagrantfile}'').
-Het doel van Vagrant is om lichte, reproduceerbare en draagbare ontwikkel- en testomgevingen te creëren die met één commando kunnen worden opgestart, geprovisioneerd en opnieuw vernietigd. \autocite{HashiCorp2026} 
+Het doel van Vagrant is om lichte, reproduceerbare en draagbare ontwikkel- en testomgevingen te creëren die met één commando kunnen worden opgestart, geprovisioneerd en opnieuw vernietigd. \autocite{HashiCorp2026}
 
 In de ``\texttt{Vagrantfile}'' specificeert men voor elke virtuele machine, onder andere, de base box (of het gastbesturingssysteem zoals \emph{AlmaLinux}, Alpine Linux, Ubuntu), de hoeveelheid CPU en werkgeheugen, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
-Standaard ondersteunt Vagrant providers zoals \emph{VirtualBox}, Hyper-V en Docker, maar via plug-ins kunnen ook andere platformen worden aangestuurd, waaronder VMware of publieke cloudproviders. \autocite{HashiCorp2026a} 
+Standaard ondersteunt Vagrant providers zoals \emph{VirtualBox}, Hyper-V en Docker, maar via plug-ins kunnen ook andere platformen worden aangestuurd, waaronder VMware of publieke cloudproviders. \autocite{HashiCorp2026a}
 
 Voor provisioning kan Vagrant gebruik maken van verschillende configuratiebeheertools, waaronder shellscripts, Ansible, Chef en Puppet.
 Dit maakt het mogelijk om via het``\texttt{vagrant up}''-commando zowel de virtuele infrastructuur (via Vagrant) als de configuratie van het gastbesturingssysteem (bijvoorbeeld via Ansible playbooks) te automatiseren.\autocite{HashiCorp2026a}
@@ -255,7 +255,7 @@ Binnen de opleiding \emph{Toegepaste Informatica} wordt Vagrant ingezet om snel 
 Het volgende codefragment licht een mogelijke, eenvoudige ``\texttt{Vagrantfile}'' toe.
 
 \begin{codeblock}
-\begin{lstlisting}
+  \begin{lstlisting}
 Vagrant.configure("2") do |config|
   config.vm.box = "hashicorp-education/ubuntu-24-04"
   config.vm.box_version = "0.1.0"
@@ -282,8 +282,8 @@ Vagrant.configure("2") do |config|
   SHELL
 end
 \end{lstlisting}
-\caption[Voorbeeld ``\texttt{Vagrantfile}'']{Voorbeeld van een eenvoudige ``\texttt{Vagrantfile}'' \autocite{HashiCorp2024a}.}
-\label{code:vagrantfile_vb}
+  \caption[Voorbeeld ``\texttt{Vagrantfile}'']{Voorbeeld van een eenvoudige ``\texttt{Vagrantfile}'' \autocite{HashiCorp2024a}.}
+  \label{code:vagrantfile_vb}
 \end{codeblock}
 
 \section{Configuration Management}%
@@ -297,7 +297,7 @@ Ansible, Puppet en Chef zijn drie open-source tools die in de praktijk het meest
 \subsection{Ansible}%
 
 Ansible is een open-source ``\emph{configuration management}''-tool die werkt zonder permanente agenten op de doelhosts: standaard maakt het verbinding via SSH om taken uit te voeren.
-Beheerders beschrijven de gewenste configuratie in menselijk leesbare YAML-bestanden, zogenaamde \emph{playbooks}, die bestaan uit taken (\emph{tasks}) en herbruikbare rollen (\emph{roles}). \autocite{Ansible2025} 
+Beheerders beschrijven de gewenste configuratie in menselijk leesbare YAML-bestanden, zogenaamde \emph{playbooks}, die bestaan uit taken (\emph{tasks}) en herbruikbare rollen (\emph{roles}). \autocite{Ansible2025}
 
 Taken maken gebruik van modules (ingebouwd of community-gedreven) om verscheidene systeem-gerelateerde objecten te beheren, zoals packages, services, gebruikers, bestanden en firewallregels.
 Hier is de kracht van Ansible dat men deze taken op declaratieve wijze kan schrijven in plaats van imperatief; men beschrijft \emph{wat} het eindresultaat moet zijn, niet \emph{hoe} men daar moet geraken. Ansible biedt hier dus de mogelijkheid om playbooks zo idempotent mogelijk te schrijven; bij herhaalde uitvoeringen krijgt men steeds hetzelfde (en verwachte) eindresultaat. \autocite{Stoeckl2025}
@@ -307,7 +307,7 @@ Dankzij een inventorybestand kunnen de taken van een playbook identiek uitgevoer
 Onderstaand voorbeeld toont een beknopte Ansible playbook die twee taken uitvoert: de webserver en databankserver updaten op alle hosts in de overeenkomende groepen (``\texttt{webservers}'' en ``\texttt{databases}'').
 
 \begin{codeblock}
-\begin{lstlisting}
+  \begin{lstlisting}
 ---
 - name: Update web servers
   hosts: webservers
@@ -339,8 +339,8 @@ Onderstaand voorbeeld toont een beknopte Ansible playbook die twee taken uitvoer
       name: postgresql
       state: started
 \end{lstlisting}
-\caption[Voorbeeld Ansible playbook]{Voorbeeld van een eenvoudige Ansible playbook \autocite{Ansible2025a}.}
-\label{code:ansible_playbook_vb}
+  \caption[Voorbeeld Ansible playbook]{Voorbeeld van een eenvoudige Ansible playbook \autocite{Ansible2025a}.}
+  \label{code:ansible_playbook_vb}
 \end{codeblock}
 
 Deze playbook kan herhaaldelijk uitgevoerd worden en telkens hetzelfde resultaat opleveren, wat het potentieel van Ansible qua idempotentie (zeker voor de ingebouwde modules) illustreert.
@@ -351,12 +351,12 @@ Puppet is een configuration-managementtool die gebruikmaakt van een declaratieve
 Beheerders definiëren resources (zoals packages, files en services) in \emph{manifests}; Puppet vergelijkt vervolgens de actuele toestand van een host met deze gewenste toestand en brengt enkel de noodzakelijke wijzigingen aan. \autocite{Perforce2026a}
 
 Typisch wordt Puppet ingezet in een server-agentarchitectuur: een centrale Puppetserver compileert de manifests tot een \emph{catalog} en deelt deze catalog uit aan Puppet-agents op de beheerde hosts.
-De agent past de catalog toe, corrigeert eventuele configuratiedrift en rapporteert zijn status terug aan de server, waardoor beheerders op grote schaal configuraties kunnen afdwingen en monitoren. \autocite{Perforce2026b} 
+De agent past de catalog toe, corrigeert eventuele configuratiedrift en rapporteert zijn status terug aan de server, waardoor beheerders op grote schaal configuraties kunnen afdwingen en monitoren. \autocite{Perforce2026b}
 
 Het volgende manifest toont vereenvoudigd aan hoe een server geconfigureerd kan worden met Puppet:
 
 \begin{codeblock}
-\begin{lstlisting}
+  \begin{lstlisting}
 file { 'ntp.conf':
   path    => '/etc/ntp.conf',
   ensure  => file,
@@ -375,8 +375,8 @@ service { 'ntpd':
   subscribe => File['ntp.conf'],
 }
 \end{lstlisting}
-\caption[Eenvoudig Puppet-manifest voor een webserver]{\autocite{Perforce2026}}
-\label{code:puppetvb}
+  \caption[Eenvoudig Puppet-manifest voor een webserver]{\autocite{Perforce2026}}
+  \label{code:puppetvb}
 \end{codeblock}
 
 Wanneer de agent dit manifest meerdere keren toepast, zal Puppet enkel wijzigingen maken als de werkelijke toestand (bijvoorbeeld ontbrekende bestanden of een gestopte service) afwijkt van de beschreven gewenste toestand.
@@ -384,15 +384,15 @@ Wanneer de agent dit manifest meerdere keren toepast, zal Puppet enkel wijziging
 \subsection{Chef}%
 
 Chef is een configuration-management- en automatiseringsplatform dat infrastructuur als code benadert via een Ruby-gebaseerde DSL.
-Configuratie wordt georganiseerd in \emph{cookbooks}, die één of meerdere \emph{recipes} bevatten; een recipe beschrijft met behulp van resources (zoals ``\texttt{package}'', ``\texttt{file}'' en ``\texttt{service}'') de gewenste toestand van een node.  \autocite{ProgressSoftware2026} 
+Configuratie wordt georganiseerd in \emph{cookbooks}, die één of meerdere \emph{recipes} bevatten; een recipe beschrijft met behulp van resources (zoals ``\texttt{package}'', ``\texttt{file}'' en ``\texttt{service}'') de gewenste toestand van een node.  \autocite{ProgressSoftware2026}
 
 In een typische opstelling communiceren Chef-clients op de beheerde nodes met een centrale Chefserver, die cookbooks, policies en run lists beheert.
-Tijdens een run vraagt de client zijn run list op, convergeert het systeem naar de in de recipes gedefinieerde toestand en rapporteert het resultaat terug, wat een idempotente, herhaalbare configuratieworkflow oplevert. \autocite{ProgressSoftware2026a} 
+Tijdens een run vraagt de client zijn run list op, convergeert het systeem naar de in de recipes gedefinieerde toestand en rapporteert het resultaat terug, wat een idempotente, herhaalbare configuratieworkflow oplevert. \autocite{ProgressSoftware2026a}
 
 Onderstaande vereenvoudigde recipe installeert een Apache webserver, kiest op willekeurige basis tussen PHP or Perl als scriptingtaal, en installeert deze vervolgens.
 
 \begin{codeblock}
-\begin{lstlisting}
+  \begin{lstlisting}
 package 'httpd' do
   action :install
 end
@@ -412,8 +412,8 @@ package 'scripting_language' do
   action :install
 end
 \end{lstlisting}
-\caption[Eenvoudige Chef-recipe voor een webserver]{\autocite{ProgressSoftware2025}}
-\label{code:chefvb}
+  \caption[Eenvoudige Chef-recipe voor een webserver]{\autocite{ProgressSoftware2025}}
+  \label{code:chefvb}
 \end{codeblock}
 
 Bij elke Chef-run wordt deze recipe opnieuw geëvalueerd; als ``\texttt{httpd}'' al geïnstalleerd is en de client overeenkomt met de gewenste toestand, zullen er geen wijzigingen meer worden doorgevoerd, in lijn met het idempotente karakter van configuration management. Als bij de volgende run een andere scriptingtaal wordt gekozen, dan zullen de wijzigingen op basis daarvan uitgevoerd worden (de deinstallatie van de oude scriptingtaal, gevolgd door installatie van de nieuwe scriptingtaal).
@@ -431,9 +431,9 @@ De volgende subsecties beschrijven achtereenvolgend het relevante keuzeprofiel (
 Binnen dit keuzeprofiel zijn er drie OLODs die relevant zijn voor deze bachelorproef, omdat ze elk op hun manier het ontwerpen en/of implementeren van virtuele serverinfrastructuren centraal stellen:
 
 \begin{itemize}
-\item ``\emph{Cybersecurity Advanced}'' \autocite{HOGENT2025}
-\item ``\emph{Infrastructure Automation}'' \autocite{HOGENT2025a}
-\item ``\emph{DevOps Project: Operations}'' \autocite{HOGENT2025b}
+  \item ``\emph{Cybersecurity Advanced}'' \autocite{HOGENT2025}
+  \item ``\emph{Infrastructure Automation}'' \autocite{HOGENT2025a}
+  \item ``\emph{DevOps Project: Operations}'' \autocite{HOGENT2025b}
 \end{itemize}
 
 De twee eerstgenoemde OLODs stellen hierbij een initiële labo-omgeving beschikbaar via de GitHub-organisatie \emph{HoGentTIN} \autocite{HoGentTIN2025,HoGentTIN2025a}. In elk van deze OLODs wordt een basisinfrastructuur aangeboden waarop studenten verder bouwen; hoe deze infrastructuur opgezet, geconfigureerd en gedocumenteerd wordt, is telkens een kerndoelstelling van het OLOD.
@@ -481,20 +481,20 @@ Naast het skelet heeft \textcite{Vreckem2016} ook een reeks \emph{Ansible}-rolle
 De volgende tabel geeft een algemeen overzicht van de voornaamste tools die voor de bovenstaande OLODS (binnen het keuzeprofiel ``\emph{IT infrastructure engineer}'') worden ingezet, alsook de context waarin ze worden gebruikt:
 
 \begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{l X}
-\toprule
-\textbf{Tool} & \textbf{Context} \\
-\midrule
-Visual Paradigm / draw.io & Ontwerp van netwerk- en UML-diagrammen (GUI-gebaseerd) \\
-PlantUML                  & Tekstueel diagramformaat (aangeraden in \emph{Cybersecurity Advanced}) \\
-Vagrant                   & \emph{IaC} voor lokale VM-omgevingen (via \emph{Ansible Skeleton}) \\
-Ansible                   & ``\emph{Configuration management}''-tool van virtuele machines\\
-Git / GitHub              & Versiebeheer van code en documentatie voor projecten en labo's \\
-\bottomrule
-\end{tabularx}
-\caption[Overzicht van voornaamste tools binnen keuzeprofiel ``\emph{IT infrastructure engineer}'']{Overzicht van de voornaamste tools die worden ingezet binnen de OLODS uit het keuzeprofiel ``\emph{IT infrastructure engineer}''.}
-\label{tab:overzicht_tools}
+  \centering
+  \begin{tabularx}{\textwidth}{l X}
+    \toprule
+    \textbf{Tool}             & \textbf{Context}                                                       \\
+    \midrule
+    Visual Paradigm / draw.io & Ontwerp van netwerk- en UML-diagrammen (GUI-gebaseerd)                 \\
+    PlantUML                  & Tekstueel diagramformaat (aangeraden in \emph{Cybersecurity Advanced}) \\
+    Vagrant                   & \emph{IaC} voor lokale VM-omgevingen (via \emph{Ansible Skeleton})     \\
+    Ansible                   & ``\emph{Configuration management}''-tool van virtuele machines         \\
+    Git / GitHub              & Versiebeheer van code en documentatie voor projecten en labo's         \\
+    \bottomrule
+  \end{tabularx}
+  \caption[Overzicht van voornaamste tools binnen keuzeprofiel ``\emph{IT infrastructure engineer}'']{Overzicht van de voornaamste tools die worden ingezet binnen de OLODS uit het keuzeprofiel ``\emph{IT infrastructure engineer}''.}
+  \label{tab:overzicht_tools}
 \end{table}
 
 \section{Compilers}%

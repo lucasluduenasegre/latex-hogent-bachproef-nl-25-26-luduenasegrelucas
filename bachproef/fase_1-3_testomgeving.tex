@@ -1,13 +1,13 @@
 %%=============================================================================
-%% Ontwerp en implementatie van de testomgeving
+%% Ontwerp en implementatie van de manuele testomgeving
 %%=============================================================================
 
-\chapter{Ontwerp en implementatie van de testomgeving}%
-\label{ch:testomgeving}
+\chapter{Ontwerp en implementatie van de manuele testomgeving}%
+\label{ch:manuele_testomgeving}
 
 Alvorens de converter te ontwikkelen, werd er eerst een manuele testomgeving opgezet die als referentie dient voor de gewenste uitvoer. Dit hoofdstuk beschrijft achtereenvolgens de keuzes van elke tool die aan de basis van deze omgeving ligt, de concrete implementatie met de bijhorende Ansible- en Vagrant-configuratiebestanden, alsook hoe deze is ontworpen aan de hand van een netwerk- en implementatiediagram (in PlantUML). De converter die in het volgende hoofdstuk (\nameref{ch:poc}) wordt ontwikkeld, moet voor deze diagrammen als invoer een functioneel equivalente omgeving als uitvoer produceren.
 
-\section{Evaluatie en toolkeuze}%
+\section{Evaluatie van de bestaande tools in de betrokken vakgebieden}%
 \label{sec:toolkeuze}
 
 De keuzes voor de tools (diagramformaat, \emph{configuration management}-tool, \emph{Infrastructure-as-Code}-tool en gastbesturingssysteem) die in deze testomgeving worden ingezet, werden onder andere bepaald op basis van de aanwezigheid binnen de opleiding \emph{Toegepaste Informatica} en de praktische haalbaarheid voor de context van de converter.
@@ -28,53 +28,125 @@ Terraform en OpenTofu zijn krachtigere ``\emph{Infrastructure-as-Code}''-tools v
 
 Als gastbesturingssysteem (voor de op te zetten VM's) werd er gekozen voor \emph{AlmaLinux 9}. De reden hierachter is eerder een compatibiliteitsprobleem: de \emph{Ansible}-rollen van \textcite{Vreckem2016} zijn ontwikkeld voor oudere versies van Ansible die op \emph{AlmaLinux 10} niet volledig worden ondersteund, waardoor de functionaliteit ervan beperkt of verhinderd wordt. Deze keuze heeft uiteraard implicaties voor de veiligheid van de omgeving op lange termijn, maar is voor de doeleinden van deze proof-of-concept een aanvaardbare afweging.
 
-\section{Ontwerp van de testomgeving}%
-\label{sec:ontwerp_testomgeving}
+\section{Ontwerp van de manuele testomgeving}%
+\label{sec:ontwerp_manuele_testomgeving}
 
 \subsection{Rollen}%
 
 De testomgeving bestaat uit drie virtuele machines, elk met een specifieke rol. Deze rollen werden gekozen omdat ze samen een representatieve, maar beheerbare omgeving vormen die voldoende (aantoonbare) verbindingen bevat om de meerwaarde van een implementatiediagram te illustreren.
 
 \begin{description}
-    \item[\texttt{web}] De webserver (IP: ``\texttt{172.26.0.10}'') combineert ``\texttt{bertvv.httpd}'' met een MariaDB-databank om een simpele \emph{PHP}-pagina te hosten die met deze databank verbinding maakt. Er worden ook drie Prometheus-exporters geïnstalleerd, namelijk ``\texttt{node\_exporter}'', ``\texttt{mysqld\_exporter}'' en ``\texttt{apache\_exporter}''. Dit maakt het de meest complexe host qua geconfigureerde packages en firewallpoorten, maar met relatief weinig rechtstreekse verbindingen met andere hosts in de omgeving.
-    \item[\texttt{dns}] De DNS-server (IP: ``\texttt{172.26.0.20}'') is gebaseerd op ``\texttt{bertvv.bind}'' en fungeert als autoritatieve DNS-server voor het ``\texttt{test.lan}''-domein. Elke host die gebruik maakt van deze DNS-server heeft er een ``\texttt{dns\_client}''-verbinding naar, wat resulteert in duidelijk zichtbare, betekenisvolle verbindingen in het implementatiediagram.
-    \item[\texttt{monitoring}] De monitoringserver (IP: ``\texttt{172.26.0.30}'', 2 CPU, 2 GB RAM) draait Prometheus en Grafana en is de host met de meeste uitgaande verbindingen: hij haalt data op van \texttt{node\_exporter} op alle drie hosts, van ``\texttt{bind\_exporter}'' op ``\texttt{dns}'' en zowel van ``\texttt{mysqld\_exporter}'' als van ``\texttt{apache\_exporter}'' op ``\texttt{web}''. Dit web van afhankelijkheden is precies het type onderlinge relaties dat een implementatiediagram het best visualiseert en dat zonder diagram minder duidelijk zou zijn.
+    \item[``\texttt{web}''] De webserver (IP: ``\texttt{172.26.0.10}'') combineert ``\texttt{bertvv.httpd}'' met een MariaDB-databank om een simpele \emph{PHP}-pagina te hosten die met deze databank verbinding maakt. Er worden ook drie Prometheus-exporters geïnstalleerd, namelijk ``\texttt{node\_exporter}'', ``\texttt{mysqld\_exporter}'' en ``\texttt{apache\_exporter}''. Dit maakt het de meest complexe host qua geconfigureerde packages en firewallpoorten, maar met relatief weinig rechtstreekse verbindingen met andere hosts in de omgeving.
+    \item[``\texttt{dns}''] De DNS-server (IP: ``\texttt{172.26.0.20}'') is gebaseerd op ``\texttt{bertvv.bind}'' en fungeert als autoritatieve DNS-server voor het ``\texttt{test.lan}''-domein. Elke host die gebruik maakt van deze DNS-server heeft er een ``\texttt{dns\_client}''-verbinding naar, wat resulteert in duidelijk zichtbare, betekenisvolle verbindingen in het implementatiediagram.
+    \item[``\texttt{monitoring}''] De monitoringserver (IP: ``\texttt{172.26.0.30}'', 2 CPU, 2 GB RAM) draait Prometheus en Grafana en is de host met de meeste uitgaande verbindingen: hij haalt data op van ``\texttt{node\_exporter}'' op alle drie hosts, van ``\texttt{bind\_exporter}'' op ``\texttt{dns}'' en zowel van ``\texttt{mysqld\_exporter}'' als van ``\texttt{apache\_exporter}'' op ``\texttt{web}''. Dit web van afhankelijkheden is precies het type onderlinge relaties dat een implementatiediagram het best visualiseert en dat zonder diagram minder duidelijk zou zijn.
 \end{description}
 
 \subsection{Diagrammen}%
 
-De omgeving wordt beschreven aan de hand van een netwerk- en implementatiediagram. Deze zijn complementair met elkaar: elk biedt een andere kijk op dezelfde omgeving, maar bevatten dus wel nog elk dezelfde hosts.
+De omgeving wordt beschreven aan de hand van een netwerk- en implementatiediagram die complementair zijn met elkaar: elk biedt een andere kijk op dezelfde omgeving, maar bevatten dus wel nog elk dezelfde hosts. Deze diagrammen zullen in het volgende hoofdstuk (\nameref{ch:poc}) als invoer dienen voor de converter.
 
 \subsubsection{Netwerkdiagram}
 
-Het \textbf{netwerkdiagram} (``\texttt{nwdiag\_test\_env.puml}'') toont de netwerktopologie van de omgeving: de hosts met hun IP-adressen en het overkoepelende ``\texttt{test.lan}''-netwerk (``\texttt{172.26.0.0/16''}).
+Het netwerkdiagram (``\texttt{nwdiag\_test\_env.puml}'') visualiseert de netwerktopologie van de omgeving: de hosts (``\texttt{web}'', ``\texttt{dns}'' en ``\texttt{monitoring}'') met hun overeenkomende IP-adressen en hun overkoepelend ``\texttt{test.lan}''-netwerk (``\texttt{172.26.0.0/16}'').
 
 \begin{codeblock}
-    \lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_2_env/nwdiag_infra_auto_lab_2_env.puml}
-    \caption[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (``\texttt{nwdiag\_test\_env.puml}'') van het netwerkdiagram van de testomgeving.}
+    \lstinputlisting[language=plantuml]{../project_files/input/test_env/nwdiag_test_env.puml}
+    \caption[Netwerkdiagram testomgeving in tekstformaat (PlantUML)]{Tekstformaat (``\texttt{nwdiag\_test\_env.puml}'') van het netwerkdiagram van de manuele testomgeving.}
     \label{code:nwdiag_test_env.puml}
 \end{codeblock}
 
 Dit diagram kan door PlantUML gerendeerd worden tot de volgende afbeelding.
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{../graphics/nwdiag_test_env.png}
-  \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{Afbeeldingsformaat van het netwerkdiagram van de testomgeving, gegenereerd door PlantUML.}
-  \label{fig:nwdiag_test_env.png}
+    \centering
+    \includegraphics[width=\textwidth]{../graphics/nwdiag_test_env.png}
+    \caption[Netwerkdiagram testomgeving in afbeeldingsformaat (PlantUML)]{Afbeeldingsformaat van het netwerkdiagram van de manuele testomgeving, gegenereerd door PlantUML.}
+    \label{fig:nwdiag_test_env.png}
 \end{figure}
 
 \subsubsection{Implementatiediagram}
 
-Het \textbf{implementatiediagram} (\texttt{uml\_test\_env.puml}) toont de \emph{Ansible}-rollen die op elke host draaien en hun onderlinge verbindingen. Zo wordt in één oogopslag duidelijk welke hosts met elkaar communiceren en via welke rol. Dit diagram vormt samen met het netwerkdiagram de invoer voor de converter.
+Het implementatiediagram (``\texttt{uml\_test\_env.puml}'') geeft de \emph{Ansible}-rollen weer die op elke host draaien en hoe deze onderling verbonden zijn. Zo wordt in één oogopslag duidelijk welke hosts met elkaar communiceren en via welke rollen.
+
+\begin{codeblock}
+    \lstinputlisting[language=plantuml]{../project_files/input/test_env/uml_test_env.puml}
+    \caption[Implementatiediagram manuele testomgeving in tekstformaat (PlantUML)]{Tekstformaat (``\texttt{uml\_test\_env.puml}'') van het implementatiediagram van de manuele testomgeving.}
+    \label{code:uml_test_env.puml}
+\end{codeblock}
+
+Deze kan, analoog met het netwerkdiagram, als volgt gerendeerd worden.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../graphics/uml_test_env.png}
+    \caption[Implementatiediagram manuele testomgeving in afbeeldingsformaat (PlantUML)]{\label{fig:uml_test_env.png}Afbeeldingsformaat van het voorbeeld van een implementatiediagram in PlantUML.}
+\end{figure}
 
 \subsection{Beperkingen}%
 
-De volgende beperkingen gelden voor de testomgeving en bij uitbreiding voor de converter:
+De volgende beperkingen gelden voor de testomgeving (en bij uitbreiding, voor de converter):
 
 \begin{itemize}
-\item De omgeving wordt lokaal opgezet via Vagrant en geconfigureerd via Ansible; de converter zal dus uitvoer genereren die op deze backends zijn afgestemd.
-\item Enkel IPv4 wordt ondersteund bij het definiëren van netwerkadressen en host-IP's.
-\item De control node (\texttt{172.26.255.253}) is aanwezig in \texttt{vagrant-hosts.yml} maar wordt niet gerepresenteerd in de netwerk- of implementatiediagrammen.
-\item Routering en switching worden niet in rekening gebracht.
+    \item Zoals vooraf vermeld (zie \nameref{sec:toolkeuze}), draaien de VM's enkel in deze omgeving \emph{AlmaLinux 9}.
+    \item De omgeving wordt lokaal opgezet via \emph{Vagrant} en geconfigureerd via \emph{Ansible}; de converter zal dus uitvoer genereren die op deze backends zijn afgestemd.
+    \item Enkel IPv4 wordt ondersteund bij het definiëren van netwerkadressen en host-IP's.
+    \item De \emph{Ansible} control node (in dit geval ``\texttt{172.26.255.253}'') is aanwezig in ``\texttt{vagrant-hosts.yml}'' maar wordt niet gerepresenteerd in de netwerk- of implementatiediagrammen. De converter zal automatisch een control node aanmaken met een gepast IP-adres (zie \nameref{subsec:fullmode})
+    \item Deze omgeving bestaat slechts uit één netwerk. Routering en switching met meerdere netwerken wordt hier dus niet in rekening gebracht.
 \end{itemize}
+
+\section{Implementatie van de manuele testomgeving}%
+\label{sec:implementatie_manuele_testomgeving}
+
+Deze manuele testomgeving wordt hoofdzakelijk geconfigureerd via \emph{hostvariabelen}. Dit zijn variabelen waar de \emph{Ansible}-rollen van gebruik maken om de hosts te configureren, zoals bijvoorbeeld de packages die geïnstalleerd moeten worden of de firewall-poorten die open moeten staan. Er wordt hier specifiek ook gebruik gemaakt van  ``\texttt{group\_vars}'' en ``\texttt{hosts: all}''-definities in de playbook ``\texttt{site.yml}'', om gedeelde variabelen en taken gecentraliseerd te houden.
+
+De converter zal echter louter gebruik maken van hostvariabelen: elke rol en bijhorende variabelen worden rechtstreeks per host in ``\texttt{host\_vars/<host>.yml}'' gedefinieerd, zonder gebruik van ``\texttt{group\_vars}''. De reden hiervoor is dat de diagrammen zelf al de centrale informatiebron vormen voor elke host, waardoor het verder centraliseren van variabelen via ``\texttt{group\_vars}'' weinig meerwaarde biedt voor de gegenereerde uitvoer. Er wordt in de playbook ``\texttt{site.yml}'' wel nog altijd een algemene taak (``General prerequisites'') behouden voor alle hosts (``\texttt{hosts: all}''), om deze aan algemene voorwaarden te voldoen.
+
+\subsection{``\texttt{vagrant-hosts.yml}''}%
+
+Het ``\texttt{vagrant-hosts.yml}''-bestand definieert de vier VM's van de omgeving, inclusief hun IP-adressen, subnet masks en hardwarespecificaties (aantal CPU cores en hoeveelheid werkgeheugen).
+
+\begin{codeblock}
+    \inputminted{yaml}{../project_files/manual_test_env/vagrant-hosts.yml}
+    \caption[``\texttt{vagrant-hosts.yml}'' van de manuele testomgeving]{``\texttt{vagrant-hosts.yml}'' van de manuele testomgeving; definieert de vier VM's met hun IP-adressen en hardwarespecificaties.}
+    \label{code:vagrant-hosts.yml}
+\end{codeblock}
+
+\subsection{``\texttt{inventory.yml}''}%
+
+Het inventorybestand groepeert de drie beheerde hosts onder de ``\texttt{test.lan}''-groep. De control node is hier niet in opgenomen, aangezien deze de Ansible-playbooks uitvoert en zichzelf niet beheert.
+
+\begin{codeblock}
+    \inputminted{yaml}{../project_files/manual_test_env/ansible/inventory.yml}
+    \caption[``\texttt{inventory.yml}'' van de manuele testomgeving]{``\texttt{inventory.yml}'' van de manuele testomgeving; groepeert de drie beheerde hosts onder ``\texttt{test.lan}''.}
+    \label{code:inventory.yml}
+\end{codeblock}
+
+\subsection{``\texttt{requirements.yml}''}%
+
+Het ``\texttt{requirements.yml}''-bestand somt de externe Ansible-rollen en -collecties op die voor de testomgeving vereist zijn. Deze worden via \texttt{ansible-galaxy} geïnstalleerd.
+
+\begin{codeblock}
+    \inputminted{yaml}{../project_files/manual_test_env/ansible/requirements.yml}
+    \caption[``\texttt{requirements.yml}'' van de manuele testomgeving]{``\texttt{requirements.yml''} van de manuele testomgeving; externe rollen en collecties vereist voor de omgeving.}
+    \label{code:requirements.yml}
+\end{codeblock}
+
+\subsection{``\texttt{site.yml}''}%
+
+Het centrale ``\texttt{site.yml}''-playbook beschrijft welke rollen op welke hosts worden uitgevoerd. Opmerkelijk is het gebruik van ``\texttt{hosts: all}'' voor de ``\texttt{bertvv.rh-base}''-, ``\texttt{dns\_client}''- en ``\texttt{node\_exporter}''-rollen, die op elke beheerde host van toepassing zijn. Nogmaals; de converter behoudt enkel de ``\texttt{bertvv.rh-base}''-taak als \texttt{hosts: all}; de overige rollen worden per host expliciet in de playbook opgenomen.
+
+\begin{codeblock}
+    \inputminted{yaml}{../project_files/manual_test_env/ansible/site.yml}
+    \caption[``\texttt{site.yml}'' van de manuele testomgeving]{``\texttt{site.yml}'' van de manuele testomgeving; het centrale playbook dat de rolverdeling per host beschrijft.}
+    \label{code:site.yml}
+\end{codeblock}
+
+\subsection{``\texttt{host\_vars}''}%
+
+De ``\texttt{host\_vars}''-map bevat per host een YAML-bestand met de rolspecifieke variabelen. Hieronder volgt het ``\texttt{monitoring.yml}''-bestand als representatief voorbeeld, aangezien dit de meest uitgebreide Prometheus-scrape-configuratie bevat die de verbindingen uit het implementatiediagram weerspiegelt.
+
+\begin{codeblock}
+    \inputminted{yaml}{../project_files/manual_test_env/ansible/host_vars/monitoring.yml}
+    \caption[``\texttt{host\_vars/monitoring.yml}'' van de manuele testomgeving]{``\texttt{host\_vars/monitoring.yml}'' van de manuele testomgeving; bevat de Prometheus- en Grafana-configuratie voor de monitoringserver.}
+    \label{code:monitoring.yml}
+\end{codeblock}

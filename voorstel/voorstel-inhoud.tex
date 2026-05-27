@@ -65,7 +65,7 @@ Verdere deelvragen met betrekking tot het \emph{oplossingsdomein}
   \item Is het mogelijk om deze oplossing te ontwikkelen aan de hand van ``reverse engineering'' van de bovenstaande tools?
 \end{itemize}
 
-De \emph{doelstelling} van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een converter (of omzetter) van PlantUML-diagrammen naar Ansible-code. PlantUML en Ansible zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden. 
+De \emph{doelstelling} van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een converter (of omzetter) van PlantUML-diagrammen naar Ansible-code. PlantUML en Ansible zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden.
 
 De hoop voor deze oplossing is dat deze een meerwaarde kan bieden voor educatieve doeleinden. Neem als voorbeeld een OLOD zoals ``Cybersecurity Advanced'' binnen de opleiding \emph{Toegepaste Informatica}. De tech-industrie evolueert snel en de labo's die voor dit OLOD ontworpen zijn, zullen daardoor ook snel verouderen.
 
@@ -194,7 +194,7 @@ De te evalueren tools voor UML-modeling zijn PlantUML en MermaidJS. Voor het ``\
 In deze fase wordt de (virtuele) testomgeving voor de transpiler ontworpen aan de hand van netwerk- en implementatiediagrammen. In deze diagrammen zullen de hardware- (Opslag, RAM, CPU cores, \ldots) en softwarespecificaties (distributie, packages, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (firewalls, eventuele backup-regels, \ldots). Het initiële ontwerp zal nog niet met PlantUML/MermaidJS verlopen maar eerder met GUI-ondersteunde tools zoals Visual Paradigm en draw.io.
 
 \subsection{Fase 3A (week 6-7): Implementatie van de testomgeving}%
-\label{subsec:voorstel_implementatie_testomgeving}
+\label{subsec:voorstel_implementatie_manuele_testomgeving}
 
 Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet met \emph{Infrastructure-as-Code}-tool(s) en geconfigureerd met een ``\emph{configuration management}''-tool (Ansible/Puppet/Chef). Er wordt intussen ook gedocumenteerd hoe het ``\emph{configuration management}''-gedeelte wordt opgezet, want dit vormt de target output voor de transpiler. De aanpassingen in verband met \emph{configuration management} worden vervolgens ongedaan gemaakt alvorens de resulterende ``\emph{configuration management}''-code van de transpiler wordt uitgevoerd op de testomgeving.
 
@@ -244,5 +244,5 @@ Deze infrastructuur zal allicht redelijk simpel gehouden worden met slechts 2 to
 \label{subsec:voorstel_verwachte_functionaliteit_poc}
 
 De verwachting van deze oplossing is om met de resulterende ``\emph{configuration management}''-code een minimaal werkende infrastructuur te configureren die de beschrijving van de gegeven netwerk- en implementatiediagrammen zo nauw mogelijk benadert.
-De transpiler zal slechts voor een (relevant) deel van de syntax tussen PlantUML en Ansible een vertaallaag kunnen vormen, aangezien de omvang voor beide tools veel groter is dan die voor dit onderzoek.  
+De transpiler zal slechts voor een (relevant) deel van de syntax tussen PlantUML en Ansible een vertaallaag kunnen vormen, aangezien de omvang voor beide tools veel groter is dan die voor dit onderzoek.
 Als invoer zullen er enkel netwerk- en implementatiediagrammen gebruikt kunnen worden en als uitvoer zal er een deelverzameling van ondersteunde ``collections'' en ``roles'' voor de Ansible playbooks gespecifiëerd worden. Nogmaals, dit wordt een proof-of-concept, dus het onderzoek moet ook aantonen waar het potentieel tot uitbreidingen ligt, alsook wat de limitaties zijn qua informatie uit een UML-diagram die omgezet kan worden naar ``\emph{configuration management}''-code en vice versa.

@@ -55,7 +55,7 @@ Aangezien het \nameref{subsec:fullmode}-gebruiksscenario van de converter slecht
 Het opgestelde netwerkdiagram (``\texttt{nwdiag\_cybersec\_adv\_env.puml}'') bevat alle subnetten en (al dan niet beheerde) hosts uit de originele labo-omgeving.
 
 \begin{codeblock}
-    \lstinputlisting[language=plantuml]{../plantuml/input/cybersec_adv_env/nwdiag_cybersec_adv_env.puml}
+    \lstinputlisting[language=plantuml]{../project_files/input/cybersec_adv_env/nwdiag_cybersec_adv_env.puml}
     \caption[Netwerkdiagram testcase 1 in tekstformaat (PlantUML)]{Tekstformaat (``\texttt{nwdiag\_cybersec\_adv\_env.puml}'') van het netwerkdiagram voor testcase 1 (\emph{Cybersecurity Advanced}).}
     \label{code:nwdiag_cybersec_adv}
 \end{codeblock}
@@ -75,7 +75,7 @@ Dit bestand genereert via PlantUML de volgende afbeelding.
 De converter genereert het ``\texttt{vagrant-hosts.yml}''-bestand in de uitvoermap. Dit bestand bevat voor elke beheerde host een entry met overeenkomend(e) IP-adres(sen) en werkgeheugen, afkomstig uit de ``\texttt{address}''- en ``\texttt{memory}''-attributen in het netwerkdiagram. De routers ``\texttt{companyrouter}'' en ``\texttt{homerouter}'' beschikken elk over meerdere netwerkinterfaces (één per verbonden subnet), wat resulteert in meerdere IP-adresregels per entry.
 
 \begin{codeblock}
-    \inputminted{yaml}{../plantuml/output/cybersec_adv_env/vagrant-hosts.yml}
+    \inputminted{yaml}{../project_files/output/cybersec_adv_env/vagrant-hosts.yml}
     \caption[Gegenereerde ``\texttt{vagrant-hosts.yml''} voor testcase 1]{De door de converter gegenereerde \texttt{vagrant-hosts.yml} voor testcase 1 (\emph{Cybersecurity Advanced}).}
     \label{code:vagrant_hosts_cybersec}
 \end{codeblock}
@@ -113,7 +113,7 @@ De router ``\texttt{r001}'', gebruikerslaptop ``\texttt{your-laptop}'' en het we
 Het opgestelde netwerkdiagram (``\texttt{nwdiag\_infra\_auto\_lab\_2\_env.puml}'') bevat één beheerd subnet (``\texttt{infra.lan}''). De niet-beheerde hosts (``\texttt{r001}'', ``\texttt{your-laptop}'' en ``\texttt{ws0001}'') en het volledige ``\texttt{virtualbox\_nat}''-netwerk worden als niet-beheerd gemarkeerd.
 
 \begin{codeblock}
-    \lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_2_env/nwdiag_infra_auto_lab_2_env.puml}
+    \lstinputlisting[language=plantuml]{../project_files/input/infra_auto_lab_2_env/nwdiag_infra_auto_lab_2_env.puml}
     \caption[Netwerkdiagram testcase 2 in tekstformaat (PlantUML)]{Tekstformaat (``\texttt{nwdiag\_infra\_auto\_lab\_2\_env.puml}'') van het netwerkdiagram voor testcase 2 (\emph{Infrastructure Automation}, labo 2).}
     \label{code:nwdiag_infra_auto_lab2}
 \end{codeblock}
@@ -128,7 +128,7 @@ Het opgestelde netwerkdiagram (``\texttt{nwdiag\_infra\_auto\_lab\_2\_env.puml}'
 Het opgestelde implementatiediagram (``\texttt{uml\_infra\_auto\_lab\_2\_env.puml}'') stelt ``\texttt{node}''-definites op voor de vier beheerde hosts. De pijlverbindingen vanuit alle ``\texttt{dns\_client}''-componenten naar ``\texttt{srv001.dns\_server\_primary}'' en ``\texttt{srv002.dns\_server\_secondary}'' worden door de converter gebruikt om de DNS-serverconfiguratie en de DHCP-subnettendefinitie correct in te vullen.
 
 \begin{codeblock}
-    \lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_2_env/uml_infra_auto_lab_2_env.puml}
+    \lstinputlisting[language=plantuml]{../project_files/input/infra_auto_lab_2_env/uml_infra_auto_lab_2_env.puml}
     \caption[Implementatiediagram testcase 2 in tekstformaat (PlantUML)]{Tekstformaat (``\texttt{uml\_infra\_auto\_lab\_2\_env.puml}'') van het implementatiediagram voor testcase 2 (\emph{Infrastructure Automation}, labo 2).}
     \label{code:uml_infra_auto_lab2}
 \end{codeblock}
@@ -159,7 +159,7 @@ De converter genereert de volgende bestanden in de uitvoermap:
 De playbook (``\texttt{site.yml}'') bevat plays in de volgorde bepaald door het topologisch sorteeralgoritme (zie \nameref{subsec:dynamische_bestanden}): hosts met ``\texttt{dns\_server\_primary}'' of ``\texttt{dns\_server\_secondary}'' worden vóór hosts met ``\texttt{dns\_client}'' geconfigureerd, overeenkomstig de ``\texttt{depends\_on}''-relaties in ``\texttt{role-config.yml}''.
 
 \begin{codeblock}
-    \inputminted{yaml}{../plantuml/output/infra_auto_lab_2_env/ansible/site.yml}
+    \inputminted{yaml}{../project_files/output/infra_auto_lab_2_env/ansible/site.yml}
     \caption[Gegenereerde ``\texttt{site.yml}'' voor testcase 2]{De door de converter gegenereerde ``\texttt{site.yml}'' voor testcase 2 (\emph{Infrastructure Automation}, labo 2).}
     \label{code:site_infra_auto_lab2}
 \end{codeblock}
@@ -170,12 +170,12 @@ De playbook (``\texttt{site.yml}'') bevat plays in de volgorde bepaald door het 
 Naast de gegenereerde bestanden kopieert de converter de volgende assets naar de uitvoermap:
 
 \begin{itemize}
-\item ``\texttt{Vagrantfile}'': het standaard Vagrant-sjabloon
-\item ``\texttt{scripts/}'': de Vagrant-provisioneringsscripts
-\item ``\texttt{ansible/roles/web\_server}'': de voorgedefinieerde ``\texttt{web\_server}''-rol
-\item ``\texttt{ansible/roles/dns\_server}'': de voorgedefinieerde ``\texttt{dns\_server}''-rol (wordt voor zowel voor ``\texttt{dns\_server\_primary}'' als ``\texttt{dns\_server\_secondary}'' gebruikt)
-\item ``\texttt{ansible/roles/dns\_client}'': de voorgedefinieerde ``\texttt{dns\_client}''-rol
-\item ``\texttt{ansible/files/ca.crt}'', ``\texttt{ansible/files/ca.key}'', \\``\texttt{ansible/files/db.sql}'', ``\texttt{ansible/files/test.php}'': de statische bestanden benodigd voor de ``\texttt{web\_server}''-rol
+    \item ``\texttt{Vagrantfile}'': het standaard Vagrant-sjabloon
+    \item ``\texttt{scripts/}'': de Vagrant-provisioneringsscripts
+    \item ``\texttt{ansible/roles/web\_server}'': de voorgedefinieerde ``\texttt{web\_server}''-rol
+    \item ``\texttt{ansible/roles/dns\_server}'': de voorgedefinieerde ``\texttt{dns\_server}''-rol (wordt voor zowel voor ``\texttt{dns\_server\_primary}'' als ``\texttt{dns\_server\_secondary}'' gebruikt)
+    \item ``\texttt{ansible/roles/dns\_client}'': de voorgedefinieerde ``\texttt{dns\_client}''-rol
+    \item ``\texttt{ansible/files/ca.crt}'', ``\texttt{ansible/files/ca.key}'', \\``\texttt{ansible/files/db.sql}'', ``\texttt{ansible/files/test.php}'': de statische bestanden benodigd voor de ``\texttt{web\_server}''-rol
 \end{itemize}
 
 \subsection{Beoordeling}%
@@ -196,7 +196,7 @@ Labo 3 van \emph{Infrastructure Automation} bouwt verder op de omgeving van labo
 Het netwerkdiagram (``\texttt{nwdiag\_infra\_auto\_lab\_3\_env.puml}'') is een uitbreiding van het opgestelde netwerkdiagram uit testcase 2 met de toevoeging van de host ``\texttt{srv004}'' (met 2 CPU cores en 2048 MB werkgeheugen).
 
 \begin{codeblock}
-    \lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_3_env/nwdiag_infra_auto_lab_3_env.puml}
+    \lstinputlisting[language=plantuml]{../project_files/input/infra_auto_lab_3_env/nwdiag_infra_auto_lab_3_env.puml}
     \caption[Netwerkdiagram testcase 3 in tekstformaat (PlantUML)]{Tekstformaat (``\texttt{nwdiag\_infra\_auto\_lab\_3\_env.puml}'') van het netwerkdiagram voor testcase 3 (\emph{Infrastructure Automation}, labo 3).}
     \label{code:nwdiag_infra_auto_lab3}
 \end{codeblock}
@@ -220,7 +220,7 @@ Het implementatiediagram (``\texttt{uml\_infra\_auto\_lab\_3\_env.puml}'') breid
 De pijlverbindingen vanuit ``\texttt{srv004.monitoring\_server}'' naar alle exporterrollen worden door de converter gebruikt om de Prometheus scrape targets automatisch op te bouwen (via de ``\texttt{prometheus\_scrape\_configs}''-variabele).
 
 \begin{codeblock}
-    \lstinputlisting[language=plantuml]{../plantuml/input/infra_auto_lab_3_env/uml_infra_auto_lab_3_env.puml}
+    \lstinputlisting[language=plantuml]{../project_files/input/infra_auto_lab_3_env/uml_infra_auto_lab_3_env.puml}
     \caption[Implementatiediagram testcase 3 in tekstformaat (PlantUML)]{Tekstformaat (``\texttt{uml\_infra\_auto\_lab\_3\_env.puml}'') van het implementatiediagram voor testcase 3 (\emph{Infrastructure Automation}, labo 3).}
     \label{code:uml_infra_auto_lab3}
 \end{codeblock}
@@ -247,8 +247,8 @@ Ten opzichte van testcase 2 zijn de volgende (extra) bestanden gegenereerd/uitge
 De hostvariabelen van \texttt{srv004} bevatten de automatisch gegenereerde \\``\texttt{prometheus\_scrape\_configs}''-waarde, opgebouwd op basis van alle exporterverbindingen in het implementatiediagram.
 
 \begin{codeblock}
-    \inputminted{yaml}{../plantuml/output/infra_auto_lab_3_env/ansible/host_vars/srv004.yml}
-    \caption[Gegenereerde \texttt{host\_vars/srv004.yml} voor testcase 3]{De door de converter gegenereerde hostvariabelen voor \texttt{srv004}. De \texttt{prometheus\_scrape\_configs}-waarde is automatisch samengesteld op basis van de pijlverbindingen in het implementatiediagram.}
+    \inputminted{yaml}{../project_files/output/infra_auto_lab_3_env/ansible/host_vars/srv004.yml}
+    \caption[Gegenereerde ``\texttt{host\_vars/srv004.yml''} voor testcase 3]{De door de converter gegenereerde hostvariabelen voor \texttt{srv004}. De \texttt{prometheus\_scrape\_configs}-waarde is automatisch samengesteld op basis van de pijlverbindingen in het implementatiediagram.}
     \label{code:hostvars_srv004}
 \end{codeblock}
 

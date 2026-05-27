@@ -80,35 +80,35 @@
 \newcommand{\@checkvariables}{%
 
     \ifx\@author\@empty{%
-        \ClassError{\@classname}{Author is undefined!}%
-        {Use the \author command to define it}
-    }\fi
+            \ClassError{\@classname}{Author is undefined!}%
+            {Use the \author command to define it}
+        }\fi
 
     \ifx\@title\@empty{%
-        \ClassError{\@classname}{Title is undefined!}%
+            \ClassError{\@classname}{Title is undefined!}%
             {Use the \title command to define it}
-    }\fi
+        }\fi
     \ifx\@academicyear\@empty{%
-      \ClassError{\@classname}{Academic year is undefined!}%
-      {Use the \academicyear command to define it}
-    }\fi  
-  
+            \ClassError{\@classname}{Academic year is undefined!}%
+            {Use the \academicyear command to define it}
+        }\fi
+
     %% The following variables only need to be defined for a thesis
     \if@thesis
-      \ifx\@supervisor\@empty{%
-          \ClassError{\@classname}{Student supervisor is undefined!}%
-              {Use the \supervisor command to define it}
-      }\fi
-      \ifx\@examperiod\@empty{%
-          \ClassError{\@classname}{Exam period is undefined!}%
-              {Use the \examperiod command to define it}
-      }\fi
-      \ifx\@degreesought\@empty{%
-          \ClassError{\@classname}{Degree sought is undefined!}%
-              {Use the \degreesought command to define it}
-      }\fi
+        \ifx\@supervisor\@empty{%
+                \ClassError{\@classname}{Student supervisor is undefined!}%
+                {Use the \supervisor command to define it}
+            }\fi
+        \ifx\@examperiod\@empty{%
+                \ClassError{\@classname}{Exam period is undefined!}%
+                {Use the \examperiod command to define it}
+            }\fi
+        \ifx\@degreesought\@empty{%
+                \ClassError{\@classname}{Degree sought is undefined!}%
+                {Use the \degreesought command to define it}
+            }\fi
     \fi
-  
+
     %% Since the input is there, set the PDF info
     \hypersetup{%
         pdftitle=\@title,
@@ -145,7 +145,7 @@
 \DeclareOption{twocolumn}{
     \OptionNotUsed
     \ClassError{\@classname}{Only single column documents supported!}%
-        {Please remove the option 'twocolumn'}
+    {Please remove the option 'twocolumn'}
 }
 
 %% Pass the unknown options to the class
@@ -192,7 +192,7 @@
 
         \RequirePackage[mathrm=sym]{unicode-math}
         \unimathsetup{math-style=ISO,bold-style=ISO,sans-style=upright,
-        mathrm=sym}
+            mathrm=sym}
         \RequirePackage{lualatex-math}
         \RequirePackage{realscripts}
     \else
@@ -268,13 +268,13 @@
 
 %% Setting of the department text and title color based on the class option
 \ifx\@department\@empty{%
-    \ClassError{\@classname}{Department parameter is undefined!}%
-    {One of the following options must be added to the class options:%
-        dbo, dgz, dit, dlo, dog, dsa, soa}%
-}\fi
+        \ClassError{\@classname}{Department parameter is undefined!}%
+        {One of the following options must be added to the class options:%
+            dbo, dgz, dit, dlo, dog, dsa, soa}%
+    }\fi
 
 \ifcase\@department@nr%
-\relax
+    \relax
     \colorlet{title}{hogent-purple}% dbo
 \or
     \colorlet{title}{hogent-darkgreen}% dbt
@@ -294,27 +294,27 @@
 
 \newcommand{\@departmentname}{%
     \ifcase\@department@nr%
-    \relax %dbo
+        \relax %dbo
         \IfLanguageName{dutch}{Departement Bedrijf en Organisatie}%
-            {School of Business Management}%
+        {School of Business Management}%
     \or % dbt
         \IfLanguageName{dutch}{Departement Biowetenschappen en Industriële Technologie}%
-            {School of Bioscience and Industrial Technology}%
+        {School of Bioscience and Industrial Technology}%
     \or %dgz
         \IfLanguageName{dutch}{Departement Gezondheidszorg}%
-            {School of Healthcare}
+        {School of Healthcare}
     \or %dit
         \IfLanguageName{dutch}{Departement IT en Digitale Innovatie}%
-            {School of IT and Digital Innovation}
+        {School of IT and Digital Innovation}
     \or %dlo
         \IfLanguageName{dutch}{Departement Lerarenopleiding}%
-            {School of Teacher Training}
+        {School of Teacher Training}
     \or %dog
         \IfLanguageName{dutch}{Departement Omgeving}%
-            {School of Built Environment}
+        {School of Built Environment}
     \or %dsa
         \IfLanguageName{dutch}{Departement Sociaal-Agogisch Werk}%
-            {School of Social Welfare}
+        {School of Social Welfare}
     \else %soa
         School of Arts%
     \fi
@@ -352,7 +352,7 @@
     \IfFontExistsTF{Montserrat}{%
         \newfontfamily\montserratblack{Montserrat}[BoldFont={Montserrat Black}]
         \newfontfamily\montserratextrabold{Montserrat}%
-            [BoldFont={Montserrat ExtraBold}]
+        [BoldFont={Montserrat ExtraBold}]
 
         \def\titlefont{\montserratblack\bfseries}
         \def\subtitlefont{\montserratextrabold\bfseries}
@@ -403,17 +403,17 @@
     }
 
     \IfFontExistsTF{Fira Code}{%
-            \setmonofont{Fira Code}[StylisticSet={1,3}]
-            %% Shapely l, upright quotes, striked zeroes
+        \setmonofont{Fira Code}[StylisticSet={1,3}]
+        %% Shapely l, upright quotes, striked zeroes
 
     }{%
-            \setmonofont{Fira Code}[
-                Path = fonts/FiraCode/,
-                Extension = .otf,
-                UprightFont = *-Regular,
-                BoldFont=*-Bold,
-                ItalicFeatures = FakeSlant,
-                BoldItalicFeatures = FakeSlant]
+        \setmonofont{Fira Code}[
+            Path = fonts/FiraCode/,
+            Extension = .otf,
+            UprightFont = *-Regular,
+            BoldFont=*-Bold,
+            ItalicFeatures = FakeSlant,
+            BoldItalicFeatures = FakeSlant]
     }
 
     % Use a unicode-compliant sans serif math font
@@ -449,97 +449,97 @@
 
 %% Redefine maketitle for our custom title page
 \if@titlepage%
-  \renewcommand{\maketitle}{\thispagestyle{empty}\begin{titlepage}%
-    \@checkvariables
-    
-    %% Change the geometry so the notes section doesn't bother us
-    \newgeometry{top=2cm,bottom=\wd\logopart,left=1.5cm,right=1.5cm}
-    
-    %% Add whitespace at the top
-    %\addvspace{10\bigskipamount}
-    
-    \begingroup
-      %% Print the title in the faculty color
-      \titlefont\color{title}\Huge\@title\@addpunct{.}\\
-      %% Optionally print a subtitle
-      \ifx\@subtitle\@empty\else
-        \bigskip
-        \subtitlefont\LARGE\@subtitle\@addpunct{.}
-      \fi
-      \hrule
-    \endgroup
-    \bigskip
-    \begingroup
-      %% Print the name of the author
-      \subtitlefont\Large\bfseries \@author\@addpunct{.}
-    \endgroup
-    
-    \vfill
-    
-    \if@thesis
-      \begingroup
-        \IfLanguageName{dutch}{%
-          Scriptie voorgedragen tot het bekomen van de graad van\\
-          \@degreesought\\
-        }{%
-          Thesis submitted in \if@partial{partial }\fi
-          fulfilment of the requirements for the degree of\\ \@degreesought\\
-        }
-      \endgroup
-    \fi
-    
-    \bigskip
-    \bigskip
-    
-    \if@thesis
-      \begingroup
-          \IfLanguageName{dutch}{%
-            \textbf{Promotor:}}{\textbf{Supervisor:}} \@supervisor\\
-          \ifx\@cosupervisor\@empty\else
-            \IfLanguageName{dutch}{%
-              \textbf{Co-promotor:}}{%
-              \textbf{Co-Supervisor:}} \@cosupervisor\\
-          \fi
-          \ifx\@institution\@empty\else
-            \IfLanguageName{dutch}{%
-              \textbf{Instelling:}}{\textbf{Institution:}} \@institution\\
-          \fi
-          \IfLanguageName{dutch}{%
-            \textbf{Academiejaar:}}{\textbf{Academic year:}} \@academicyear\\
-            \textbf{%
-              \ifcase\@examperiod
-              \or
-                \IfLanguageName{dutch}{Eerste}{First}
-              \or
-                \IfLanguageName{dutch}{Tweede}{Second}
-              \else
-                \IfLanguageName{dutch}{Derde}{Third}
-              \fi
-          \IfLanguageName{dutch}{examenperiode}{exam period} } \\
-      \endgroup
-      
-      \bigskip
-    \else
-        \IfLanguageName{dutch}{%
-          \textbf{Academiejaar:}}{\textbf{Academic year:}} \@academicyear\\
-    \fi
-    \begingroup
-      \subtitlefont\bfseries\@departmentname\@addpunct{.}
-    \endgroup
-    
-    %% Insert the HoGent logo
-    \begin{tikzpicture}[remember picture, overlay]
-      \node [anchor=south east, shift={(-\the\wd\logopart, \the\wd\logopart)}, inner sep=0, outer sep=0] (logo) at (current page.south east)%
-      {%
-        \includegraphics[height=\the\ht\logopart]{hogent_logo}%
-      };%
-    \end{tikzpicture}
+    \renewcommand{\maketitle}{\thispagestyle{empty}\begin{titlepage}%
+            \@checkvariables
 
-    \end{titlepage}%
-    
-    \thispagestyle{empty}
-    \null\clearpage\restoregeometry
-  }
+            %% Change the geometry so the notes section doesn't bother us
+            \newgeometry{top=2cm,bottom=\wd\logopart,left=1.5cm,right=1.5cm}
+
+            %% Add whitespace at the top
+            %\addvspace{10\bigskipamount}
+
+            \begingroup
+            %% Print the title in the faculty color
+            \titlefont\color{title}\Huge\@title\@addpunct{.}\\
+            %% Optionally print a subtitle
+            \ifx\@subtitle\@empty\else
+                \bigskip
+                \subtitlefont\LARGE\@subtitle\@addpunct{.}
+            \fi
+            \hrule
+            \endgroup
+            \bigskip
+            \begingroup
+            %% Print the name of the author
+            \subtitlefont\Large\bfseries \@author\@addpunct{.}
+            \endgroup
+
+            \vfill
+
+            \if@thesis
+                \begingroup
+                \IfLanguageName{dutch}{%
+                    Scriptie voorgedragen tot het bekomen van de graad van\\
+                    \@degreesought\\
+                }{%
+                    Thesis submitted in \if@partial{partial }\fi
+                    fulfilment of the requirements for the degree of\\ \@degreesought\\
+                }
+                \endgroup
+            \fi
+
+            \bigskip
+            \bigskip
+
+            \if@thesis
+                \begingroup
+                \IfLanguageName{dutch}{%
+                    \textbf{Promotor:}}{\textbf{Supervisor:}} \@supervisor\\
+                \ifx\@cosupervisor\@empty\else
+                    \IfLanguageName{dutch}{%
+                        \textbf{Co-promotor:}}{%
+                        \textbf{Co-Supervisor:}} \@cosupervisor\\
+                \fi
+                \ifx\@institution\@empty\else
+                    \IfLanguageName{dutch}{%
+                        \textbf{Instelling:}}{\textbf{Institution:}} \@institution\\
+                \fi
+                \IfLanguageName{dutch}{%
+                    \textbf{Academiejaar:}}{\textbf{Academic year:}} \@academicyear\\
+                \textbf{%
+                    \ifcase\@examperiod
+                    \or
+                        \IfLanguageName{dutch}{Eerste}{First}
+                    \or
+                        \IfLanguageName{dutch}{Tweede}{Second}
+                    \else
+                        \IfLanguageName{dutch}{Derde}{Third}
+                    \fi
+                    \IfLanguageName{dutch}{examenperiode}{exam period} } \\
+                \endgroup
+
+                \bigskip
+            \else
+                \IfLanguageName{dutch}{%
+                    \textbf{Academiejaar:}}{\textbf{Academic year:}} \@academicyear\\
+            \fi
+            \begingroup
+            \subtitlefont\bfseries\@departmentname\@addpunct{.}
+            \endgroup
+
+            %% Insert the HoGent logo
+            \begin{tikzpicture}[remember picture, overlay]
+                \node [anchor=south east, shift={(-\the\wd\logopart, \the\wd\logopart)}, inner sep=0, outer sep=0] (logo) at (current page.south east)%
+                {%
+                    \includegraphics[height=\the\ht\logopart]{hogent_logo}%
+                };%
+            \end{tikzpicture}
+
+        \end{titlepage}%
+
+        \thispagestyle{empty}
+        \null\clearpage\restoregeometry
+    }
 \fi
 
 %% Page style for title pages
@@ -575,11 +575,11 @@
 %% Change the headrule command (from fancyhdr.sty) to draw the line below the
 %% header in the title color
 \renewcommand*\headrule{%
-    \if@fancyplain%
-        \let\headrulewidth\plainheadrulewidth%
-    \fi%
-    {\color{title}\hrule\@height\headrulewidth\@width\headwidth}%
-    \vskip-\headrulewidth%
+\if@fancyplain%
+    \let\headrulewidth\plainheadrulewidth%
+\fi%
+{\color{title}\hrule\@height\headrulewidth\@width\headwidth}%
+\vskip-\headrulewidth%
 }
 
 %% Change the style of paragraphs, normally text comes directly after the
@@ -598,10 +598,10 @@
 %% A part title starts with a huge (96pt) bold black number, flushed to the
 %% right, followed by the part name on the next line in the title color
 \titleformat{\part}[display]
-    {\flushright\titlestyle}
-    {\fontsize{96pt}{96pt}\selectfont\bfseries\thepart}
-    {0pt}
-    {\Huge\color{title}}
+{\flushright\titlestyle}
+{\fontsize{96pt}{96pt}\selectfont\bfseries\thepart}
+{0pt}
+{\Huge\color{title}}
 %% Separate the title from the text by two empty lines
 \titlespacing{\part}{0pt}{0pt}{2\baselineskip}
 %% In the table of contents, the part name is preceded by an empty line, printed
@@ -611,10 +611,10 @@
 
 %% Chapter titles have the same layout as parts
 \titleformat{\chapter}[display]
-    {\flushright\titlestyle}
-    {\fontsize{96pt}{96pt}\selectfont\bfseries\thechapter}
-    {0pt}
-    {\Huge\color{title}}
+{\flushright\titlestyle}
+{\fontsize{96pt}{96pt}\selectfont\bfseries\thechapter}
+{0pt}
+{\Huge\color{title}}
 \titlespacing{\chapter}{0pt}{0pt}{2\baselineskip}
 %% In the table of contents, a chapter is similar to a part, except that it is
 %% preceded by half an empty line
@@ -624,10 +624,10 @@
 %% Section titles start with the number in bold, followed by the name printed
 %% in the title color
 \titleformat{\section}
-    {\Large\titlestyle}
-    {\bfseries\thesection.\ }
-    {0pt}
-    {\color{title}}
+{\Large\titlestyle}
+{\bfseries\thesection.\ }
+{0pt}
+{\color{title}}
 %% Sections are preceded by an empty line.
 \titlespacing{\section}{0pt}{\baselineskip}{3pt}
 %% In the table of contents, section names are followed by a line of dots 8pt
@@ -637,20 +637,20 @@
 %% Subsection titles have the same layout as section titles, except in a smaller
 %% font
 \titleformat{\subsection}
-    {\large\titlestyle}
-    {\bfseries\thesubsection.\ }
-    {0pt}
-    {\color{title}}
+{\large\titlestyle}
+{\bfseries\thesubsection.\ }
+{0pt}
+{\color{title}}
 \titlespacing{\subsection}{0pt}{\baselineskip}{1.5pt}
 \dottedcontents{subsection}[7em]{\tocfont}{3.2em}{8pt}
 
 %% Subsubsections have the same font and color as sections and subsections, but
 %% are not preceded by a number
 \titleformat{\subsubsection}
-    {\titlestyle}
-    {}
-    {0pt}
-    {\color{title}}
+{\titlestyle}
+{}
+{0pt}
+{\color{title}}
 %% Subsubsections are preceded by an empty line and do not appear in the table
 %% of contents
 \titlespacing{\subsubsection}{0pt}{\bigskipamount}{0pt}
