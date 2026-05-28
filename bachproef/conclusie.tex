@@ -19,11 +19,11 @@
 \section{Conclusie}%
 \label{sec:conclusie}
 
-Om op de centrale onderzoeksvraag van deze bachelorproef te antwoorden, is een proof-of-concept converter ontwikkeld genaamd \emph{PlantUML2Ansible}, die netwerk- en implementatiediagrammen, geschreven in \emph{PlantUML}-code, als invoer aanneemt en een volledig \emph{IaC}- en ``\emph{configuration management}''-ondersteunde omgeving (aangeboden door \emph{Vagrant} en \emph{Ansible}, respectievelijk) als uitvoer produceert.
+Om op de centrale onderzoeksvraag van deze bachelorproef te antwoorden, is een proof-of-concept \emph{converter} ontwikkeld genaamd \emph{PlantUML2Ansible}, die netwerk- en implementatiediagrammen, geschreven in \emph{PlantUML}-code, als invoer aanneemt en een volledig \emph{IaC}- en ``\emph{configuration management}''-ondersteunde omgeving (aangeboden door \emph{Vagrant} en \emph{Ansible}, respectievelijk) als uitvoer produceert.
 
 Naast dit primaire gebruiksscenario (\nameref{subsec:fullmode}) is er ook een alternatief scenario ontwikkeld om enkel een \emph{Vagrant}-omgeving te produceren (\nameref{subsec:iaconlymode}).
 
-Bestaande labo-omgevingen uit bepaalde \emph{OLODS} binnen de opleiding \emph{Toegepaste Informatica} (\emph{Cybersecurity Advanced} en \emph{Infrastructure Automation}) zijn herwerkt als bruikbare invoer voor de converter (zijnde netwerk- en/of implementatiediagrammen) en zijn, binnen de beperkingen van het script, met succes omgezet naar functionele omgevingen.
+Bestaande labo-omgevingen uit bepaalde \emph{OLODS} binnen de opleiding \emph{Toegepaste Informatica} (\emph{Cybersecurity Advanced} en \emph{Infrastructure Automation}) zijn herwerkt als bruikbare invoer voor de \emph{converter} (zijnde netwerk- en/of implementatiediagrammen) en zijn, binnen de beperkingen van het script, met succes omgezet naar functionele omgevingen.
 De initiële labo-omgeving van \emph{Cybersecurity Advanced} is via de ``\emph{IaC}-only mode'' volledig gereproduceerd kunnen worden als een \emph{Vagrant}-ondersteunde omgeving.
 De labo's 2 en 3 uit \emph{Infrastructure Automation} zijn ook via de ``full mode'' gerecreëerd als \emph{Vagrant}- en \emph{Ansible}-ondersteunde omgeving, met uitzondering van de router \texttt{r001} (zie \autoref{subsec:testcase2_beoordeling}).
 
@@ -42,7 +42,7 @@ De beperkingen van deze proof-of-concept leggen verschillende fundamenten waarop
 
 Het ondersteunen voor meerdere netwerken in beide modi is technisch mogelijk, mits de configuratie van routering (en de gerelateerde firewallregels) wordt verwerkt in de logica van het script. Daarnaast moet er, onder andere, een uitbreiding van de \emph{DNS}-zone-generatielogica uitgevoerd worden, alsook een herziene aanpak voor de toewijzing (van het IP-adres) van de \emph{Ansible} \texttt{control}-node.
 
-De beperking van \emph{AlmaLinux} 9 als gastbesturingssysteem kan geremedieerd worden door de configuratie van de rollen niet meer afhankelijk te maken van de bestaande rollen die gebruikt worden binnen de opleiding \emph{Toegepaste Informatica}. Door over te stappen naar meer distributie-agnostische modules in deze  nieuwe rollen, zou de converter ook andere distributies kunnen ondersteunen, waaronder de nieuwere \emph{AlmaLinux} 10 en misschien zelfs Ubuntu Server of Alpine Linux.
+De beperking van \emph{AlmaLinux} 9 als gastbesturingssysteem kan geremedieerd worden door de configuratie van de rollen niet meer afhankelijk te maken van de bestaande rollen die gebruikt worden binnen de opleiding \emph{Toegepaste Informatica}. Door over te stappen naar meer distributie-agnostische modules in deze  nieuwe rollen, zou de \emph{converter} ook andere distributies kunnen ondersteunen, waaronder de nieuwere \emph{AlmaLinux} 10 en misschien zelfs Ubuntu Server of Alpine Linux.
 
 Het huidige \texttt{role-config.yml}-bestand bevat momenteel slechts een beperkt aantal voorgedefinieerde rollen. Hoewel het bestand alvast een modulaire basis heeft, is het op dit moment niet mogelijk om nieuwe rollen (zelfs met de minste complexiteit) te definiëren zonder de broncode van het script te wijzigen.
 

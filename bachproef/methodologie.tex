@@ -62,7 +62,7 @@ Aangezien sommige fases afhankelijk zijn van elkaar en/of korter op elkaar valle
 \section{Fase 1A (week 1-7): Literatuurstudie}
 \label{sec:fase_literatuurstudie}
 
-Bij het begin van het onderzoek zal er parallel met de andere voorbereidende fases (1-3) een studie uitgevoerd worden over hoe converters werken en hoe deze ontwikkeld worden.
+Bij het begin van het onderzoek zal er parallel met de andere voorbereidende fases (1-3) een studie uitgevoerd worden over hoe \emph{converter}s werken en hoe deze ontwikkeld worden.
 % De deliverable voor deze fase is een simpele, maar functionele converter (zonder \emph{UML}-diagrammen en ``\emph{configuration management}''-code) die de basis zal vormen voor de toekomstige, finale versie.
 
 \section{Fase 1B (week 1-2): Evaluatie van de bestaande tools in de betrokken vakgebieden}%
@@ -74,23 +74,23 @@ De te evalueren tools voor \emph{UML}-modeling zijn \emph{PlantUML} en \emph{Mer
 \section{Fase 2 (week 3-5): Ontwerp van de manuele testomgeving}%
 \label{sec:fase_ontwerp_manuele_testomgeving}
 
-In deze fase wordt de manuele testomgeving voor de converter ontworpen aan de hand van netwerk- en implementatiediagrammen (ontworpen met \emph{PlantUML}/\emph{MermaidJS}). In deze diagrammen zullen de hardware- (Opslag, RAM, CPU cores, \ldots) en softwarespecificaties (distributie, packages, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (firewalls, eventuele backup-regels, \ldots).
-Deze diagrammen dienen een tweevoudig doel; ze kunnen binnen de originele context van hun taal als visuele \emph{UML}-diagrammen worden gegenereerd, en ze vormen de bron-bestanden voor de converter, die deze zal omzetten tot ``\emph{configuration management}''-code.
+In deze fase wordt de manuele testomgeving voor de \emph{converter} ontworpen aan de hand van netwerk- en implementatiediagrammen (ontworpen met \emph{PlantUML}/\emph{MermaidJS}). In deze diagrammen zullen de hardware- (Opslag, RAM, CPU cores, \ldots) en softwarespecificaties (distributie, packages, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (firewalls, eventuele backup-regels, \ldots).
+Deze diagrammen dienen een tweevoudig doel; ze kunnen binnen de originele context van hun taal als visuele \emph{UML}-diagrammen worden gegenereerd, en ze vormen de bron-bestanden voor de \emph{converter}, die deze zal omzetten tot ``\emph{configuration management}''-code.
 
 \section{Fase 3A (week 6-7): Implementatie van de manuele testomgeving}%
 \label{sec:fase_implementatie_manuele_testomgeving}
 
-Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet met een \emph{Infrastructure-as-Code}-tool en geconfigureerd met een ``\emph{configuration management}''-tool (\emph{Ansible}/\emph{Puppet}/\emph{Chef}). Er wordt intussen ook gedocumenteerd hoe het ``\emph{configuration management}''-gedeelte wordt opgezet, want dit vormt de target output voor de converter.
+Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet met een \emph{Infrastructure-as-Code}-tool en geconfigureerd met een ``\emph{configuration management}''-tool (\emph{Ansible}/\emph{Puppet}/\emph{Chef}). Er wordt intussen ook gedocumenteerd hoe het ``\emph{configuration management}''-gedeelte wordt opgezet, want dit vormt de target output voor de \emph{converter}.
 
 \section{Fase 3B (week 6-10): Opstellen van de testcases}%
 \label{sec:fase_opstellen_testcases}
 
-Hier worden de testcases opgesteld waaraan de proof-of-concept moet voldoen. De testen zich zullen hoofdzakelijk buigen over de converter en haar uitvoer (aantal playbooks, idempotentie, grootte van codebase, \ldots) alsook de werking van de finale infrastructuur. Deze fase zal in de praktijk waarschijnlijk gedeeltelijk parallel verlopen met fase 4, aangezien er tijdens het ontwikkelen van de oplossing mogelijk nieuwe testcases kunnen ontstaan.
+Hier worden de testcases opgesteld waaraan de proof-of-concept moet voldoen. De testen zich zullen hoofdzakelijk buigen over de \emph{converter} en haar uitvoer (aantal \emph{playbooks}, idempotentie, grootte van codebase, \ldots) alsook de werking van de finale infrastructuur. Deze fase zal in de praktijk waarschijnlijk gedeeltelijk parallel verlopen met fase 4, aangezien er tijdens het ontwikkelen van de oplossing mogelijk nieuwe testcases kunnen ontstaan.
 
-\section{Fase 4 (week 8-15): Ontwikkeling van de proof-of-concept (converter)}%
+\section{Fase 4 (week 8-15): Ontwikkeling van de proof-of-concept (\emph{converter})}%
 \label{sec:fase_ontwikkeling_poc_converter}
 
-Tijdens deze fase wordt de proof-of-concept ontwikkeld, in de vorm van een converter. Deze zal als invoer de netwerk- en implementatiediagrammen (ontworpen met \emph{PlantUML}/\emph{MermaidJS}) aannemen en ze omzetten tot ``\emph{configuration management}''-code (in \emph{Ansible}/\emph{Puppet}/\emph{Chef}). Deze fase loopt tot 22 mei, 2026.
+Tijdens deze fase wordt de proof-of-concept ontwikkeld, in de vorm van een \emph{converter}. Deze zal als invoer de netwerk- en implementatiediagrammen (ontworpen met \emph{PlantUML}/\emph{MermaidJS}) aannemen en ze omzetten tot ``\emph{configuration management}''-code (in \emph{Ansible}/\emph{Puppet}/\emph{Chef}). Deze fase loopt tot 22 mei, 2026.
 
 \section{Fase 5 (week 11-15): Uitvoeren van de testcases}%
 \label{sec:fase_uitvoeren_testcases}

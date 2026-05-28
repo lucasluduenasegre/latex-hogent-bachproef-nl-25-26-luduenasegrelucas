@@ -5,23 +5,23 @@
 \chapter{Opstelling en uitvoering van de testcases}%
 \label{ch:testcases}
 
-Dit hoofdstuk beschrijft hoe de labo-omgevingen van de \emph{OLODs} \emph{Cybersecurity Advanced} en \emph{Infrastructure Automation} zijn herontworpen als \emph{PlantUML}-invoer (netwerk- en implementatiediagrammen) voor de converter. Hierna wordt dan ook telkens beschreven welke \emph{Vagrant}- en \emph{Ansible}-uitvoer hier telkens uit ontstaat. De selectie van hosts en rollen is gebaseerd op de originele \emph{Vagrant}- en \emph{Ansible}-configuraties van de betrokken labo's, maar er zullen daarin beperkingen zijn wegens de scope van de proof-of-concept.
+Dit hoofdstuk beschrijft hoe de labo-omgevingen van de \emph{OLODs} \emph{Cybersecurity Advanced} en \emph{Infrastructure Automation} zijn herontworpen als \emph{PlantUML}-invoer (netwerk- en implementatiediagrammen) voor de \emph{converter}. Hierna wordt dan ook telkens beschreven welke \emph{Vagrant}- en \emph{Ansible}-uitvoer hier telkens uit ontstaat. De selectie van hosts en rollen is gebaseerd op de originele \emph{Vagrant}- en \emph{Ansible}-configuraties van de betrokken labo's, maar er zullen daarin beperkingen zijn wegens de scope van de proof-of-concept.
 
 \section{Werkwijze}%
 \label{sec:werkwijze_testcases}
 
 Voor elke testcase worden eerst de beheerde hosts uit de betrokken labo-omgevingen geïdentificeerd (op basis van de originele ``\texttt{vagrant-hosts.yml}'' en ``\texttt{inventory.yml}'') en vervolgens in het netwerkdiagram gedefinieerd.
-Hosts die door de converter niet ondersteund worden of niet tot de beheerde infrastructuur behoren zoals routers, workstations, de laptop van de gebruiker en VirtualBox-specifieke netwerkinfrastructuur (``\texttt{virtualbox\_nat\_gateway}'', ``\texttt{virtualbox\_nat\_dns}''), worden als niet-beheerd gemarkeerd (via ``\texttt{managed = false}'') in het netwerkdiagram.
+Hosts die door de \emph{converter} niet ondersteund worden of niet tot de beheerde infrastructuur behoren zoals routers, workstations, de laptop van de gebruiker en VirtualBox-specifieke netwerkinfrastructuur (``\texttt{virtualbox\_nat\_gateway}'', ``\texttt{virtualbox\_nat\_dns}''), worden als niet-beheerd gemarkeerd (via ``\texttt{managed = false}'') in het netwerkdiagram.
 
 Het implementatiediagram wordt daarna opgesteld via ``\texttt{node}''-definities voor elke beheerde host en ``\texttt{component}''-definities voor elke toegewezen rol.
-De \emph{Ansible}-rollen worden gebaseerd op de originele hostvariabelen (``\texttt{host\_vars}'') en playbook (``\texttt{site.yml}'') van de labo-omgeving en vervolgens gedefinieerd via de \emph{role identifiers} die opgelijst staan in het ``\texttt{role-config.yml}''-bestand van de converter (zie \nameref{subsec:rolconfiguratie}).
-Pijlverbindingen tussen rollen worden enkel opgenomen wanneer de converter ze effectief herkent als mogelijke verbinding, namelijk \emph{DNS}-verbindingen (bijvoorbeeld ``\texttt{web.dns\_client --> dns.dns\_server\_primary}'') en Prometheus scrape targets (bijvoorbeeld ``\texttt{mon.monitoring\_server --> web.node\_exporter}'').
+De \emph{Ansible}-rollen worden gebaseerd op de originele hostvariabelen (``\texttt{host\_vars}'') en \emph{playbook} (``\texttt{site.yml}'') van de labo-omgeving en vervolgens gedefinieerd via de \emph{role identifiers} die opgelijst staan in het ``\texttt{role-config.yml}''-bestand van de \emph{converter} (zie \nameref{subsec:rolconfiguratie}).
+Pijlverbindingen tussen rollen worden enkel opgenomen wanneer de \emph{converter} ze effectief herkent als mogelijke verbinding, namelijk \emph{DNS}-verbindingen (bijvoorbeeld ``\texttt{web.dns\_client --> dns.dns\_server\_primary}'') en \emph{Prometheus} scrape targets (bijvoorbeeld ``\texttt{mon.monitoring\_server --> web.node\_exporter}'').
 
-Ten slotte wordt de converter uitgevoerd op de opgestelde invoerbestanden en wordt de gegenereerde uitvoer beoordeeld aan de hand van de volgende criteria:
+Ten slotte wordt de \emph{converter} uitgevoerd op de opgestelde invoerbestanden en wordt de gegenereerde uitvoer beoordeeld aan de hand van de volgende criteria:
 \begin{itemize}
     \item Zijn alle beheerde hosts aanwezig in de gegenereerde ``\texttt{vagrant-hosts.yml}''- en ``\texttt{inventory.yml}''-bestanden?
     \item Zijn de gegenereerde hostvariabelen correct en volledig ingevuld?
-    \item Is de gegenereerde playbook (``\texttt{site.yml}'') correct en sluit de uitvoervolgorde van de plays aan bij de verwachte afhankelijkheden?
+    \item Is de gegenereerde \emph{playbook} (``\texttt{site.yml}'') correct en sluit de uitvoervolgorde van de plays aan bij de verwachte afhankelijkheden?
     \item Kan de omgeving succesvol worden opgestart met het ``\texttt{vagrant up}''-commando zonder manuele aanpassingen achteraf?
 \end{itemize}
 
@@ -47,7 +47,7 @@ De beheerde hosts omvatten:
     \item Twee werkstations ``\texttt{employee}'' en ``\texttt{remote-employee}''
 \end{itemize}
 
-Aangezien het \nameref{subsec:fullmode}-gebruiksscenario van de converter slechts één beheerd subnet ondersteunt en de ``\texttt{role-config.yml}'' geen rollen voor routers of werkstations bevat, wordt deze testcase uitsluitend via de \nameref{subsec:iaconlymode} uitgevoerd. Deze modus produceert enkel een ``\texttt{vagrant-hosts.yml}''- en ``\texttt{Vagrantfile}''-bestand, zonder \emph{Ansible}-configuratie. Bijgevolg wordt er hier dus géén implementatiediagram opgesteld. De host ``\texttt{your-laptop}'' en de VirtualBox-specifieke netwerkinfrastructuur worden als niet-beheerd gemarkeerd.
+Aangezien het \nameref{subsec:fullmode}-gebruiksscenario van de \emph{converter} slechts één beheerd subnet ondersteunt en de ``\texttt{role-config.yml}'' geen rollen voor routers of werkstations bevat, wordt deze testcase uitsluitend via de \nameref{subsec:iaconlymode} uitgevoerd. Deze modus produceert enkel een ``\texttt{vagrant-hosts.yml}''- en ``\texttt{Vagrantfile}''-bestand, zonder \emph{Ansible}-configuratie. Bijgevolg wordt er hier dus géén implementatiediagram opgesteld. De host ``\texttt{your-laptop}'' en de VirtualBox-specifieke netwerkinfrastructuur worden als niet-beheerd gemarkeerd.
 
 \subsection{Invoer: netwerkdiagram}%
 \label{subsec:testcase1_invoer}
@@ -72,18 +72,18 @@ Dit bestand genereert via \emph{PlantUML} de volgende afbeelding.
 \subsection{Gegenereerde bestanden}%
 \label{subsec:testcase1_gegenereerd}
 
-De converter genereert het ``\texttt{vagrant-hosts.yml}''-bestand in de uitvoermap. Dit bestand bevat voor elke beheerde host een entry met overeenkomend(e) IP-adres(sen) en werkgeheugen, afkomstig uit de ``\texttt{address}''- en ``\texttt{memory}''-attributen in het netwerkdiagram. De routers ``\texttt{companyrouter}'' en ``\texttt{homerouter}'' beschikken elk over meerdere netwerkinterfaces (één per verbonden subnet), wat resulteert in meerdere IP-adresregels per entry.
+De \emph{converter} genereert het ``\texttt{vagrant-hosts.yml}''-bestand in de uitvoermap. Dit bestand bevat voor elke beheerde host een entry met overeenkomend(e) IP-adres(sen) en werkgeheugen, afkomstig uit de ``\texttt{address}''- en ``\texttt{memory}''-attributen in het netwerkdiagram. De routers ``\texttt{companyrouter}'' en ``\texttt{homerouter}'' beschikken elk over meerdere netwerkinterfaces (één per verbonden subnet), wat resulteert in meerdere IP-adresregels per entry.
 
 \begin{codeblock}
     \inputminted{yaml}{../project_files/output/cybersec_adv_env/vagrant-hosts.yml}
-    \caption[Gegenereerde ``\texttt{vagrant-hosts.yml''} voor testcase 1]{De door de converter gegenereerde \texttt{vagrant-hosts.yml} voor testcase 1 (\emph{Cybersecurity Advanced}).}
+    \caption[Gegenereerde ``\texttt{vagrant-hosts.yml''} voor testcase 1]{De door de \emph{converter} gegenereerde \texttt{vagrant-hosts.yml} voor testcase 1 (\emph{Cybersecurity Advanced}).}
     \label{code:vagrant_hosts_cybersec}
 \end{codeblock}
 
 \subsection{Gekopieerde assets}%
 \label{subsec:testcase1_assets}
 
-Naast het gegenereerde ``\texttt{vagrant-hosts.yml}''-bestand kopieert de converter ook een vooraf opgestelde ``\texttt{Vagrantfile}'' naar de uitvoermap. Deze leest de ``\texttt{vagrant-hosts.yml}'' in en voorziet voor elke entry de correcte \emph{Vagrant}-VM-configuratie, inclusief de VirtualBox-netwerkinstellingen.
+Naast het gegenereerde ``\texttt{vagrant-hosts.yml}''-bestand kopieert de \emph{converter} ook een vooraf opgestelde ``\texttt{Vagrantfile}'' naar de uitvoermap. Deze leest de ``\texttt{vagrant-hosts.yml}'' in en voorziet voor elke entry de correcte \emph{Vagrant}-VM-configuratie, inclusief de VirtualBox-netwerkinstellingen.
 
 \subsection{Beoordeling}%
 \label{subsec:testcase1_beoordeling}
@@ -105,7 +105,7 @@ Het tweede labo van het \emph{OLOD} \emph{Infrastructure Automation} beschrijft 
     \item een webserver (``\texttt{srv100}'')
 \end{itemize}
 
-De router ``\texttt{r001}'', gebruikerslaptop ``\texttt{your-laptop}'' en het werkstation ``\texttt{ws0001}'' worden niet door de converter beheerd. Deze omgeving wordt opgezet via het \nameref{subsec:fullmode}-gebruiksscenario van de converter.
+De router ``\texttt{r001}'', gebruikerslaptop ``\texttt{your-laptop}'' en het werkstation ``\texttt{ws0001}'' worden niet door de \emph{converter} beheerd. Deze omgeving wordt opgezet via het \nameref{subsec:fullmode}-gebruiksscenario van de \emph{converter}.
 
 \subsection{Invoer: netwerk- en implementatiediagram}%
 \label{subsec:testcase2_invoer}
@@ -125,7 +125,7 @@ Het opgestelde netwerkdiagram (``\texttt{nwdiag\_infra\_auto\_lab\_2\_env.puml}'
     \label{fig:nwdiag_infra_auto_lab2}
 \end{figure}
 
-Het opgestelde implementatiediagram (``\texttt{uml\_infra\_auto\_lab\_2\_env.puml}'') stelt ``\texttt{node}''-definites op voor de vier beheerde hosts. De pijlverbindingen vanuit alle ``\texttt{dns\_client}''-componenten naar ``\texttt{srv001.dns\_server\_primary}'' en ``\texttt{srv002.dns\_server\_secondary}'' worden door de converter gebruikt om de \emph{DNS}-serverconfiguratie en de \emph{DHCP}-subnettendefinitie correct in te vullen.
+Het opgestelde implementatiediagram (``\texttt{uml\_infra\_auto\_lab\_2\_env.puml}'') stelt ``\texttt{node}''-definites op voor de vier beheerde hosts. De pijlverbindingen vanuit alle ``\texttt{dns\_client}''-componenten naar ``\texttt{srv001.dns\_server\_primary}'' en ``\texttt{srv002.dns\_server\_secondary}'' worden door de \emph{converter} gebruikt om de \emph{DNS}-serverconfiguratie en de \emph{DHCP}-subnettendefinitie correct in te vullen.
 
 \begin{codeblock}
     \lstinputlisting[language=plantuml]{../project_files/input/infra_auto_lab_2_env/uml_infra_auto_lab_2_env.puml}
@@ -143,12 +143,12 @@ Het opgestelde implementatiediagram (``\texttt{uml\_infra\_auto\_lab\_2\_env.pum
 \subsection{Gegenereerde bestanden}%
 \label{subsec:testcase2_gegenereerd}
 
-De converter genereert de volgende bestanden in de uitvoermap:
+De \emph{converter} genereert de volgende bestanden in de uitvoermap:
 
 \begin{itemize}
     \item ``\texttt{vagrant-hosts.yml}'': de \emph{Vagrant}-VM-definities
-    \item ``\texttt{ansible/inventory.yml}'': de \emph{Ansible} inventory
-    \item ``\texttt{ansible/site.yml}'': de (hoofd-)playbook
+    \item ``\texttt{ansible/inventory.yml}'': de \emph{Ansible}-\emph{inventory}
+    \item ``\texttt{ansible/site.yml}'': de (hoofd-)\emph{playbook}
     \item ``\texttt{ansible/host\_vars/srv001.yml}'': de hostvariabelen voor ``\texttt{srv001}''
     \item ``\texttt{ansible/host\_vars/srv002.yml}'': de hostvariabelen voor ``\texttt{srv002}''
     \item ``\texttt{ansible/host\_vars/srv003.yml}'': de hostvariabelen voor ``\texttt{srv003}''
@@ -156,18 +156,18 @@ De converter genereert de volgende bestanden in de uitvoermap:
     \item ``\texttt{ansible/requirements.yml}'': de ``\emph{Ansible Galaxy}''-afhankelijkheden
 \end{itemize}
 
-De playbook (``\texttt{site.yml}'') bevat plays in de volgorde bepaald door het topologisch sorteeralgoritme (zie \nameref{subsec:dynamische_bestanden}): hosts met ``\texttt{dns\_server\_primary}'' of ``\texttt{dns\_server\_secondary}'' worden vóór hosts met ``\texttt{dns\_client}'' geconfigureerd, overeenkomstig de ``\texttt{depends\_on}''-relaties in ``\texttt{role-config.yml}''.
+De \emph{playbook} (``\texttt{site.yml}'') bevat plays in de volgorde bepaald door het topologisch sorteeralgoritme (zie \nameref{subsec:dynamische_bestanden}): hosts met ``\texttt{dns\_server\_primary}'' of ``\texttt{dns\_server\_secondary}'' worden vóór hosts met ``\texttt{dns\_client}'' geconfigureerd, overeenkomstig de ``\texttt{depends\_on}''-relaties in ``\texttt{role-config.yml}''.
 
 \begin{codeblock}
     \inputminted{yaml}{../project_files/output/infra_auto_lab_2_env/ansible/site.yml}
-    \caption[Gegenereerde ``\texttt{site.yml}'' voor testcase 2]{De door de converter gegenereerde ``\texttt{site.yml}'' voor testcase 2 (\emph{Infrastructure Automation}, labo 2).}
+    \caption[Gegenereerde ``\texttt{site.yml}'' voor testcase 2]{De door de \emph{converter} gegenereerde ``\texttt{site.yml}'' voor testcase 2 (\emph{Infrastructure Automation}, labo 2).}
     \label{code:site_infra_auto_lab2}
 \end{codeblock}
 
 \subsection{Gekopieerde assets}%
 \label{subsec:testcase2_assets}
 
-Naast de gegenereerde bestanden kopieert de converter de volgende assets naar de uitvoermap:
+Naast de gegenereerde bestanden kopieert de \emph{converter} de volgende assets naar de uitvoermap:
 
 \begin{itemize}
     \item ``\texttt{Vagrantfile}'': het standaard \emph{Vagrant}-sjabloon
@@ -183,12 +183,12 @@ Naast de gegenereerde bestanden kopieert de converter de volgende assets naar de
 
 Alle vier beheerde hosts zijn aanwezig in de gegenereerde uitvoer. De \emph{DNS}-zone-informatie, de \emph{DHCP}-subnettendefinitie en de firewall-poortenlijsten zijn correct afgeleid uit de diagraminformatie en het ``\texttt{role-config.yml}''-bestand.
 
-De router ``\texttt{r001}'' is de voornaamste beperking van deze testcase: het doel van deze host wordt door de converter niet ondersteund en is bijgevolg afwezig in de geproduceerde uitvoer. De beheerde hosts beschikken wel over internettoegang via hun eigen VirtualBox NAT-interface, maar onderlinge routering is dus niet geconfigureerd. \emph{DNS}-queries tussen de hosts onderling blijven wel functioneel, aangezien deze via de gegenereerde \emph{DNS}-serverconfiguratie verlopen.
+De router ``\texttt{r001}'' is de voornaamste beperking van deze testcase: het doel van deze host wordt door de \emph{converter} niet ondersteund en is bijgevolg afwezig in de geproduceerde uitvoer. De beheerde hosts beschikken wel over internettoegang via hun eigen VirtualBox NAT-interface, maar onderlinge routering is dus niet geconfigureerd. \emph{DNS}-queries tussen de hosts onderling blijven wel functioneel, aangezien deze via de gegenereerde \emph{DNS}-serverconfiguratie verlopen.
 
 \section{Testcase 3: Full mode (\emph{Infrastructure Automation}, labo 3)}%
 \label{sec:testcase3}
 
-Labo 3 van \emph{Infrastructure Automation} bouwt verder op de omgeving van labo 2 door een monitoring-server (``\texttt{srv004}'') toe te voegen. Op deze host wordt Prometheus en Grafana geïnstalleerd via de ``\texttt{monitoring\_server}''-rol. Op alle hosts worden daarnaast ook dienst-specifieke exporters voorzien.
+Labo 3 van \emph{Infrastructure Automation} bouwt verder op de omgeving van labo 2 door een monitoring-server (``\texttt{srv004}'') toe te voegen. Op deze host wordt \emph{Prometheus} en Grafana geïnstalleerd via de ``\texttt{monitoring\_server}''-rol. Op alle hosts worden daarnaast ook dienst-specifieke exporters voorzien.
 
 \subsection{Invoer: netwerk- en implementatiediagram}%
 \label{subsec:testcase3_invoer}
@@ -217,7 +217,7 @@ Het implementatiediagram (``\texttt{uml\_infra\_auto\_lab\_3\_env.puml}'') breid
     \item ``\texttt{node\_exporter}'' voor elke ``\texttt{node}'', inclusief ``\texttt{srv004}''
 \end{itemize}
 
-De pijlverbindingen vanuit ``\texttt{srv004.monitoring\_server}'' naar alle exporterrollen worden door de converter gebruikt om de Prometheus scrape targets automatisch op te bouwen (via de ``\texttt{prometheus\_scrape\_configs}''-variabele).
+De pijlverbindingen vanuit ``\texttt{srv004.monitoring\_server}'' naar alle exporterrollen worden door de \emph{converter} gebruikt om de \emph{Prometheus} scrape targets automatisch op te bouwen (via de ``\texttt{prometheus\_scrape\_configs}''-variabele).
 
 \begin{codeblock}
     \lstinputlisting[language=plantuml]{../project_files/input/infra_auto_lab_3_env/uml_infra_auto_lab_3_env.puml}
@@ -248,7 +248,7 @@ De hostvariabelen van \texttt{srv004} bevatten de automatisch gegenereerde \\``\
 
 \begin{codeblock}
     \inputminted{yaml}{../project_files/output/infra_auto_lab_3_env/ansible/host_vars/srv004.yml}
-    \caption[Gegenereerde ``\texttt{host\_vars/srv004.yml''} voor testcase 3]{De door de converter gegenereerde hostvariabelen voor \texttt{srv004}. De \texttt{prometheus\_scrape\_configs}-waarde is automatisch samengesteld op basis van de pijlverbindingen in het implementatiediagram.}
+    \caption[Gegenereerde ``\texttt{host\_vars/srv004.yml''} voor testcase 3]{De door de \emph{converter} gegenereerde hostvariabelen voor \texttt{srv004}. De \texttt{prometheus\_scrape\_configs}-waarde is automatisch samengesteld op basis van de pijlverbindingen in het implementatiediagram.}
     \label{code:hostvars_srv004}
 \end{codeblock}
 
@@ -268,6 +268,6 @@ Ten opzichte van testcase 2 worden de volgende extra assets gekopieerd:
 \subsection{Beoordeling}%
 \label{subsec:testcase3_beoordeling}
 
-De uitvoer voor labo 3 is functioneel equivalent aan de manueel opgestelde \emph{Ansible}-configuratie uit de originele labo-omgeving. Alle vijf beheerde hosts zijn aanwezig, de exporterconfiguraties zijn correct gegenereerd en de Prometheus scrape-configuratie reflecteert nauwkeurig de verbindingen uit het implementatiediagram.
+De uitvoer voor labo 3 is functioneel equivalent aan de manueel opgestelde \emph{Ansible}-configuratie uit de originele labo-omgeving. Alle vijf beheerde hosts zijn aanwezig, de exporterconfiguraties zijn correct gegenereerd en de \emph{Prometheus} scrape-configuratie reflecteert nauwkeurig de verbindingen uit het implementatiediagram.
 
-De beperking met betrekking tot ``\texttt{r001}'' geldt ook hier; zie \nameref{subsec:testcase2_beoordeling}. Daarnaast veronderstelt de gegenereerde ``\texttt{monitoring\_server}''-configuratie dat de \emph{DNS}-servers reeds operationeel zijn vóór de Prometheus-installatie; dit is gegarandeerd door de ``\texttt{depends\_on}''-relaties in ``\texttt{role-config.yml}'' en straalt zich uit in de resulterende volgorde in ``\texttt{site.yml}''.
+De beperking met betrekking tot ``\texttt{r001}'' geldt ook hier; zie \nameref{subsec:testcase2_beoordeling}. Daarnaast veronderstelt de gegenereerde ``\texttt{monitoring\_server}''-configuratie dat de \emph{DNS}-servers reeds operationeel zijn vóór de \emph{Prometheus}-installatie; dit is gegarandeerd door de ``\texttt{depends\_on}''-relaties in ``\texttt{role-config.yml}'' en straalt zich uit in de resulterende volgorde in ``\texttt{site.yml}''.

@@ -83,7 +83,7 @@ Volgens \textcite{Padmanabhan2012} worden binnen \emph{UML} er veertien diagramt
 
 De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele \emph{UML}-diagrammen (\emph{Class Diagrams}, \emph{Deployment Diagrams}, \emph{Activity Diagrams}, \ldots), maar dus ook notaties die niet strikt genomen onder \emph{UML} vallen zoals netwerkdiagrammen, mindmaps en \emph{GANTT}-schemas \autocite{PlantUML2025}.
 
-\emph{PlantUML} kan op verschillende manieren gebruikt worden; via de online webinterface\footnote{https://www.plantuml.com/plantuml}, een lokale installatie of een Docker-container. Er worden ook verscheidene integraties aangeboden zoals plugins voor gangbare \emph{IDE}'s (\emph{Visual Studio Code}, \emph{IntelliJ IDEA} en \emph{Eclipse}) en documentatie- en wiki-tools (\emph{Confluence} en \emph{Markdown}).
+\emph{PlantUML} kan op verschillende manieren gebruikt worden; via de online webinterface\footnote{https://www.plantuml.com/plantuml}, een lokale installatie of een \emph{Docker}-container. Er worden ook verscheidene integraties aangeboden zoals plugins voor gangbare \emph{IDE}'s (\emph{Visual Studio Code}, \emph{IntelliJ IDEA} en \emph{Eclipse}) en documentatie- en wiki-tools (\emph{Confluence} en \emph{Markdown}).
 
 Aangezien de diagramdefinities gewone tekstbestanden zijn (met ``\texttt{.puml}'' als bestandsextensie), lenen ze zich goed tot versiebeheer met \emph{Git}. \autocite{PlantUML2025a}
 
@@ -232,7 +232,7 @@ resource "aws_subnet" "az" {
 
 \subsection{\emph{OpenTofu}}%
 
-\emph{OpenTofu} is een relatief recente speler, ontstaan als een community-gedreven fork van \emph{Terraform} in 2023. De drijfveer achter deze fork is de keuze van \emph{HashiCorp} om een licentiewijziging naar het \emph{Business Source License} (afgekort BSL) voor \emph{Terraform} door te voeren. Dit bracht het bestuur in gevaar voor de bestaande community, die op lange termijn eerder leveranciersonafhankelijk willen blijven. \autocite{Gaddam2023}
+\emph{OpenTofu} is een relatief recente speler, ontstaan als een community-gedreven fork van \emph{Terraform} in 2023. De drijfveer achter deze fork is de keuze van \emph{HashiCorp} om een licentiewijziging naar het \emph{Business Source License} (afgekort \emph{BSL}) voor \emph{Terraform} door te voeren. Dit bracht het bestuur in gevaar voor de bestaande community, die op lange termijn eerder leveranciersonafhankelijk willen blijven. \autocite{Gaddam2023}
 
 Het project heeft als doel een volledig vrije, open-governance variant van de \emph{Terraform}-tooling te bieden, met langdurige compatibiliteit en transparante besluitvorming in de open-source gemeenschap.
 
@@ -241,14 +241,14 @@ De tool ondersteunt dus dezelfde concepten (providers, resources, modules en sta
 
 \subsection{\emph{Vagrant}}%
 
-\emph{Vagrant} is een tool van \emph{HashiCorp} voor het bouwen en beheren van (lokale) virtuele omgevingen via een eenvoudig, tekstueel configuratiebestand (``\texttt{Vagrantfile}'').
-Het doel van \emph{Vagrant} is om lichte, reproduceerbare en draagbare ontwikkel- en testomgevingen te creëren die met één commando kunnen worden opgestart, geprovisioneerd en opnieuw vernietigd. \autocite{HashiCorp2026}
+\emph{Vagrant} is een tool van \emph{HashiCorp} voor het bouwen en beheren van (lokale) virtuele omgevingen via een tekstueel configuratiebestand (``\texttt{Vagrantfile}'').
+Het doel van \emph{Vagrant} is om reproduceerbare ontwikkel- en testomgevingen te creëren die met één commando kunnen opgestart, geprovisioneerd en opnieuw vernietigd worden. \autocite{HashiCorp2026}
 
-In de ``\texttt{Vagrantfile}'' specificeert men voor elke virtuele machine, onder andere, de base box (of het gastbesturingssysteem zoals \emph{AlmaLinux}, Alpine Linux, Ubuntu), de hoeveelheid CPU en werkgeheugen, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
-Standaard ondersteunt \emph{Vagrant} providers zoals \emph{VirtualBox}, Hyper-V en Docker, maar via plugins kunnen ook andere platformen worden aangestuurd, waaronder VMware of publieke cloudproviders. \autocite{HashiCorp2026a}
+In de ``\texttt{Vagrantfile}'' specificeert men voor elke virtuele machine, onder andere, de base box (of het gastbesturingssysteem zoals \emph{AlmaLinux}, Alpine Linux, Ubuntu), het aantal CPU cores, hoeveelheid werkgeheugen, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
+Standaard ondersteunt \emph{Vagrant} providers zoals \emph{VirtualBox}, \emph{Hyper-V} en \emph{Docker}, maar via plugins kunnen ook andere platformen worden aangestuurd, waaronder \emph{VMware} of publieke cloudproviders. \autocite{HashiCorp2026a}
 
-Voor provisioning kan \emph{Vagrant} gebruik maken van verschillende methodes zoals shellscripts maar ook ``\emph{configuration management}''-tools (\emph{Ansible}/\emph{Chef}/\emph{Puppet}).
-Dit maakt het mogelijk om via het ``\texttt{vagrant up}''-commando zowel de virtuele infrastructuur (via \emph{Vagrant}) als de configuratie van het gastbesturingssysteem (bijvoorbeeld via \emph{Ansible}-playbooks) te automatiseren. \autocite{HashiCorp2026a}
+Voor provisioning kan \emph{Vagrant} gebruik maken van verschillende methodes zoals \emph{Bash}-scripts maar ook ``\emph{configuration management}''-tools (\emph{Ansible}/\emph{Chef}/\emph{Puppet}).
+Dit maakt het mogelijk om via het ``\texttt{vagrant up}''-commando zowel de virtuele infrastructuur (via \emph{Vagrant}) als de configuratie van het gastbesturingssysteem (bijvoorbeeld via \emph{Ansible}-\emph{playbooks}) te automatiseren. \autocite{HashiCorp2026a}
 
 Binnen de opleiding \emph{Toegepaste Informatica} wordt \emph{Vagrant} ingezet om snel identieke virtuele omgevingen uit te rollen waarin \emph{Ansible} de verdere configuratie en deployment van software verzorgt.
 
@@ -300,11 +300,11 @@ Als \emph{Infrastructure-as-Code} een omgeving automatisch opzet, staat \emph{co
 Beheerders beschrijven de gewenste configuratie in menselijk leesbare YAML-bestanden, zogenaamde \emph{playbooks}, die bestaan uit taken (\emph{tasks}) en herbruikbare rollen (\emph{roles}). \autocite{Ansible2025}
 
 Taken maken gebruik van (ingebouwde) modules om verscheidene systeem-gerelateerde objecten te beheren, zoals packages, services, gebruikers, bestanden en firewallregels.
-Hier is de kracht van \emph{Ansible} dat men deze taken op declaratieve wijze kan schrijven in plaats van imperatief; men beschrijft \emph{wat} het eindresultaat moet zijn, niet \emph{hoe} men daar moet geraken. \emph{Ansible} biedt hier dus ook de mogelijkheid om playbooks zo idempotent mogelijk te schrijven; bij herhaalde uitvoeringen krijgt men steeds hetzelfde, verwachte eindresultaat. \autocite{Stoeckl2025}
+Hier is de kracht van \emph{Ansible} dat men deze taken op declaratieve wijze kan schrijven in plaats van imperatief; men beschrijft \emph{wat} het eindresultaat moet zijn, niet \emph{hoe} men daar moet geraken. \emph{Ansible} biedt hier dus ook de mogelijkheid om \emph{playbooks} zo idempotent mogelijk te schrijven; bij herhaalde uitvoeringen krijgt men steeds hetzelfde, verwachte eindresultaat. \autocite{Stoeckl2025}
 
-Dankzij een inventorybestand kunnen de taken van een playbook identiek uitgevoerd worden op groepen van meerdere hosts, wat \emph{Ansible} geschikt maakt voor het configureren van tientallen of honderden servers in één keer. \autocite{Ansible2025}
+Dankzij een \emph{inventory}-bestand kunnen de taken van een \emph{playbook} identiek uitgevoerd worden op groepen van meerdere hosts, wat \emph{Ansible} geschikt maakt voor het configureren van tientallen of honderden servers in één keer. \autocite{Ansible2025}
 
-Onderstaand voorbeeld toont een beknopte \emph{Ansible}-playbook die twee taken uitvoert: de webserver en databankserver updaten op alle hosts in de overeenkomende groepen (``\texttt{webservers}'' en ``\texttt{databases}'').
+Onderstaand voorbeeld toont een beknopte \emph{Ansible}-\emph{playbook} die twee taken uitvoert: de webserver en databankserver updaten op alle hosts in de overeenkomende groepen (``\texttt{webservers}'' en ``\texttt{databases}'').
 
 \begin{codeblock}
   \begin{lstlisting}
@@ -339,18 +339,18 @@ Onderstaand voorbeeld toont een beknopte \emph{Ansible}-playbook die twee taken 
       name: postgresql
       state: started
 \end{lstlisting}
-  \caption[Voorbeeld \emph{Ansible}-playbook]{Voorbeeld van een eenvoudige \emph{Ansible}-playbook \autocite{Ansible2025a}.}
+  \caption[Voorbeeld \emph{Ansible}-\emph{playbook}]{Voorbeeld van een eenvoudige \emph{Ansible}-\emph{playbook} \autocite{Ansible2025a}.}
   \label{code:ansible_playbook_vb}
 \end{codeblock}
 
-Deze playbook kan herhaaldelijk uitgevoerd worden en telkens hetzelfde resultaat opleveren, wat het potentieel van \emph{Ansible} qua idempotentie (zeker voor de ingebouwde modules) illustreert.
+Deze \emph{playbook} kan herhaaldelijk uitgevoerd worden en telkens hetzelfde resultaat opleveren, wat het potentieel van \emph{Ansible} qua idempotentie (zeker voor de ingebouwde modules) illustreert.
 
 \subsection{\emph{Puppet}}%
 
 \emph{Puppet} is een ``\emph{configuration management}''- tool die gebruikmaakt van een declaratieve domeinspecifieke taal (gebaseerd op \emph{Ruby}) om de gewenste toestand van systemen te beschrijven.
 Beheerders definiëren resources (zoals packages, files en services) in \emph{manifests}; \emph{Puppet} vergelijkt vervolgens de actuele toestand van een host met deze gewenste toestand en brengt enkel de noodzakelijke wijzigingen aan. \autocite{Perforce2026a}
 
-Typisch wordt \emph{Puppet} ingezet in een ``\emph{server-agent}''-architectuur: een centrale \emph{Puppet}server compileert de \emph{manifests} tot een \emph{catalog} en deelt deze catalog uit aan \emph{Puppet}-\emph{\emph{agent}s} op de beheerde hosts.
+Typisch wordt \emph{Puppet} ingezet in een ``\emph{server-agent}''-architectuur: een centrale \emph{Puppet}-server compileert de \emph{manifests} tot een \emph{catalog} en deelt deze catalog uit aan \emph{Puppet}-\emph{\emph{agent}s} op de beheerde hosts.
 De \emph{agent} past de catalog toe, corrigeert eventuele configuratiedrift en rapporteert zijn status terug aan de server, waardoor beheerders op grote schaal configuraties kunnen afdwingen en monitoren. \autocite{Perforce2026b}
 
 Het volgende \emph{manifest} toont vereenvoudigd aan hoe een server geconfigureerd kan worden met \emph{Puppet}:
@@ -386,10 +386,10 @@ Wanneer de \emph{agent} dit \emph{manifest} meerdere keren toepast, zal \emph{Pu
 \emph{Chef} is een ``\emph{configuration management}''-tool en automatiseringsplatform dat \emph{Infrastructuur-as-Code} benadert via \emph{Ruby}-gebaseerde code.
 Configuratie wordt georganiseerd in \emph{cookbooks}, die één of meerdere \emph{recipes} bevatten; een \emph{recipe} beschrijft met behulp van resources (zoals ``\texttt{package}'', ``\texttt{file}'' en ``\texttt{service}'') de gewenste toestand van een node.  \autocite{ProgressSoftware2026}
 
-In een typische opstelling communiceren \emph{Chef}-clients op de beheerde nodes met een centrale \emph{Chef}server, die \emph{cookbooks}, policies en \emph{run lists} beheert.
+In een typische opstelling communiceren \emph{Chef}-clients op de beheerde nodes met een centrale \emph{Chef}-server, die \emph{cookbooks}, policies en \emph{run lists} beheert.
 Tijdens een \emph{run} vraagt de client zijn \emph{run list} op, convergeert het systeem naar de in de \emph{recipes} gedefinieerde toestand en rapporteert het resultaat terug, wat een idempotente, herhaalbare configuratieworkflow oplevert. \autocite{ProgressSoftware2026a}
 
-Onderstaande vereenvoudigde \emph{recipe} installeert een Apache webserver, kiest op willekeurige basis \emph{PHP} of \emph{Perl} als scriptingtaal, en installeert deze vervolgens.
+Onderstaande vereenvoudigde \emph{recipe} installeert een \emph{Apache} webserver, kiest op willekeurige basis \emph{PHP} of \emph{Perl} als scriptingtaal, en installeert deze vervolgens.
 
 \begin{codeblock}
   \begin{lstlisting}
@@ -421,9 +421,9 @@ Bij elke \emph{Chef}-\emph{run} wordt deze \emph{recipe} opnieuw geëvalueerd; a
 \section{De opleiding Toegepaste Informatica (\emph{HOGENT})}%
 \label{sec:opleiding}
 
-\emph{Toegepaste Informatica} is een professionele bacheloropleiding van drie jaar aan \emph{HOGENT}, aangeboden door het Departement IT \& Digitale Innovatie \autocite{HOGENT2024}. In het derde jaar kiezen studenten een keuzeprofiel dat aansluit bij hun interesse; voor studenten met een interesse in serverinfrastructuur, netwerken en automatisering is dat het keuzeprofiel ``\emph{IT infrastructure engineer}''.
+\emph{Toegepaste Informatica} is een professionele bacheloropleiding van drie jaar aan \emph{HOGENT}, aangeboden door het \emph{Departement IT \& Digitale Innovatie} \autocite{HOGENT2024}. In het derde jaar kiezen studenten een keuzeprofiel dat aansluit bij hun interesse; voor studenten met een interesse in serverinfrastructuur, netwerken en automatisering is dat het keuzeprofiel ``\emph{IT infrastructure engineer}''.
 
-De volgende subsecties beschrijven achtereenvolgend het relevante keuzeprofiel (``\emph{IT infrastructure engineer}''), de drie \emph{OLODs} (opleidingsonderdelen) die centraal staan in deze bachelorproef, de \emph{Ansible}-rollen en de \emph{Ansible Skeleton} van Bert Van Vreckem, en tot slot een algemeen overzicht van de voornaamste tools die binnen de \emph{OLODs} in dit keuzeprofiel worden ingezet.
+De volgende subsecties beschrijven achtereenvolgend het relevante keuzeprofiel (``\emph{IT infrastructure engineer}''), drie \emph{OLODs} (opleidingsonderdelen) die er binnen vallen en centraal staan in deze bachelorproef, de \emph{Ansible}-rollen en de \emph{Ansible Skeleton} van Bert Van Vreckem, en tot slot een algemeen overzicht van de voornaamste tools die binnen de \emph{OLODs} in dit keuzeprofiel worden ingezet.
 
 \subsection{``IT infrastructure engineer'' (Keuzeprofiel)}%
 \label{subsec:keuzeprofiel}
@@ -436,7 +436,7 @@ Binnen dit keuzeprofiel zijn er drie \emph{OLODs} die relevant zijn voor deze ba
   \item ``\emph{DevOps Project: Operations}'' \autocite{HOGENT2025b}
 \end{itemize}
 
-De twee eerstgenoemde \emph{OLODs} stellen hierbij een initiële labo-omgeving beschikbaar via de \emph{GitHub}-organisatie \emph{HoGentTIN} \autocite{HoGentTIN2025,HoGentTIN2025a}. In elk van deze \emph{OLODs} wordt een basisinfrastructuur aangeboden waarop studenten verder bouwen; hoe deze infrastructuur opgezet, geconfigureerd en gedocumenteerd wordt, is telkens een kerndoelstelling van het \emph{OLOD}.
+De twee eerstgenoemde \emph{OLODs} stellen hierbij een initiële labo-omgeving beschikbaar via de \emph{GitHub}-organisatie \emph{HoGentTIN} \autocite{HoGentTIN2025,HoGentTIN2025a}. In elk van deze \emph{OLODs} wordt een basisinfrastructuur aangeboden waarop studenten verder kunnen bouwen; hoe deze infrastructuur opgezet, geconfigureerd en gedocumenteerd wordt, is telkens een kerndoelstelling van het \emph{OLOD}.
 
 \subsection{``\emph{Cybersecurity Advanced}'' (\emph{OLOD})}%
 \label{subsec:cybersec_adv}
@@ -448,31 +448,31 @@ Het gebruik van \emph{configuration management} of \emph{UML}-diagrammen is hier
 \subsection{``\emph{Infrastructure Automation}'' (\emph{OLOD})}%
 \label{subsec:infra_auto}
 
-``\emph{Infrastructure Automation}'' is een \emph{OLOD} dat een reeks labo's bevat die verschillende tools introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen, waaronder \emph{Ansible}, Jenkins\footnote{\url{https://www.jenkins.io/}}, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}} \autocite{HOGENT2025a}. In tegenstelling tot ``\emph{Cybersecurity Advanced}'' is het gebruik van \emph{configuration management} hier een centrale leerdoelstelling: de labo's vereisen dat studenten \emph{Ansible} inzetten om de virtuele machines te configureren.
+``\emph{Infrastructure Automation}'' is een \emph{OLOD} dat een reeks labo's bevat die verschillende tools introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen, waaronder \emph{Ansible}, \emph{Jenkins}\footnote{\url{https://www.jenkins.io/}}, \emph{Prometheus}\footnote{\url{https://prometheus.io/}} en \emph{Kubernetes}\footnote{\url{https://kubernetes.io/}} \autocite{HOGENT2025a}. In tegenstelling tot ``\emph{Cybersecurity Advanced}'' is het gebruik van \emph{configuration management} hier een centrale leerdoelstelling: de labo's vereisen dat studenten \emph{Ansible} inzetten om de virtuele machines te configureren.
 
-De labo-omgeving voor dit \emph{OLOD} is gebaseerd op de ``\emph{Ansible Skeleton}'' van \textcite{Vreckem2025}: een sjabloon voor \emph{Ansible}-projecten met een geïntegreerde \emph{Vagrant}-omgeving. Deze structuur -- met mappen zoals ``\texttt{ansible/}'', ``\texttt{ansible/host\_vars/}'', ``\texttt{ansible/group\_vars/}'' en een centraal ``\texttt{site.yml}''-playbook -- vormt ook de uitvoerstructuur van de converter die in deze bachelorproef wordt ontwikkeld \autocite{HoGentTIN2025a}.
+De labo-omgeving voor dit \emph{OLOD} is gebaseerd op de ``\emph{Ansible Skeleton}'' van \textcite{Vreckem2025}: een sjabloon voor \emph{Ansible}-projecten met een geïntegreerde \emph{Vagrant}-omgeving (zie \nameref{subsec:bertvv}). Deze structuur -- met mappen zoals ``\texttt{ansible/}'', ``\texttt{ansible/host\_vars/}'', ``\texttt{ansible/group\_vars/}'' en een centrale ``\texttt{site.yml}''-\emph{playbook} -- vormt ook de uitvoerstructuur van de \emph{converter} die in deze bachelorproef wordt ontwikkeld \autocite{HoGentTIN2025a}.
 
 \subsection{``\emph{DevOps Project: Operations}'' (\emph{OLOD})}%
 \label{subsec:devops_ops}
 
-``\emph{DevOps Project: Operations}'' is een \emph{OLOD} dat het tweede luik vormt van een tweeledig groepsproject \autocite{HOGENT2025b}, het eerste luik zijnde ``\emph{Real-life Integrated Software Engineering}'' (RISE) voor de studenten binnen het keuzetraject ``\emph{full stack developer}''.
-Het doel van het ``operations-team'' is om de backend van een webapplicatie (bijvoorbeeld een \emph{.NET}- of \emph{Android}-package) -- ontwikkeld door een parallel ``development-team'' -- te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet volledig geautomatiseerd kunnen opgezet worden via \emph{Infrastructure-as-Code}- en \emph{configuration management}-tools.
+``\emph{DevOps Project: Operations}'' is een \emph{OLOD} dat het tweede luik vormt van een tweeledig groepsproject \autocite{HOGENT2025b}, het eerste luik zijnde ``\emph{Real-life Integrated Software Engineering}'' (\emph{RISE}) voor de studenten binnen het keuzetraject ``\emph{full stack developer}''.
+Het doel van het ``\emph{operations}-team'' is om de backend van een webapplicatie (bijvoorbeeld een \emph{.NET}- of \emph{Android}-package) -- ontwikkeld door een parallel ``\emph{development}-team'' -- te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet volledig geautomatiseerd kunnen opgezet worden via \emph{Infrastructure-as-Code}- en \emph{configuration management}-tools.
 
-In tegenstelling tot de twee vorige \emph{OLODs} is het gebruik van een netwerkdiagram hier verplicht: de onderliggende architectuur moet worden gevisualiseerd voor zowel technische als niet-technische stakeholders via \emph{UML}-modelleringssoftware. Dit \emph{OLOD} combineert daarmee twee aspecten die centraal staan in deze bachelorproef: het ontwerpen van een infrastructuur via (\emph{UML}-)diagrammen, en het automatisch uitrollen ervan via \emph{IaC} en \emph{configuration management}.
+In tegenstelling tot de twee vorige \emph{OLODs} is het gebruik van een netwerkdiagram hier verplicht: de onderliggende architectuur moet gevisualiseerd worden voor zowel technische als niet-technische stakeholders via \emph{UML}-modelleringssoftware. Dit \emph{OLOD} combineert daarmee twee aspecten die centraal staan in deze bachelorproef: het ontwerpen van een infrastructuur via (\emph{UML}-)diagrammen, en het automatisch uitrollen ervan via \emph{IaC} en \emph{configuration management}.
 
-\subsection{\emph{Ansible}-rollen en \emph{Ansible} Skeleton van Bert Van Vreckem}%
+\subsection{\emph{Ansible}-rollen en \emph{Ansible Skeleton} van Bert Van Vreckem}%
 \label{subsec:bertvv}
 
-Een aantal centrale bouwstenen binnen de bovenstaande \emph{OLODs} -- en bij uitbreiding binnen de converter ontwikkeld in deze bachelorproef -- zijn de \emph{Ansible}-rollen en \emph{Ansible Skeleton} van \textcite{Vreckem2025}.
+Een aantal centrale bouwstenen binnen de bovenstaande \emph{OLODs} -- en bij uitbreiding binnen de \emph{converter} ontwikkeld in deze bachelorproef -- zijn de \emph{Ansible}-rollen en \emph{Ansible Skeleton} van \textcite{Vreckem2025}.
 De \emph{Ansible Skeleton} is een sjabloon voor \emph{Vagrant}- en \emph{Ansible}-projecten dat een vaste mappenstructuur, een vooraf geconfigureerde ``\texttt{Vagrantfile}'' en hulpscripts omvat. Deze ``\texttt{Vagrantfile}'' is zo ontworpen zodat men enkel in een apart ``\texttt{vagrant-hosts.yml}''-bestand hosts moet definiëren om deze vervolgens eenvoudig op te starten met het ``\texttt{vagrant up}''-commando.
 
-Naast het skelet heeft \textcite{Vreckem2016} ook een reeks \emph{Ansible}-rollen ontwikkeld die specifiek gericht zijn op \emph{RedHat}-gebaseerde distributies en die binnen de opleiding standaard worden ingezet, waarvan hier enkele voorbeelden:
+Naast de \emph{Ansible Skeleton} heeft \textcite{Vreckem2016} ook een reeks \emph{Ansible}-rollen ontwikkeld die specifiek gericht zijn op \emph{RedHat}-gebaseerde distributies en die binnen de opleiding standaard worden ingezet, waarvan hier enkele voorbeelden:
 
 \begin{description}
-  \item[``\texttt{bertvv.rh-base}''] Basisinstallatie en -configuratie van een \emph{RedHat}-gebaseerde server: firewall, SELinux, gebruikersbeheer en algemene systeeminstellingen \autocite{Vreckem2016}.
+  \item[``\texttt{bertvv.rh-base}''] Basisinstallatie en -configuratie van een \emph{RedHat}-gebaseerde server: firewall, \emph{SELinux}, gebruikersbeheer en algemene systeeminstellingen \autocite{Vreckem2016}.
   \item[``\texttt{bertvv.bind}''] Installatie en configuratie van \emph{BIND9} als autoritatieve \emph{DNS}-server \autocite{Vreckem2015}.
   \item[``\texttt{bertvv.dhcp}''] Installatie en configuratie van \emph{ISC DHCP} als \emph{DHCP}-server \autocite{Vreckem2015a}.
-  \item[`\texttt{bertvv.httpd}'] Installatie en configuratie van een \emph{Apache}-webserver \autocite{Vreckem2015b}.
+  \item[``\texttt{bertvv.httpd}''] Installatie en configuratie van een \emph{Apache}-webserver \autocite{Vreckem2015b}.
 \end{description}
 
 \subsection{Overzicht voornaamste tools}%
@@ -497,51 +497,51 @@ De volgende tabel geeft een algemeen overzicht van de voornaamste tools die voor
   \label{tab:overzicht_tools}
 \end{table}
 
-\section{Compilers}%
+\section{\emph{Compilers}}%
 \label{sec:compilers}
 
-Compilers vertalen de broncode van een high-level, menselijk leesbare taal (zoals \emph{Java}\footnote{\url{https://www.java.com/}} of \emph{C\#}\footnote{\url{https://dotnet.microsoft.com/en-us/languages/csharp}}) tot equivalente instructies in een andere, vaak low-level taal of machinecode \autocite{Seidl2012}. Dit proces verloopt in meerdere opeenvolgende fases, waarbij elke fase de uitvoer van de vorige als invoer neemt.
+\emph{Compilers} vertalen de broncode van een \emph{high-level}, menselijk leesbare taal (zoals \emph{Java}\footnote{\url{https://www.java.com/}} of \emph{C\#}\footnote{\url{https://dotnet.microsoft.com/en-us/languages/csharp}}) tot equivalente instructies in een andere, vaak \emph{low-level} taal of machinecode \autocite{Seidl2012}. Dit proces verloopt in meerdere opeenvolgende fases, waarbij elke fase de uitvoer van de vorige als invoer neemt.
 
 \subsection{Fases}%
 \label{subsec:compilerfases}
 
 \subsubsection{Lexicale analyse}%
 
-De eerste fase, de \emph{lexicale analyse} (ook wel ``\emph{scanning}'' of ``\emph{tokenisatie}'' genoemd), leest de broncode karakter per karakter en groepeert deze in betekenisvolle eenheden of ``\emph{tokens}'' \autocite{Seidl2012}. Voorbeelden van tokens zijn sleutelwoorden (``\texttt{if}'', ``\texttt{while}''), identifiers, operatoren en literals. Witruimte en commentaar wordt hier doorgaans geen rekening mee gehouden, tenzij de brontaal in kwestie bijvoorbeeld wel witruimte-gevoelig is (zoals bij \emph{Python}).
+De eerste fase, de \emph{lexicale analyse} (ook wel ``\emph{scanning}'' of ``\emph{tokenisatie}'' genoemd), leest de broncode karakter per karakter en groepeert deze in betekenisvolle eenheden of ``\emph{tokens}'' \autocite{Seidl2012}. Voorbeelden van \emph{tokens} zijn sleutelwoorden (``\texttt{if}'', ``\texttt{while}''), identifiers, operatoren en literals. Witruimte en commentaar wordt hier doorgaans geen rekening mee gehouden, tenzij de brontaal in kwestie bijvoorbeeld wel witruimte-gevoelig is (zoals bij \emph{Python}).
 
-\subsubsection{Parsen/ontleden}%
+\subsubsection{\emph{Parsen}/ontleden}%
 
-De \emph{parser} neemt de tokens van de vorige fase als invoer en controleert of deze voldoen aan de grammaticale regels van de brontaal \autocite{Seidl2012}. Het resultaat is een \emph{parse tree}, die de hiërarchische structuur van de broncode weergeeft (zie \nameref{subsec:parsetree}). Als de tokens niet grammaticaal correct zijn, ontstaat er in de parser een syntaxfout.
+De \emph{parser} neemt de \emph{tokens} van de vorige fase als invoer en controleert of deze voldoen aan de grammaticale regels van de brontaal \autocite{Seidl2012}. Het resultaat is een \emph{parse tree}, die de hiërarchische structuur van de broncode weergeeft (zie \nameref{subsec:parsetree}). Als de \emph{tokens} niet grammaticaal correct zijn, ontstaat er in de \emph{parser} een syntaxfout.
 
 \subsubsection{Semantische analyse}%
 
-Waar de parser enkel de syntactische correctheid controleert, gaat de \emph{semantische analyse} na of de code ook effectief betekenisvol is \autocite{Seidl2012}. Typische controles zijn typeverificatie, scopecontrole en het oplossen van namen. Het resultaat is doorgaans een verrijkte \emph{abstracte syntaxboom} (of \emph{AST}, zie \nameref{subsec:ast}).
+Waar de \emph{parser} enkel de syntactische correctheid controleert, gaat de \emph{semantische analyse} na of de code ook effectief betekenisvol is \autocite{Seidl2012}. Typische controles zijn typeverificatie, scopecontrole en het oplossen van namen. Het resultaat is doorgaans een verrijkte \emph{abstracte syntaxboom} (of \emph{AST}, zie \nameref{subsec:ast}).
 
 \subsubsection{Optimalisatie}%
 
-De optionele \emph{optimalisatiefase} transformeert de tussentijdse representatie om de efficiëntie van de gegenereerde code te verbeteren, zonder de semantiek te wijzigen \autocite{Seidl2012}. Voorbeelden zijn \emph{constant folding}, het elimineren van dode code en het inlinen van kleine functies.
+De optionele \emph{optimalisatiefase} transformeert de tussentijdse representatie om de efficiëntie van de gegenereerde code te verbeteren, zonder de semantiek te wijzigen \autocite{Seidl2012}. Voorbeelden zijn \emph{constant folding}, het elimineren van dode code en het \emph{inlinen} van kleine functies.
 
 \subsubsection{Codegeneratie}%
 
-De laatste fase zet de (al dan niet geoptimaliseerde) tussentijdse representatie om naar de doeltaal \autocite{Seidl2012}. Voor traditionele compilers is dit machinecode of assembler; voor andere compilers kan dit ook een andere high-level taal zijn. In dat laatste geval spreekt men van een \emph{transpiler}, wat in \nameref{sec:transpilers} verder wordt toegelicht.
+De laatste fase zet de (al dan niet geoptimaliseerde) tussentijdse representatie om naar de doeltaal \autocite{Seidl2012}. Voor traditionele \emph{compilers} is dit machinecode of \emph{Assembly}; voor andere \emph{compilers} kan dit ook een andere \emph{high-level} taal zijn. In dat laatste geval spreekt men van een \emph{transpiler}, wat in \nameref{sec:transpilers} verder wordt toegelicht.
 
 \subsection{Abstract Syntax Tree (\emph{AST})}%
 \label{subsec:ast}
 
-Een \emph{Abstract Syntax Tree} (afgekort \emph{AST}) is een boomstructuur die de logische, abstracte structuur van de broncode weergeeft, zonder overbodige grammaticale details zoals haakjes of scheidingstekens \autocite{Freitas2025}. Elke knoop in de boom stelt een constructie uit de broncode voor (zoals een expressie of declaratie), terwijl de bladeren de concrete waarden bevatten. Compilers gebruiken de \emph{AST} als centrale tussentijdse representatie: de invoertaal wordt geparsed naar een \emph{AST}, getransformeerd, en vervolgens gegenereerd naar de doeltaal.
+Een \emph{Abstract Syntax Tree} (afgekort \emph{AST}) is een boomstructuur die de logische, abstracte structuur van de broncode weergeeft, zonder overbodige grammaticale details zoals haakjes of scheidingstekens \autocite{Freitas2025}. Elke knoop in de boom stelt een constructie uit de broncode voor (zoals een expressie of declaratie), terwijl de bladeren de concrete waarden bevatten. \emph{Compilers} gebruiken de \emph{AST} als centrale tussentijdse representatie: de invoertaal wordt geparsed naar een \emph{AST}, getransformeerd, en vervolgens gegenereerd naar de doeltaal.
 
-\subsection{Parse Tree}%
+\subsection{\emph{Parse Tree}}%
 \label{subsec:parsetree}
 
-Een \emph{parse tree} (ook wel \emph{concrete syntaxboom}) is het directe resultaat van het parsen van broncode en bevat \emph{alle} grammaticale informatie, inclusief interpunctie en andere syntactische details die voor de betekenis niet relevant zijn \autocite{Freitas2025}. Een \emph{AST} is in de praktijk een vereenvoudigde versie van de parse tree waarbij de overbodige knopen zijn weggelaten. De \emph{AST} is voor transpilers de voorkeur, omdat transformaties erop eenvoudiger en minder foutgevoelig zijn.
+Een \emph{parse tree} (ook wel \emph{concrete syntaxboom}) is het directe resultaat van het \emph{parsen} van broncode en bevat \emph{alle} grammaticale informatie, inclusief interpunctie en andere syntactische details die voor de betekenis niet relevant zijn \autocite{Freitas2025}. Een \emph{AST} is in de praktijk een vereenvoudigde versie van de \emph{parse tree} waarbij de overbodige knopen zijn weggelaten. De \emph{AST} is voor \emph{transpilers} de voorkeur, omdat transformaties erop eenvoudiger en minder foutgevoelig zijn.
 
-\section{Transpilers}%
+\section{\emph{Transpilers}}%
 \label{sec:transpilers}
-``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn compilers die broncode geschreven in één high-level taal omzetten naar code in een andere high-level taal \autocite{Freitas2025}. Bekende toepassingen zijn de omzetting van moderne \emph{JavaScript} (ES2022+) naar oudere versies voor browsercompatibiliteit (via tools zoals \emph{Babel}\footnote{\url{https://babeljs.io/}}) \autocite{Nicolini2024}, de compilatie van TypeScript naar \emph{JavaScript}, en de omzetting van C/C++ naar WebAssembly (via \emph{Emscripten}\footnote{\url{https://emscripten.org/}}). Voor het automatisch genereren van lexers en parsers bestaan er gespecialiseerde tools zoals \emph{ANTLR}\footnote{\url{https://www.antlr.org/}} of ingebouwde Unix-tools zoals \emph{Lex} en \emph{Yacc}.
+``\emph{Source-to-source compilers}'', algemeen gekend als ``\emph{transpilers}'', zijn \emph{compilers} die broncode geschreven in één \emph{high-level} taal omzetten naar code in een andere \emph{high-level} taal \autocite{Freitas2025}. Bekende toepassingen zijn de omzetting van moderne \emph{JavaScript} (ES2022+) naar oudere versies voor browsercompatibiliteit (via tools zoals \emph{Babel}\footnote{\url{https://babeljs.io/}}) \autocite{Nicolini2024}, de compilatie van TypeScript naar \emph{JavaScript}, en de omzetting van C/C++ naar WebAssembly (via \emph{Emscripten}\footnote{\url{https://emscripten.org/}}). Voor het automatisch genereren van lexers en parsers bestaan er gespecialiseerde tools zoals \emph{ANTLR}\footnote{\url{https://www.antlr.org/}} of ingebouwde \emph{Unix}-tools zoals \emph{Lex} en \emph{Yacc}.
 
-\section{Converters}%
+\section{\emph{Converters}}%
 \label{sec:converters}
 
-Waar een transpiler een formele pipeline doorloopt (lexicale analyse, parsing, \emph{AST}-opbouw en codegeneratie), volstaat een \emph{converter} met een patroongebaseerde transformatie van het ene bestandsformaat naar het andere, zonder een volledige semantische analyse van de invoer \autocite{Plaisted2013}. Het doel is functionele equivalentie: de uitvoer moet de informatie uit de invoer correct weergeven in het doelformaat, maar het pad ernaartoe hoeft niet via een formele grammatica te lopen.
+Waar een \emph{transpiler} een formele pipeline doorloopt (lexicale analyse, parsing, \emph{AST}-opbouw en codegeneratie), volstaat een \emph{converter} met een patroongebaseerde transformatie van het ene bestandsformaat naar het andere, zonder een volledige semantische analyse van de invoer \autocite{Plaisted2013}. Het doel is functionele equivalentie: de uitvoer moet de informatie uit de invoer correct weergeven in het doelformaat, maar het pad ernaartoe hoeft niet via een formele grammatica te lopen.
 
-Een converter kan bijvoorbeeld op basis van reguliere expressies of patroonherkenning relevante elementen uit een tekstbestand extraheren en deze omzetten naar een andere structuur. Dit is een pragmatische aanpak die goed werkt wanneer de invoertaal een beperkte, voorspelbare syntax heeft en er geen volledige semantische analyse vereist is.
+Een \emph{converter} kan bijvoorbeeld op basis van reguliere expressies of patroonherkenning relevante elementen uit een tekstbestand extraheren en deze omzetten naar een andere structuur. Dit is een pragmatische aanpak die goed werkt wanneer de invoertaal een beperkte, voorspelbare syntax heeft en er geen volledige semantische analyse vereist is.

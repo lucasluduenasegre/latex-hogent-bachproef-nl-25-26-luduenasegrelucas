@@ -65,7 +65,7 @@ Verdere deelvragen met betrekking tot het \emph{oplossingsdomein}
   \item Is het mogelijk om deze oplossing te ontwikkelen aan de hand van ``reverse engineering'' van de bovenstaande tools?
 \end{itemize}
 
-De \emph{doelstelling} van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een converter (of omzetter) van \emph{PlantUML}-diagrammen naar \emph{Ansible}-code. \emph{PlantUML} en \emph{Ansible} zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden.
+De \emph{doelstelling} van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een \emph{converter} (of omzetter) van \emph{PlantUML}-diagrammen naar \emph{Ansible}-code. \emph{PlantUML} en \emph{Ansible} zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden.
 
 De hoop voor deze oplossing is dat deze een meerwaarde kan bieden voor educatieve doeleinden. Neem als voorbeeld een \emph{OLOD} zoals ``\emph{Cybersecurity Advanced}'' binnen de opleiding \emph{Toegepaste Informatica}. De tech-industrie evolueert snel en de labo's die voor dit \emph{OLOD} ontworpen zijn, zullen daardoor ook snel verouderen.
 
@@ -128,18 +128,18 @@ Er zijn drie noemenswaardige \emph{OLODs}, binnen het keuzetraject ``System \& N
 
 Het \emph{OLOD} ``\emph{Cybersecurity Advanced}'' introduceert het concept van ``blue-teaming'' binnen het gebied van cybersecurity aan de hand van een reeks virtuele labo's die individueel worden uitgevoerd. Het gebruik van \emph{configuration management} of \emph{UML}-diagrammen is hierbij niet strikt noodzakelijk, maar het geeft de student wel een aanzienlijk voordeel aangezien deze zo de labo-omgeving reproduceerbaar en visueel overzichtelijk kan maken. Bovendien wordt de (basis-)opstelling alvast voorgesteld met een netwerkdiagram ontworpen via \emph{PlantUML}.
 
-``\emph{DevOps Project: Operations}'' is een \emph{OLOD} dat het tweede luik vormt van een tweeledig groepsproject, het eerste luik zijnde ``Real-life Integrated Software Engineering'' voor de studenten binnen ``Mobile \& enterprise developer''. Het doel van het ``operations-team'' in dit project, is om de backend van een webapplicatie (ontwikkeld door het ``development-team'') te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet automatisch kunnen opgezet worden via zowel \emph{Infrastructure-as-Code}- als ``\emph{configuration management}''-tools (met in het bijzonder \emph{Ansible}). % Mobile \& enterprise --> full stack
+``\emph{DevOps Project: Operations}'' is een \emph{OLOD} dat het tweede luik vormt van een tweeledig groepsproject, het eerste luik zijnde ``Real-life Integrated Software Engineering'' voor de studenten binnen ``Mobile \& enterprise developer''. Het doel van het ``\emph{operations}-team'' in dit project, is om de backend van een webapplicatie (ontwikkeld door het ``\emph{development}-team'') te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet automatisch kunnen opgezet worden via zowel \emph{Infrastructure-as-Code}- als ``\emph{configuration management}''-tools (met in het bijzonder \emph{Ansible}). % Mobile \& enterprise --> full stack
 Om de onderliggende werking van deze omgeving te visualiseren voor al dan niet technische stakeholders, moet er ook een netwerk- en implementatiediagram (of een combinatie ervan) ontworpen worden met \emph{UML}-modeling software.
 
-Tot slot biedt het \emph{OLOD} ``\emph{Infrastructure Automation}'' een reeks virtuele labo's die verschillende tools (Jenkins\footnote{\url{https://www.jenkins.io/}}, \emph{Ansible}, Prometheus\footnote{\url{https://prometheus.io/}} en Kubernetes\footnote{\url{https://kubernetes.io/}}) introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen.
+Tot slot biedt het \emph{OLOD} ``\emph{Infrastructure Automation}'' een reeks virtuele labo's die verschillende tools (\emph{Jenkins}\footnote{\url{https://www.jenkins.io/}}, \emph{Ansible}, \emph{Prometheus}\footnote{\url{https://prometheus.io/}} en \emph{Kubernetes}\footnote{\url{https://kubernetes.io/}}) introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen.
 Nogmaals, hierbij wordt het gebruik van \emph{UML}-diagrammen niet verplicht, maar aangeraden.
 
-\subsection{Compilers, transpilers en hun doel}%
+\subsection{\emph{compilers}, \emph{transpilers} en hun doel}%
 \label{subsec:voorstel_overzicht_transpilers}
 
-Compilers vertalen de broncode van een high-level, menselijk leesbare taal (zoals Java\footnote{\url{https://www.java.com/}} of C\#\footnote{\url{https://dotnet.microsoft.com/en-us/languages/csharp}}) tot equivalente instructies in een andere, vaak low-level taal of machinecode \autocite{Seidl2012}.
+\emph{compilers} vertalen de broncode van een \emph{high-level}, menselijk leesbare taal (zoals Java\footnote{\url{https://www.java.com/}} of C\#\footnote{\url{https://dotnet.microsoft.com/en-us/languages/csharp}}) tot equivalente instructies in een andere, vaak \emph{low-level} taal of machinecode \autocite{Seidl2012}.
 
-``Source-to-source compilers'', algemeen gekend als ``transpilers'', zijn compilers die code geschreven in één high-level (programmeer-)taal als invoer aannemen en deze omzetten naar code in een andere high-level taal als uitvoer. De use cases voor deze software kunnen zich ook uitbreiden tot het optimaliseren of omzetten van code naar een andere/nieuwere versie van eenzelfde taal. \autocite{Ilyushin2016}
+``\emph{Source-to-source compilers}'', algemeen gekend als ``\emph{transpilers}'', zijn \emph{compilers} die code geschreven in één \emph{high-level} (programmeer-)taal als invoer aannemen en deze omzetten naar code in een andere \emph{high-level} taal als uitvoer. De use cases voor deze software kunnen zich ook uitbreiden tot het optimaliseren of omzetten van code naar een andere/nieuwere versie van eenzelfde taal. \autocite{Ilyushin2016}
 
 %---------- Methodologie ------------------------------------------------------
 
@@ -164,7 +164,7 @@ Compilers vertalen de broncode van een high-level, menselijk leesbare taal (zoal
 Deze bachelorproef zal uitgevoerd worden in de volgende fases, van 9 februari (week 1) t.e.m. 22 mei (week 15), 2026:
 
 \begin{itemize}
-  \item{Fase 1A (week 1-7): Studie over (het ontwikkelen van) transpilers}
+  \item{Fase 1A (week 1-7): Studie over (het ontwikkelen van) \emph{transpilers}}
   \item{Fase 1B (week 1-2): Evaluatie van de bestaande tools in de betrokken vakgebieden}
   \item{Fase 2 (week 3-5): Ontwerp van de testomgeving (\emph{UML}-diagrammen)}
   \item{Fase 3A (week 6-7): Implementatie van de testomgeving}
@@ -176,11 +176,11 @@ Deze bachelorproef zal uitgevoerd worden in de volgende fases, van 9 februari (w
 
 Indien een fase begint met hetzelfde nummer maar eindigt met een andere letter, indiceert dit dat ze op hetzelfde moment (kunnen) beginnen, eindigen (met fases 1A, 3C en 5 als uitzondering) en parallel worden uitgevoerd.
 
-\subsection{Fase 1A (week 1-7): Studie over (het ontwikkelen van) transpilers}%
+\subsection{Fase 1A (week 1-7): Studie over (het ontwikkelen van) \emph{transpilers}}%
 \label{subsec:voorstel_studie_ontwikkelen_transpilers}
 
-Bij het begin van het onderzoek zal er parallel met de andere voorbereidende fases (1-3) een studie uitgevoerd worden over hoe transpilers werken en hoe deze ontwikkeld worden.
-De deliverable voor deze fase is een simpele, maar functionele transpiler (zonder \emph{UML}-diagrammen en ``\emph{configuration management}''-code) die de basis zal vormen voor de toekomstige, finale versie.
+Bij het begin van het onderzoek zal er parallel met de andere voorbereidende fases (1-3) een studie uitgevoerd worden over hoe \emph{transpilers} werken en hoe deze ontwikkeld worden.
+De deliverable voor deze fase is een simpele, maar functionele \emph{transpiler} (zonder \emph{UML}-diagrammen en ``\emph{configuration management}''-code) die de basis zal vormen voor de toekomstige, finale versie.
 
 \subsection{Fase 1B (week 1-2): Evaluatie van de bestaande tools in de betrokken vakgebieden}%
 \label{subsec:voorstel_evaluatie_bestaande_tools_betrokken_vakgebieden}
@@ -191,32 +191,32 @@ De te evalueren tools voor \emph{UML}-modeling zijn \emph{PlantUML} en \emph{Mer
 \subsection{Fase 2 (week 3-5): Ontwerp van de testomgeving (\emph{UML}-diagrammen)}%
 \label{subsec:voorstel_hardware_softwarespecs_testomgeving}
 
-In deze fase wordt de (virtuele) testomgeving voor de transpiler ontworpen aan de hand van netwerk- en implementatiediagrammen. In deze diagrammen zullen de hardware- (Opslag, RAM, CPU cores, \ldots) en softwarespecificaties (distributie, packages, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (firewalls, eventuele backup-regels, \ldots). Het initiële ontwerp zal nog niet met \emph{PlantUML}/\emph{MermaidJS} verlopen maar eerder met \emph{GUI}-ondersteunde tools zoals \emph{Visual Paradigm} en \emph{draw.io}.
+In deze fase wordt de (virtuele) testomgeving voor de \emph{transpiler} ontworpen aan de hand van netwerk- en implementatiediagrammen. In deze diagrammen zullen de hardware- (Opslag, RAM, CPU cores, \ldots) en softwarespecificaties (distributie, packages, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (firewalls, eventuele backup-regels, \ldots). Het initiële ontwerp zal nog niet met \emph{PlantUML}/\emph{MermaidJS} verlopen maar eerder met \emph{GUI}-ondersteunde tools zoals \emph{Visual Paradigm} en \emph{draw.io}.
 
 \subsection{Fase 3A (week 6-7): Implementatie van de testomgeving}%
 \label{subsec:voorstel_implementatie_manuele_testomgeving}
 
-Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet met \emph{Infrastructure-as-Code}-tool(s) en geconfigureerd met een ``\emph{configuration management}''-tool (\emph{Ansible}/\emph{Puppet}/\emph{Chef}). Er wordt intussen ook gedocumenteerd hoe het ``\emph{configuration management}''-gedeelte wordt opgezet, want dit vormt de target output voor de transpiler. De aanpassingen in verband met \emph{configuration management} worden vervolgens ongedaan gemaakt alvorens de resulterende ``\emph{configuration management}''-code van de transpiler wordt uitgevoerd op de testomgeving.
+Tijdens deze fase wordt de infrastructuur (ontworpen in fase 2) opgezet met \emph{Infrastructure-as-Code}-tool(s) en geconfigureerd met een ``\emph{configuration management}''-tool (\emph{Ansible}/\emph{Puppet}/\emph{Chef}). Er wordt intussen ook gedocumenteerd hoe het ``\emph{configuration management}''-gedeelte wordt opgezet, want dit vormt de target output voor de \emph{transpiler}. De aanpassingen in verband met \emph{configuration management} worden vervolgens ongedaan gemaakt alvorens de resulterende ``\emph{configuration management}''-code van de \emph{transpiler} wordt uitgevoerd op de testomgeving.
 
 \subsection{Fase 3B (week 6-7): \emph{UML}-diagrammen herschrijven naar \emph{PlantUML}/\emph{MermaidJS}}%
 \label{subsec:voorstel_uml_diagrammen_herscrijven}
 
-Nadat de netwerk- en implementatiediagrammen zijn ontworpen, zullen deze herschreven worden in \emph{PlantUML}/\emph{MermaidJS}. Deze diagrammen dienen een tweevoudig doel; ze kunnen binnen de originele context van hun taal als visuele \emph{UML}-diagrammen worden gegenereerd, en ze vormen de bron-bestanden voor de transpiler, die deze zal omzetten tot ``\emph{configuration management}''-code.
+Nadat de netwerk- en implementatiediagrammen zijn ontworpen, zullen deze herschreven worden in \emph{PlantUML}/\emph{MermaidJS}. Deze diagrammen dienen een tweevoudig doel; ze kunnen binnen de originele context van hun taal als visuele \emph{UML}-diagrammen worden gegenereerd, en ze vormen de bron-bestanden voor de \emph{transpiler}, die deze zal omzetten tot ``\emph{configuration management}''-code.
 
 \subsection{Fase 3C (week 6-10): Opstellen van testcases}%
 \label{subsec:voorstel_opstellen_testcases}
 
-Hier worden de testcases opgesteld waaraan de transpiler moet voldoen. De testen zich zullen hoofdzakelijk buigen over de kwaliteit van de uitvoer (aantal playbooks, idempotentie, grootte van codebase, \ldots) en de werking van de finale infrastructuur. Deze fase zal in de praktijk waarschijnlijk gedeeltelijk parallel verlopen met fase 4, aangezien er tijdens het ontwikkelen van de oplossing mogelijk nieuwe testcases kunnen ontstaan.
+Hier worden de testcases opgesteld waaraan de \emph{transpiler} moet voldoen. De testen zich zullen hoofdzakelijk buigen over de kwaliteit van de uitvoer (aantal \emph{playbooks}, idempotentie, grootte van codebase, \ldots) en de werking van de finale infrastructuur. Deze fase zal in de praktijk waarschijnlijk gedeeltelijk parallel verlopen met fase 4, aangezien er tijdens het ontwikkelen van de oplossing mogelijk nieuwe testcases kunnen ontstaan.
 
 \subsection{Fase 4 (week 8-15): Ontwikkeling van de transpiler}%
 \label{subsec:voorstel_ontwikkeling_poc_transpiler}
 
-Tijdens deze fase wordt de transpiler ontwikkeld. Deze zal als invoer de netwerk- en implementatiediagrammen (ontworpen met \emph{PlantUML}/\emph{MermaidJS}) aannemen en ze omzetten tot ``\emph{configuration management}''-code (in \emph{Ansible}/\emph{Puppet}/\emph{Chef}). Deze fase loopt tot 22 mei, 2026, aangezien dit voor de auteur de laatste dag van de stage is.
+Tijdens deze fase wordt de \emph{transpiler} ontwikkeld. Deze zal als invoer de netwerk- en implementatiediagrammen (ontworpen met \emph{PlantUML}/\emph{MermaidJS}) aannemen en ze omzetten tot ``\emph{configuration management}''-code (in \emph{Ansible}/\emph{Puppet}/\emph{Chef}). Deze fase loopt tot 22 mei, 2026, aangezien dit voor de auteur de laatste dag van de stage is.
 
 \subsection{Fase 5 (week 11-15): Testen van de bekomen oplossing}%
 \label{subsec:voorstel_evaluatie_bekomen_oplossing}
 
-Ten slotte worden de opgestelde testen uit fase 3C uitgevoerd op de (gedeeltelijk) uitgewerkte transpiler. Op basis van de resultaten zal er een rapport worden opgesteld die aangeeft in welke mate deze oplossing een antwoord biedt op de hoofdonderzoeksvraag. Nogmaals, dit zal allicht parallel verlopen met fase 4.
+Ten slotte worden de opgestelde testen uit fase 3C uitgevoerd op de (gedeeltelijk) uitgewerkte \emph{transpiler}. Op basis van de resultaten zal er een rapport worden opgesteld die aangeeft in welke mate deze oplossing een antwoord biedt op de hoofdonderzoeksvraag. Nogmaals, dit zal allicht parallel verlopen met fase 4.
 
 %---------- Verwachte resultaten ----------------------------------------------
 
@@ -244,5 +244,5 @@ Deze infrastructuur zal allicht redelijk simpel gehouden worden met slechts 2 to
 \label{subsec:voorstel_verwachte_functionaliteit_poc}
 
 De verwachting van deze oplossing is om met de resulterende ``\emph{configuration management}''-code een minimaal werkende infrastructuur te configureren die de beschrijving van de gegeven netwerk- en implementatiediagrammen zo nauw mogelijk benadert.
-De transpiler zal slechts voor een (relevant) deel van de syntax tussen \emph{PlantUML} en \emph{Ansible} een vertaallaag kunnen vormen, aangezien de omvang voor beide tools veel groter is dan die voor dit onderzoek.
-Als invoer zullen er enkel netwerk- en implementatiediagrammen gebruikt kunnen worden en als uitvoer zal er een deelverzameling van ondersteunde ``collections'' en ``roles'' voor de \emph{Ansible}-playbooks gespecifiëerd worden. Nogmaals, dit wordt een proof-of-concept, dus het onderzoek moet ook aantonen waar het potentieel tot uitbreidingen ligt, alsook wat de limitaties zijn qua informatie uit een \emph{UML}-diagram die omgezet kan worden naar ``\emph{configuration management}''-code en vice versa.
+De \emph{transpiler} zal slechts voor een (relevant) deel van de syntax tussen \emph{PlantUML} en \emph{Ansible} een vertaallaag kunnen vormen, aangezien de omvang voor beide tools veel groter is dan die voor dit onderzoek.
+Als invoer zullen er enkel netwerk- en implementatiediagrammen gebruikt kunnen worden en als uitvoer zal er een deelverzameling van ondersteunde ``collections'' en ``roles'' voor de \emph{Ansible}-\emph{playbooks} gespecifiëerd worden. Nogmaals, dit wordt een proof-of-concept, dus het onderzoek moet ook aantonen waar het potentieel tot uitbreidingen ligt, alsook wat de limitaties zijn qua informatie uit een \emph{UML}-diagram die omgezet kan worden naar ``\emph{configuration management}''-code en vice versa.
