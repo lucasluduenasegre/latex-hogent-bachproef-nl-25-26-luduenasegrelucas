@@ -17,15 +17,13 @@
 %   \item \ldots
 % \end{itemize}
 
-<TODO: Inleiding nalezen, checken voor ongegronde beweringen, ...>
-
 \section{Context, achtergrond}%
 \label{sec:inl_context}
 
-Binnen de opleiding \emph{Toegepaste Informatica} op \emph{HOGENT} hebben de meeste OLODs (opleidingsonderdelen) gelinkt aan het keuzeprofiel ``System \& Network Administrator'' de opzet om de creatie en het beheer van (virtuele) serveromgevingen aan te leren. Bij het opzetten van dit soort infrastructuur, is helderheid over elke stap van het proces en communicatie met elke -- al dan niet technisch ingestelde -- stakeholder cruciaal.
-Om deze duidelijkheid te waarborgen, wordt er binnen de opleiding (meerbepaald tijdens de analyse-OLODs) ook aangeleerd om te werken met UML-modeling software zoals Visual Paradigm\footnote{\url{https://www.visual-paradigm.com/}} en draw.io\footnote{\url{https://www.drawio.com/}}. Deze software wordt gebruikt om diagrammen te ontwerpen voor softwareontwikkeling, zoals Activity Diagrams, System Sequence Diagrams, domeinmodellen en BPMN-diagrammen.
+Binnen de opleiding \emph{Toegepaste Informatica} op \emph{HOGENT} hebben de meeste \emph{OLODs} (opleidingsonderdelen) gelinkt aan het keuzeprofiel ``\emph{IT infrastructure engineer}'' de opzet om het beheer van (virtuele) serveromgevingen aan te leren. Bij het opzetten van dit soort infrastructuur is helderheid over elke stap van het proces en communicatie met elke (al dan niet technisch ingestelde) stakeholder cruciaal.
+Om deze duidelijkheid te waarborgen, wordt er binnen de opleiding (meerbepaald tijdens de analyse-\emph{OLODs}) ook aangeleerd om te werken met \emph{UML}-modeling software zoals \emph{Visual Paradigm}\footnote{\url{https://www.visual-paradigm.com/}} en \emph{draw.io}\footnote{\url{https://www.drawio.com/}}. Deze software wordt gebruikt om diagrammen te ontwerpen zoals Activity Diagrams, System Sequence Diagrams, domeinmodellen en BPMN-diagrammen. Deze diagrammen zijn hoofdzakelijk gericht op softwareontwikkeling.
 
-Men kan met deze software ook netwerk- en implementatiediagrammen ontwerpen, die de specificaties, software-elementen (databanken, webservers, firewalls, \ldots) en verbanden tussen verschillende servers in een bepaalde infrastructuur verduidelijken. Deze servers worden op basis van deze diagrammen daarna respectievelijk opgezet via \emph{Infrastructure-as-Code}-tools (zoals Terraform\footnote{\url{https://developer.hashicorp.com/terraform}}, OpenTofu\footnote{\url{https://opentofu.org/}}, Vagrant\footnote{\url{https://developer.hashicorp.com/vagrant}}, \ldots) en geconfigureerd met ``\emph{configuration management}''-tools (Ansible\footnote{\url{https://docs.ansible.com/}}, Puppet\footnote{\url{https://www.puppet.com/}}, Chef\footnote{\url{https://www.chef.io/}}, \ldots). De \emph{HOGENT}-OLODs ``DevOps Project: Operations'', ``Cybersecurity Advanced'' en meerbepaald ``Infrastructure Automation'' introduceren ook het gebruik van Ansible, één van de leidende ``\emph{configuration management}''-tools.
+Met deze software kan men ook netwerk- en implementatiediagrammen ontwerpen, die de specificaties, software-elementen (databanken, webservers, firewalls, \ldots) en verbanden tussen verschillende servers in een bepaalde infrastructuur verduidelijken. Deze servers worden op basis van deze diagrammen daarna respectievelijk opgezet via \emph{Infrastructure-as-Code}-tools (zoals \emph{Terraform}\footnote{\url{https://developer.hashicorp.com/terraform}}, \emph{OpenTofu}\footnote{\url{https://opentofu.org/}}, \emph{Vagrant}\footnote{\url{https://developer.hashicorp.com/vagrant}}, \ldots) en geconfigureerd met ``\emph{configuration management}''-tools (\emph{Ansible}\footnote{\url{https://docs.ansible.com/}}, \emph{Puppet}\footnote{\url{https://www.puppet.com/}}, \emph{Chef}\footnote{\url{https://www.chef.io/}}, \ldots). De \emph{HOGENT}-\emph{OLODs} ``\emph{DevOps Project: Operations}'', ``\emph{Cybersecurity Advanced}'' en meerbepaald ``\emph{Infrastructure Automation}'' introduceren ook het gebruik van \emph{Ansible}, één van de leidende ``\emph{configuration management}''-tools.
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:inl_probleemstelling}
@@ -35,7 +33,7 @@ Men kan met deze software ook netwerk- en implementatiediagrammen ontwerpen, die
 Het huidige proces waarbij (complexe) netwerk- en implementatiediagrammen worden geïnterpreteerd en manueel worden omgezet tot een ``\emph{configuration management}''-ondersteunde serveromgeving kan, volgens \textcite{Nicacio2020}, tijdrovend en vatbaar voor ambiguïteit en foute interpretaties zijn.
 
 Bij implementatiediagrammen kan er onder meer onduidelijkheid onstaan bij (de versies van) software-packages, hun afhankelijkheden/dependencies, de firewall-regels voor elke server en hoe dit het bereik buiten het lokale netwerk beïnvloedt.
-Voor netwerkdiagrammen kan dit bijvoorbeeld gaan over hardwarespecificaties van de servers, (de versies van) hun besturingssystemen en de declaratie van de DNS server(s).
+Voor netwerkdiagrammen kan dit bijvoorbeeld gaan over hardwarespecificaties van de servers, (de versies van) hun besturingssystemen en de declaratie van de \emph{DNS} server(s).
 
 \section{\IfLanguageName{dutch}{Hoofdonderzoeksvraag}{Research question}}%
 \label{sec:inl_hoofdonderzoeksvraag}
@@ -44,7 +42,7 @@ Voor netwerkdiagrammen kan dit bijvoorbeeld gaan over hardwarespecificaties van 
 
 De hoofdonderzoeksvraag voor deze bachelorproef luidt als volgt:
 
-Hoe kan men een gegeven netwerk- en implementatiediagram (in tekstuele vorm via bijvoorbeeld PlantUML\footnote{\url{https://plantuml.com/}}) van een infrastructuur met minimale menselijke interventie omzetten tot een overeenkomende, gebruiksklare ``\emph{configuration management}''-ondersteunde (bijvoorbeeld met Ansible) omgeving?
+Hoe kan men een gegeven netwerk- en implementatiediagram (in tekstuele vorm via bijvoorbeeld \emph{PlantUML}\footnote{\url{https://plantuml.com/}}) van een infrastructuur met minimale menselijke interventie omzetten tot een overeenkomende, gebruiksklare ``\emph{configuration management}''-ondersteunde (bijvoorbeeld met \emph{Ansible}) omgeving?
 
 Voor deze omgeving wordt ervan uit gegaan dat de eenheden (bare-metal servers, virtuele machines, containers, \ldots) alvorens uitgerold zijn via een \emph{Infrastructure-as-Code}-tool en dat ze enkel nog achteraf geconfigureerd moeten worden via een ``\emph{configuration management}''-tool.
 
@@ -54,18 +52,18 @@ Voor deze omgeving wordt ervan uit gegaan dat de eenheden (bare-metal servers, v
 \label{sec:inl_deelvragen_probleemdomein}
 
 \begin{itemize}
-  \item Wat zijn de doeleinden (business- of technisch-gericht) van UML?
+  \item Wat zijn de doeleinden (business- of technisch-gericht) van \emph{UML}?
   \item Welke infrastructuur-gerelateerde informatie kan een netwerk- en implementatiediagram \emph{niet} weergeven (dat een \emph{Infrastructure-as-Code}- en/of ``\emph{configuration management}''-tool wel kan)?
-  \item Welke stappen zijn er tussen het ontwerp van UML-diagrammen en de eerste opstelling van een ``\emph{configuration management}''-ondersteunde omgeving?
+  \item Welke stappen zijn er tussen het ontwerp van \emph{UML}-diagrammen en de eerste opstelling van een ``\emph{configuration management}''-ondersteunde omgeving?
 \end{itemize}
 
 \section{Deelvragen over het oplossingsdomein}%
 \label{sec:inl_deelvragen_oplossingsdomein}
 
 \begin{itemize}
-  \item Naast PlantUML en MermaidJS, met welke andere talen kan men UML-diagrammen ontwerpen?
-  \item Buiten Ansible, Puppet en Chef, wat zijn andere ``\emph{configuration management}''-tools die voor dit soort doeleinden geschikt zijn?
-  \item Aangezien er al tools bestaan om UML-diagrammen te genereren op basis van ``\emph{configuration management}''-ondersteunde omgevingen, zoals één van \textcite{teramako2023}, welke meerwaarde zou deze oplossing (die in de omgekeerde richting werkt) kunnen bieden?
+  \item Naast \emph{PlantUML} en \emph{MermaidJS}, met welke andere talen kan men \emph{UML}-diagrammen ontwerpen?
+  \item Buiten \emph{Ansible}, \emph{Puppet} en \emph{Chef}, wat zijn andere ``\emph{configuration management}''-tools die voor dit soort doeleinden geschikt zijn?
+  \item Aangezien er al tools bestaan om \emph{UML}-diagrammen te genereren op basis van ``\emph{configuration management}''-ondersteunde omgevingen, zoals één van \textcite{teramako2023}, welke meerwaarde zou deze oplossing (die in de omgekeerde richting werkt) kunnen bieden?
   \item Is het mogelijk om deze oplossing te ontwikkelen aan de hand van ``reverse engineering'' van de bovenstaande tools?
 \end{itemize}
 
@@ -74,11 +72,11 @@ Voor deze omgeving wordt ervan uit gegaan dat de eenheden (bare-metal servers, v
 
 % Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
 
-De doelstelling van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een converter (of omzetter) van PlantUML-diagrammen naar Ansible-code. PlantUML en Ansible zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden.
+De doelstelling van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een converter (of omzetter) van \emph{PlantUML}-diagrammen naar \emph{Ansible}-code. \emph{PlantUML} en \emph{Ansible} zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden.
 
-Deze oplossing zal een meerwaarde bieden voor educatieve doeleinden binnen de opleiding \emph{Toegepaste Informatica}. Neem als voorbeeld een OLOD zoals ``Cybersecurity Advanced'' -- een vak waarin studenten leren om de beveiliging van netwerken te versterken aan de hand van virtuele labo's. De tech-industrie evolueert snel en de labo's die voor dit OLOD ontworpen zijn, zullen daardoor ook snel verouderen.
+Deze oplossing zal een meerwaarde bieden voor educatieve doeleinden binnen de opleiding \emph{Toegepaste Informatica}. Neem als voorbeeld een \emph{OLOD} zoals ``\emph{Cybersecurity Advanced}'' -- een vak waarin studenten leren om de beveiliging van netwerken te versterken aan de hand van virtuele labo's. De tech-industrie evolueert snel en de labo's die voor dit \emph{OLOD} ontworpen zijn, zullen daardoor ook snel verouderen.
 
-Aangezien met deze oplossing de drempel tussen de ontwerp- en implementatiefase verkleint, zouden docenten sneller nieuwe (virtuele) labo-omgevingen kunnen ontwerpen, met (in theorie) onmiddelijk beschikbare ``\emph{configuration management}''-code om deze meteen te configureren. Voor studenten kan dit ook een kans bieden om potentiële experimenten tijdens hun studies sneller effectief vorm te geven.
+Aangezien met deze oplossing de drempel tussen de ontwerp- en implementatiefase verkleint, zouden docenten sneller nieuwe (virtuele) labo-omgevingen kunnen ontwerpen, met (in theorie) onmiddelijk beschikbare ``\emph{configuration management}''-code om deze meteen te configureren. Voor studenten kan dit ook een kans bieden om potentiële infrastructuur-gerelateerde experimenten tijdens hun studies sneller effectief vorm te geven.
 
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:inl_opzet-bachelorproef}
@@ -95,10 +93,10 @@ In Hoofdstuk~\ref{ch:methodologie} (\nameref{ch:methodologie}) worden de verschi
 
 % Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
 
-In Hoofdstuk~\ref{ch:manuele_testomgeving} (\nameref{ch:manuele_testomgeving}) wordt het ontwerp en de implementatie van de testomgeving voor de proof-of-concept beschreven. Dit bevat een evaluatie van bestaande tools in de betrokken vakgebieden (UML en \emph{configuration management}), alsook het ontwerp van de verwachte invoer en uitvoer voor de converter.
+In Hoofdstuk~\ref{ch:manuele_testomgeving} (\nameref{ch:manuele_testomgeving}) wordt het ontwerp en de implementatie van de manuele testomgeving voor de proof-of-concept beschreven. Dit bevat een evaluatie van bestaande tools in de betrokken vakgebieden (\emph{UML} en \emph{configuration management}), alsook het ontwerp van de verwachte invoer en uitvoer voor de converter.
 
-In Hoofdstuk~\ref{ch:poc} (\nameref{ch:poc}) wordt toegelicht hoe de proof-of-concept, in de vorm van een converter voor PlantUML naar Ansible, is ontwikkeld.
+In Hoofdstuk~\ref{ch:poc} (\nameref{ch:poc}) wordt toegelicht hoe de proof-of-concept, in de vorm van een converter voor \emph{PlantUML} naar \emph{Ansible} (\emph{PlantUML2Ansible}), is ontwikkeld.
 
-In Hoofdstuk~\ref{ch:testcases} (\nameref{ch:testcases}) wordt de definitie van de verschillende testcases, waar de proof-of-concept op wordt getoetst, beschreven. De resultaten van deze testen worden ook in dit hoofdstuk toegelicht.
+In Hoofdstuk~\ref{ch:testcases} (\nameref{ch:testcases}) wordt de definitie van de verschillende testcases, waar de converter op wordt getoetst, beschreven. De resultaten van deze testen worden ook in dit hoofdstuk toegelicht.
 
-In Hoofdstuk~\ref{ch:conclusie_discussie} (\nameref{ch:conclusie_discussie}), ten slotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
+In Hoofdstuk~\ref{ch:conclusie_discussie} (\nameref{ch:conclusie_discussie}), ten slotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarnaast wordt in de discussie ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
