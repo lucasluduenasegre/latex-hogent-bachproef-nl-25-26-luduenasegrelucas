@@ -19,17 +19,17 @@
 \section{Conclusie}%
 \label{sec:conclusie}
 
-Om op de centrale onderzoeksvraag van deze bachelorproef te antwoorden, is een proof-of-concept \emph{converter} ontwikkeld genaamd \emph{PlantUML2Ansible}, die netwerk- en implementatiediagrammen, geschreven in \emph{PlantUML}-code, als invoer aanneemt en een volledig \emph{IaC}- en ``\emph{configuration management}''-ondersteunde omgeving (aangeboden door \emph{Vagrant} en \emph{Ansible}, respectievelijk) als uitvoer produceert.
+Om op de centrale onderzoeksvraag van deze bachelorproef te antwoorden, is een \emph{Proof of Concept} \emph{converter} ontwikkeld genaamd \emph{PlantUML2Ansible}, die netwerk- en implementatiediagrammen, geschreven in \emph{PlantUML}-code, als invoer aanneemt en een volledig \emph{IaC}- en ``\emph{configuration management}''-ondersteunde omgeving (aangeboden door \emph{Vagrant} en \emph{Ansible}, respectievelijk) als uitvoer produceert.
 
 Naast dit primaire gebruiksscenario (\nameref{subsec:fullmode}) is er ook een alternatief scenario ontwikkeld om enkel een \emph{Vagrant}-omgeving te produceren (\nameref{subsec:iaconlymode}).
 
 Bestaande labo-omgevingen uit bepaalde \emph{OLODS} binnen de opleiding \emph{Toegepaste Informatica} (\emph{Cybersecurity Advanced} en \emph{Infrastructure Automation}) zijn herwerkt als bruikbare invoer voor de \emph{converter} (zijnde netwerk- en/of implementatiediagrammen) en zijn, binnen de beperkingen van het script, met succes omgezet naar functionele omgevingen.
-De initiële labo-omgeving van \emph{Cybersecurity Advanced} is via de ``\emph{IaC}-only mode'' volledig gereproduceerd kunnen worden als een \emph{Vagrant}-ondersteunde omgeving.
-De labo's 2 en 3 uit \emph{Infrastructure Automation} zijn ook via de ``full mode'' gerecreëerd als \emph{Vagrant}- en \emph{Ansible}-ondersteunde omgeving, met uitzondering van de router \texttt{r001} (zie \autoref{subsec:testcase2_beoordeling}).
+De initiële labo-omgeving van \emph{Cybersecurity Advanced} is via de ``\emph{IaC-only-mode}'' volledig gereproduceerd kunnen worden als een \emph{Vagrant}-ondersteunde omgeving.
+De labo's 2 en 3 uit \emph{Infrastructure Automation} zijn ook via de ``\emph{full mode}'' gerecreëerd als \emph{Vagrant}- en \emph{Ansible}-ondersteunde omgeving, met uitzondering van de router \texttt{r001} (zie \autoref{subsec:testcase2_beoordeling}).
 
-Deze resultaten tonen dus aan dat het technisch haalbaar is om, op basis van \emph{PlantUML}-bronbestanden, volledige en functionele omgevingen te genereren -- zonder manuele tussenkomst van de gebruiker.
+Deze resultaten tonen dus aan dat het technisch haalbaar is om, op basis van \emph{PlantUML}-bronbestanden, volledige en functionele omgevingen te produceren -- zonder manuele tussenkomst van de gebruiker.
 
-Tegelijkertijd kent de proof-of-concept een aantal beperkingen die de scope van het huidige onderzoek afbakenen. De ``full mode'' ondersteunt slechts één netwerk, het ondersteunde gastbesturingssysteem wordt beperkt tot \emph{AlmaLinux} 9, en de invoerdiagrammen moeten voldoen aan een welomschreven en beperkt subset van de \emph{PlantUML}-syntax.
+Tegelijkertijd kent de \emph{Proof of Concept} een aantal beperkingen die de scope van het huidige onderzoek afbakenen. De ``\emph{full mode}'' ondersteunt slechts één netwerk, het ondersteunde gastbesturingssysteem wordt beperkt tot \emph{AlmaLinux} 9, en de invoerdiagrammen moeten voldoen aan een welomschreven en beperkt subset van de \emph{PlantUML}-syntax.
 
 De meerwaarde van deze oplossing situeert zich voornamelijk in de educatieve context waarvoor ze ontworpen is. Docenten binnen de opleiding \emph{Toegepaste Informatica} op \emph{HOGENT} kunnen met deze tool sneller nieuwe labo-omgevingen ontwerpen en deze tegelijk voorzien van functionele code om deze effectief op te zetten en te configureren. De kloof tussen de ontwerpfase (\emph{UML}-diagram) en de implementatiefase (uitgerolde omgeving) wordt zo met andere woorden aanzienlijk verkleind.
 
@@ -38,9 +38,9 @@ Voor studenten kan de tool de link tussen deze twee fases juist alsmaar meer ver
 \section{Discussie}%
 \label{sec:discussie}
 
-De beperkingen van deze proof-of-concept leggen verschillende fundamenten waarop toekomstige uitbreidingen verder gebouwd kunnen worden.
+De beperkingen van deze \emph{Proof of Concept} leggen verschillende fundamenten waarop toekomstige uitbreidingen verder gebouwd kunnen worden.
 
-Het ondersteunen voor meerdere netwerken in beide modi is technisch mogelijk, mits de configuratie van routering (en de gerelateerde firewallregels) wordt verwerkt in de logica van het script. Daarnaast moet er, onder andere, een uitbreiding van de \emph{DNS}-zone-generatielogica uitgevoerd worden, alsook een herziene aanpak voor de toewijzing (van het IP-adres) van de \emph{Ansible} \texttt{control}-node.
+Het ondersteunen voor meerdere netwerken in beide modi is technisch mogelijk, mits de configuratie van routering (en de gerelateerde \emph{firewall}-regels) wordt verwerkt in de logica van het script. Daarnaast moet er, onder andere, een uitbreiding van de \emph{DNS}-zone-generatielogica uitgevoerd worden, alsook een herziene aanpak voor de toewijzing (van het IP-adres) van de \emph{Ansible} \texttt{control}-node.
 
 De beperking van \emph{AlmaLinux} 9 als gastbesturingssysteem kan geremedieerd worden door de configuratie van de rollen niet meer afhankelijk te maken van de bestaande rollen die gebruikt worden binnen de opleiding \emph{Toegepaste Informatica}. Door over te stappen naar meer distributie-agnostische modules in deze  nieuwe rollen, zou de \emph{converter} ook andere distributies kunnen ondersteunen, waaronder de nieuwere \emph{AlmaLinux} 10 en misschien zelfs Ubuntu Server of Alpine Linux.
 

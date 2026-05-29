@@ -1,14 +1,10 @@
-# ansible/host_vars/monitoring.yml
 ---
-# region bertvv.rhbase
 rhbase_firewall_allow_ports:
   - 3000/tcp # Grafana
   - 53/tcp # DNS
   - 53/udp # DNS
   - 9100/tcp # Node Exporter
-# endregion
 
-# region prometheus.prometheus.prometheus
 prometheus_scrape_configs:
   - job_name: "node_exporter"
     static_configs:
@@ -28,9 +24,7 @@ prometheus_scrape_configs:
     static_configs:
       - targets:
           - "web.test.lan:9117"
-# endregion
 
-# region grafana.grafana.grafana
 grafana_security:
   admin_user: admin
   admin_password: root
@@ -43,7 +37,6 @@ grafana_datasources:
     basicAuth: false
 
 grafana_alerting: {}
-# endregion
 
 dns_servers:
   - 172.26.0.20

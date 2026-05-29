@@ -35,12 +35,12 @@
 Binnen de opleiding \emph{Toegepaste Informatica} op \emph{HOGENT} hebben de meeste \emph{OLODs} (opleidingsonderdelen) gelinkt aan het keuzetraject ``System \& Network Administrator'' de opzet om de creatie en het beheer van (virtuele) serveromgevingen aan te leren. Bij het opzetten van dit soort infrastructuur, is helderheid over elke stap van het proces en communicatie met elke -- al dan niet technisch ingestelde -- stakeholder cruciaal. % System \& Network Administrator --> IT infrastructure engineer
 Om deze duidelijkheid te waarborgen, wordt er binnen de opleiding (meerbepaald tijdens de analyse-\emph{OLODs}) ook aangeleerd om te werken met \emph{UML}-modeling software zoals \emph{Visual Paradigm}\footnote{\url{https://www.visual-paradigm.com/}} en \emph{draw.io}\footnote{\url{https://www.drawio.com/}}. Deze software wordt gebruikt om diagrammen te ontwerpen voor softwareontwikkeling, zoals Activity Diagrams, System Sequence Diagrams, domeinmodellen en BPMN-diagrammen.
 
-Men kan met deze software ook netwerk- en implementatiediagrammen ontwerpen, die de specificaties, software-elementen (databanken, webservers, firewalls, \ldots) en verbanden tussen verschillende servers in een bepaalde infrastructuur verduidelijken. Deze servers worden op basis van deze diagrammen daarna respectievelijk opgezet via \emph{Infrastructure-as-Code}-tools (zoals \emph{Terraform}\footnote{\url{https://developer.hashicorp.com/terraform}}, \emph{OpenTofu}\footnote{\url{https://opentofu.org/}}, \emph{Vagrant}\footnote{\url{https://developer.hashicorp.com/vagrant}}, \ldots) en geconfigureerd met ``\emph{configuration management}''-tools (\emph{Ansible}\footnote{\url{https://docs.ansible.com/}}, \emph{Puppet}\footnote{\url{https://www.puppet.com/}}, \emph{Chef}\footnote{\url{https://www.chef.io/}}, \ldots). De \emph{HOGENT}-\emph{OLODs} ``\emph{DevOps Project: Operations}'', ``\emph{Cybersecurity Advanced}'' en meerbepaald ``\emph{Infrastructure Automation}'' introduceren ook het gebruik van \emph{Ansible}, één van de leidende ``\emph{configuration management}''-tools.
+Men kan met deze software ook netwerk- en implementatiediagrammen ontwerpen, die de specificaties, software-elementen (databanken, webservers, \emph{firewalls}, \ldots) en verbanden tussen verschillende servers in een bepaalde infrastructuur verduidelijken. Deze servers worden op basis van deze diagrammen daarna respectievelijk opgezet via \emph{Infrastructure-as-Code}-tools (zoals \emph{Terraform}\footnote{\url{https://developer.hashicorp.com/terraform}}, \emph{OpenTofu}\footnote{\url{https://opentofu.org/}}, \emph{Vagrant}\footnote{\url{https://developer.hashicorp.com/vagrant}}, \ldots) en geconfigureerd met ``\emph{configuration management}''-tools (\emph{Ansible}\footnote{\url{https://docs.ansible.com/}}, \emph{Puppet}\footnote{\url{https://www.puppet.com/}}, \emph{Chef}\footnote{\url{https://www.chef.io/}}, \ldots). De \emph{HOGENT}-\emph{OLODs} ``\emph{DevOps Project: Operations}'', ``\emph{Cybersecurity Advanced}'' en meerbepaald ``\emph{Infrastructure Automation}'' introduceren ook het gebruik van \emph{Ansible}, één van de leidende ``\emph{configuration management}''-tools.
 
 De \emph{concrete probleemstelling/casus} voor het onderzoek:
 Het huidige proces waarbij (complexe) netwerk- en implementatiediagrammen worden geïnterpreteerd en manueel worden omgezet tot een ``\emph{configuration management}''-ondersteunde serveromgeving kan, volgens \textcite{Nicacio2020}, tijdrovend en vatbaar voor ambiguïteit en foute interpretaties zijn.
 
-Bij implementatiediagrammen kan er onder meer onduidelijkheid onstaan bij (de versies van) software-packages, hun afhankelijkheden/dependencies, de firewall-regels voor elke server en hoe dit het bereik buiten het lokale netwerk beïnvloedt.
+Bij implementatiediagrammen kan er onder meer onduidelijkheid ontstaan bij (de versies van) software-\emph{packages}, hun afhankelijkheden/dependencies, de \emph{firewall}-regels voor elke server en hoe dit het bereik buiten het lokale netwerk beïnvloedt.
 Voor netwerkdiagrammen kan dit bijvoorbeeld gaan over hardwarespecificaties van de servers, (de versies van) hun besturingssystemen en de declaratie van de \emph{DNS} server(s).
 
 De \emph{hoofdonderzoeksvraag} voor deze bachelorproef:
@@ -62,10 +62,10 @@ Verdere deelvragen met betrekking tot het \emph{oplossingsdomein}
   \item Naast \emph{PlantUML} en \emph{MermaidJS}, met welke andere talen kan men \emph{UML}-diagrammen ontwerpen?
   \item Buiten \emph{Ansible}, \emph{Puppet} en \emph{Chef}, wat zijn andere ``\emph{configuration management}''-tools die voor dit soort doeleinden geschikt zijn?
   \item Aangezien er al tools bestaan om \emph{UML}-diagrammen te genereren op basis van ``\emph{configuration management}''-ondersteunde omgevingen, zoals één van \textcite{teramako2023}, welke meerwaarde zou deze oplossing (die in de omgekeerde richting werkt) kunnen bieden?
-  \item Is het mogelijk om deze oplossing te ontwikkelen aan de hand van ``reverse engineering'' van de bovenstaande tools?
+  \item Is het mogelijk om deze oplossing te ontwikkelen aan de hand van ``\emph{reverse engineering}'' van de bovenstaande tools?
 \end{itemize}
 
-De \emph{doelstelling} van deze bachelorproef is om een proof-of-concept te ontwikkelen voor een \emph{converter} (of omzetter) van \emph{PlantUML}-diagrammen naar \emph{Ansible}-code. \emph{PlantUML} en \emph{Ansible} zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden.
+De \emph{doelstelling} van deze bachelorproef is om een \emph{Proof of Concept} te ontwikkelen voor een \emph{converter} (of omzetter) van \emph{PlantUML}-diagrammen naar \emph{Ansible}-code. \emph{PlantUML} en \emph{Ansible} zijn de twee tools die op dit moment voor ogen staan, maar er zullen tijdens het onderzoek ook alternatieven gezocht en geëvalueerd worden.
 
 De hoop voor deze oplossing is dat deze een meerwaarde kan bieden voor educatieve doeleinden. Neem als voorbeeld een \emph{OLOD} zoals ``\emph{Cybersecurity Advanced}'' binnen de opleiding \emph{Toegepaste Informatica}. De tech-industrie evolueert snel en de labo's die voor dit \emph{OLOD} ontworpen zijn, zullen daardoor ook snel verouderen.
 
@@ -109,7 +109,7 @@ Deze tools zijn ook open source, ergo de broncode van deze software is voor iede
 \subsection{\emph{Configuration management} en haar toepassingen}%
 \label{subsec:voorstel_cfgmgmt_toepassingen}
 
-\emph{Configuration management} heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en \emph{DNS}-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; het herhalen van het hetzelde proces geeft exact hetzelfde resultaat. Deze manier van werken schaalt beter voor omgevingen met honderden of duizenden servers, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
+\emph{Configuration management} heeft als principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van \emph{packages}, beheren van \emph{firewalls}, instellen van de default gateways en \emph{DNS}-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; het herhalen van het hetzelde proces geeft exact hetzelfde resultaat. Deze manier van werken schaalt beter voor omgevingen met honderden of duizenden servers, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
 
 \emph{Configuration management} staat echter niet in voor het creeëren en opzetten van servers; dat is de taak van \emph{Infrastructure-as-Code} tools zoals \emph{Terraform}, \emph{OpenTofu} en \emph{Vagrant}.
 
@@ -185,13 +185,13 @@ De deliverable voor deze fase is een simpele, maar functionele \emph{transpiler}
 \subsection{Fase 1B (week 1-2): Evaluatie van de bestaande tools in de betrokken vakgebieden}%
 \label{subsec:voorstel_evaluatie_bestaande_tools_betrokken_vakgebieden}
 
-Hier zal er een afweging gemaakt worden voor de verschillende tools binnen \emph{UML}-modeling en \emph{configuration management} die gebruikt zullen worden tijdens de ontwikkeling van de proof-of-concept.
+Hier zal er een afweging gemaakt worden voor de verschillende tools binnen \emph{UML}-modeling en \emph{configuration management} die gebruikt zullen worden tijdens de ontwikkeling van de \emph{Proof of Concept}.
 De te evalueren tools voor \emph{UML}-modeling zijn \emph{PlantUML} en \emph{MermaidJS}. Voor het ``\emph{configuration management}''-gedeelte zal er gekeken worden naar \emph{Ansible}, \emph{Puppet} en \emph{Chef}. Deze opsomming van tools is echter niet-uitputtend, en andere tools kunnen nog in het vizier komen.
 
 \subsection{Fase 2 (week 3-5): Ontwerp van de testomgeving (\emph{UML}-diagrammen)}%
 \label{subsec:voorstel_hardware_softwarespecs_testomgeving}
 
-In deze fase wordt de (virtuele) testomgeving voor de \emph{transpiler} ontworpen aan de hand van netwerk- en implementatiediagrammen. In deze diagrammen zullen de hardware- (Opslag, RAM, CPU cores, \ldots) en softwarespecificaties (distributie, packages, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (firewalls, eventuele backup-regels, \ldots). Het initiële ontwerp zal nog niet met \emph{PlantUML}/\emph{MermaidJS} verlopen maar eerder met \emph{GUI}-ondersteunde tools zoals \emph{Visual Paradigm} en \emph{draw.io}.
+In deze fase wordt de (virtuele) testomgeving voor de \emph{transpiler} ontworpen aan de hand van netwerk- en implementatiediagrammen. In deze diagrammen zullen de hardware- (Opslag, \emph{RAM}, \emph{CPU} cores, \ldots) en softwarespecificaties (distributie, \emph{packages}, \ldots) van elke server beschreven worden, alsook hoe deze met elkaar interageren (\emph{firewalls}, eventuele backup-regels, \ldots). Het initiële ontwerp zal nog niet met \emph{PlantUML}/\emph{MermaidJS} verlopen maar eerder met \emph{GUI}-ondersteunde tools zoals \emph{Visual Paradigm} en \emph{draw.io}.
 
 \subsection{Fase 3A (week 6-7): Implementatie van de testomgeving}%
 \label{subsec:voorstel_implementatie_manuele_testomgeving}
@@ -238,11 +238,11 @@ Dit heeft hoofdzakelijk te maken met de voorkennis van de auteur, met in het bij
 \subsection{Verwachte eigenschappen van de testomgeving}
 \label{subsec:voorstel_verwachte_eigenschappen_testomgeving}
 
-Deze infrastructuur zal allicht redelijk simpel gehouden worden met slechts 2 tot 3 (virtuele) servers, aangezien deze bachelorproef vooral over de ontwikkeling van een proof-of-concept gaat. Dat gezegd zijnde zal er gemikt worden op het implementeren van een web-, \emph{DNS}- en monitoringserver. Mogelijke uitbreidingen kunnen een databank-, secundaire \emph{DNS}- en \emph{DHCP}-server zijn.
+Deze infrastructuur zal allicht redelijk simpel gehouden worden met slechts 2 tot 3 (virtuele) servers, aangezien deze bachelorproef vooral over de ontwikkeling van een \emph{Proof of Concept} gaat. Dat gezegd zijnde zal er gemikt worden op het implementeren van een web-, \emph{DNS}- en monitoringserver. Mogelijke uitbreidingen kunnen een databank-, secundaire \emph{DNS}- en \emph{DHCP}-server zijn.
 
 \subsection{Verwachte functionaliteit voor de transpiler}%
 \label{subsec:voorstel_verwachte_functionaliteit_poc}
 
 De verwachting van deze oplossing is om met de resulterende ``\emph{configuration management}''-code een minimaal werkende infrastructuur te configureren die de beschrijving van de gegeven netwerk- en implementatiediagrammen zo nauw mogelijk benadert.
 De \emph{transpiler} zal slechts voor een (relevant) deel van de syntax tussen \emph{PlantUML} en \emph{Ansible} een vertaallaag kunnen vormen, aangezien de omvang voor beide tools veel groter is dan die voor dit onderzoek.
-Als invoer zullen er enkel netwerk- en implementatiediagrammen gebruikt kunnen worden en als uitvoer zal er een deelverzameling van ondersteunde ``collections'' en ``roles'' voor de \emph{Ansible}-\emph{playbooks} gespecifiëerd worden. Nogmaals, dit wordt een proof-of-concept, dus het onderzoek moet ook aantonen waar het potentieel tot uitbreidingen ligt, alsook wat de limitaties zijn qua informatie uit een \emph{UML}-diagram die omgezet kan worden naar ``\emph{configuration management}''-code en vice versa.
+Als invoer zullen er enkel netwerk- en implementatiediagrammen gebruikt kunnen worden en als uitvoer zal er een deelverzameling van ondersteunde ``collections'' en ``roles'' voor de \emph{Ansible}-\emph{playbooks} gespecifiëerd worden. Nogmaals, dit wordt een \emph{Proof of Concept}, dus het onderzoek moet ook aantonen waar het potentieel tot uitbreidingen ligt, alsook wat de limitaties zijn qua informatie uit een \emph{UML}-diagram die omgezet kan worden naar ``\emph{configuration management}''-code en vice versa.

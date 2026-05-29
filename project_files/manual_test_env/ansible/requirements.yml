@@ -1,4 +1,3 @@
-# ansible/requirements.yml
 ---
 roles:
   - name: bertvv.rh-base

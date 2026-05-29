@@ -53,7 +53,7 @@
 %   \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
 % \end{table}
 
-Dit hoofdstuk biedt de stand van zaken en theoretische onderbouwing voor de vakgebieden die aan bod komen tijdens de ontwikkeling van de proof-of-concept.
+Dit hoofdstuk biedt de stand van zaken en theoretische onderbouwing voor de vakgebieden die aan bod komen tijdens de ontwikkeling van de \emph{Proof of Concept}.
 
 \section{\emph{Unified Modeling Language} (\emph{UML})}%
 \label{sec:uml}
@@ -72,14 +72,14 @@ Volgens \textcite{Padmanabhan2012} worden binnen \emph{UML} er veertien diagramt
 \begin{description}
   \item \textbf{\emph{Use Case Diagram}}: Beschrijft welke actoren (gebruikers, externe systemen) met een gegeven systeem interageren en welke functionaliteit zij gebruiken. Dit diagram is nuttig om de scope en de rollen binnen dit systeem te verduidelijken.
   \item \textbf{\emph{Class Diagram}}: Toont de klassen in een systeem met hun attributen, methoden en relaties (associaties, erfenis, compositie). Deze diagrammen zijn typisch op softwarecode gericht.
-  \item \textbf{\emph{Deployment Diagram} (of implementatiediagram)}: Richt zich op de (al dan niet virtuele) nodes (servers, containers, netwerkapparatuur) en de daarop gedeployde artefacten (applicatiepakketten, services). Dit diagram sluit nauw aan bij een netwerkdiagram zoals die in DevOps-scenario's voorkomen.
+  \item \textbf{\emph{Deployment Diagram} (of implementatiediagram)}: Richt zich op de (al dan niet virtuele) nodes (servers, containers, netwerkapparatuur) en de daarop gedeployde artefacten (\emph{packages}, \emph{services}). Dit diagram sluit nauw aan bij een netwerkdiagram zoals die in DevOps-scenario's voorkomen.
   \item \textbf{\emph{Activity Diagram}}: Beschrijft de flow van controle en gegevens in een proces. Dit kan toegepast worden op een deployment pipeline of een provisioning workflow in een \emph{Infrastructure-as-Code}-context.
   \item \textbf{\emph{Sequence Diagram}}: Legt vast welke berichten in welke volgorde uitgewisseld worden tussen objecten of componenten, bijvoorbeeld tussen een webserver en een databank tijdens een typische request-flow.
 \end{description}
 
 \subsection{\emph{PlantUML}}%
 
-\emph{PlantUML} is een open-source tool waarmee \emph{UML}- en aanverwante diagrammen gegenereerd kunnen worden op basis een van declaratief en menselijk leesbaar tekstformaat \autocite{PlantUML2026}.
+\emph{PlantUML} is een open-source tool waarmee \emph{UML}- en aanverwante diagrammen gegenereerd kunnen worden op basis van een declaratief en menselijk leesbaar tekstformaat \autocite{PlantUML2026}.
 
 De tool ondersteunt een brede waaier aan diagramtypen, waaronder vele \emph{UML}-diagrammen (\emph{Class Diagrams}, \emph{Deployment Diagrams}, \emph{Activity Diagrams}, \ldots), maar dus ook notaties die niet strikt genomen onder \emph{UML} vallen zoals netwerkdiagrammen, mindmaps en \emph{GANTT}-schemas \autocite{PlantUML2025}.
 
@@ -176,7 +176,7 @@ De configuraties worden geschreven in \emph{HashiCorp} Configuration Language (\
 Het volgende codefragment licht de structuur van \emph{HCL} toe via een eenvoudige topologie voor een \emph{AWS}-gebaseerde omgeving.
 
 \begin{codeblock}
-  \begin{lstlisting}
+  \begin{minted}{terraform}
 terraform {
   required_providers {
     aws = {
@@ -192,22 +192,18 @@ variable "base_cidr_block" {
   description = "A /16 CIDR range definition, such as 10.1.0.0/16, that the VPC will use"
   default = "10.1.0.0/16"
 }
-
 variable "availability_zones" {
   description = "A list of availability zones in which to create subnets"
   type = list(string)
 }
-
 provider "aws" {
   region = var.aws_region
 }
-
 resource "aws_vpc" "main" {
   # Referencing the base_cidr_block variable allows the network address
   # to be changed without modifying the configuration.
   cidr_block = var.base_cidr_block
 }
-
 resource "aws_subnet" "az" {
   # Create one subnet for each given availability zone.
   count = length(var.availability_zones)
@@ -223,9 +219,9 @@ resource "aws_subnet" "az" {
   # values, such as computing a subnet address. Here we create a /20 prefix for
   # each subnet, using consecutive addresses for each availability zone,
   # such as 10.1.16.0/20 .
-  cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 4, count.index+1)
+  cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 4, count.index + 1 )
 }
-\end{lstlisting}
+\end{minted}
   \caption[Voorbeeld \emph{Terraform}-configuratie]{Voorbeeld van een eenvoudige \emph{Terraform}-configuratie \autocite{HashiCorp2025}.}
   \label{code:terraform_vb}
 \end{codeblock}
@@ -237,14 +233,14 @@ resource "aws_subnet" "az" {
 Het project heeft als doel een volledig vrije, open-governance variant van de \emph{Terraform}-tooling te bieden, met langdurige compatibiliteit en transparante besluitvorming in de open-source gemeenschap.
 
 Op technisch vlak positioneert \emph{OpenTofu} zich als een drop-in replacement voor \emph{Terraform 1.6.x} (en voorafgaande versies); bestaande configuraties in \emph{HCL} en de bekende \emph{CLI}-commando's blijven bruikbaar, zodat organisaties en projecten relatief eenvoudig kunnen migreren zonder hun codebase volledig te moeten herschrijven.
-De tool ondersteunt dus dezelfde concepten (providers, resources, modules en state-bestanden) en streeft naar backwards compatibility, terwijl op termijn nieuwe functionaliteit kan worden geïntroduceerd die niet noodzakelijk in \emph{Terraform} beschikbaar is. \autocite{OpenTofu2026}
+De tool ondersteunt dus dezelfde concepten (providers, resources, modules en state-bestanden) en streeft naar \emph{backwards compatibility}, terwijl op termijn nieuwe functionaliteit kan worden geïntroduceerd die niet noodzakelijk in \emph{Terraform} beschikbaar is. \autocite{OpenTofu2026}
 
 \subsection{\emph{Vagrant}}%
 
 \emph{Vagrant} is een tool van \emph{HashiCorp} voor het bouwen en beheren van (lokale) virtuele omgevingen via een tekstueel configuratiebestand (``\texttt{Vagrantfile}'').
 Het doel van \emph{Vagrant} is om reproduceerbare ontwikkel- en testomgevingen te creëren die met één commando kunnen opgestart, geprovisioneerd en opnieuw vernietigd worden. \autocite{HashiCorp2026}
 
-In de ``\texttt{Vagrantfile}'' specificeert men voor elke virtuele machine, onder andere, de base box (of het gastbesturingssysteem zoals \emph{AlmaLinux}, Alpine Linux, Ubuntu), het aantal CPU cores, hoeveelheid werkgeheugen, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
+In de ``\texttt{Vagrantfile}'' specificeert men voor elke virtuele machine, onder andere, de base box (of het gastbesturingssysteem zoals \emph{AlmaLinux}, Alpine Linux, Ubuntu), het aantal \emph{CPU} cores, hoeveelheid werkgeheugen, welke netwerkconfiguratie van toepassing is, en welke provisioning-stappen moeten worden uitgevoerd.
 Standaard ondersteunt \emph{Vagrant} providers zoals \emph{VirtualBox}, \emph{Hyper-V} en \emph{Docker}, maar via plugins kunnen ook andere platformen worden aangestuurd, waaronder \emph{VMware} of publieke cloudproviders. \autocite{HashiCorp2026a}
 
 Voor provisioning kan \emph{Vagrant} gebruik maken van verschillende methodes zoals \emph{Bash}-scripts maar ook ``\emph{configuration management}''-tools (\emph{Ansible}/\emph{Chef}/\emph{Puppet}).
@@ -255,40 +251,36 @@ Binnen de opleiding \emph{Toegepaste Informatica} wordt \emph{Vagrant} ingezet o
 Het volgende codefragment licht een mogelijke, eenvoudige ``\texttt{Vagrantfile}'' toe.
 
 \begin{codeblock}
-  \begin{lstlisting}
+  \begin{minted}{ruby}
 Vagrant.configure("2") do |config|
   config.vm.box = "hashicorp-education/ubuntu-24-04"
   config.vm.box_version = "0.1.0"
-
   # Install Docker and dependencies
   config.vm.provision "shell", name: "install-dependencies", path: "install-dependencies.sh"
-
   # Start Terramino (can be rerun with vagrant provision --provision-with start-terramino)
   config.vm.provision "shell", name: "start-terramino", inline: <<-SHELL
     cd /home/vagrant/terramino-go
     docker compose up -d
   SHELL
-
   # Restart Terramino (can be rerun with vagrant provision --provision-with restart-terramino)
   # For quick changes that doesn't require rebuilding (e.g. frontend changes)
   config.vm.provision "shell", name: "restart-terramino", run: "never", inline: <<-SHELL
     docker compose restart
   SHELL
-
   # Reload Terramino (can be rerun with vagrant provision --provision-with reload-terramino)
   # For changes that require rebuilding (e.g. backend changes)
   config.vm.provision "shell", name: "reload-terramino", run: "never", inline: <<-SHELL
     /usr/local/bin/reload-terramino
   SHELL
 end
-\end{lstlisting}
+\end{minted}
   \caption[Voorbeeld ``\texttt{Vagrantfile}'']{Voorbeeld van een eenvoudige ``\texttt{Vagrantfile}'' \autocite{HashiCorp2024a}.}
   \label{code:vagrantfile_vb}
 \end{codeblock}
 
 \section{\emph{Configuration management}}%
 
-\emph{Configuration management} is het principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van packages, beheren van firewalls, instellen van de default gateways en \emph{DNS}-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; op basis van dezelfde stappen wordt hetzelfde resultaat opgeleverd zonder afwijkingen, en vertoont het proces dus consistent gedrag. Deze manier van werken, analoog met het principe van \emph{Infrastructure-as-Code}, schaalt beter voor omgevingen met honderden of duizenden nodes, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
+\emph{Configuration management} is het principe om een (grote) set van manuele, repetitieve configuratietaken (installeren van \emph{packages}, beheren van \emph{firewalls}, instellen van de default gateways en \emph{DNS}-servers, \ldots) automatisch te laten uitvoeren op servers. In het beste geval verloopt dit proces op een idempotente manier; op basis van dezelfde stappen wordt hetzelfde resultaat opgeleverd zonder afwijkingen, en vertoont het proces dus consistent gedrag. Deze manier van werken, analoog met het principe van \emph{Infrastructure-as-Code}, schaalt beter voor omgevingen met honderden of duizenden nodes, aangezien het aanzienlijk minder tijdrovend en vatbaar voor menselijke fouten is. \autocite{Likitha2022}
 
 Als \emph{Infrastructure-as-Code} een omgeving automatisch opzet, staat \emph{configuration management} met andere woorden in voor het configuratie-aspect.
 
@@ -299,7 +291,7 @@ Als \emph{Infrastructure-as-Code} een omgeving automatisch opzet, staat \emph{co
 \emph{Ansible} is een open-source ``\emph{configuration management}''-tool die werkt zonder permanente \emph{agents} op de doelhosts: standaard maakt het verbinding via \emph{SSH} om taken uit te voeren.
 Beheerders beschrijven de gewenste configuratie in menselijk leesbare YAML-bestanden, zogenaamde \emph{playbooks}, die bestaan uit taken (\emph{tasks}) en herbruikbare rollen (\emph{roles}). \autocite{Ansible2025}
 
-Taken maken gebruik van (ingebouwde) modules om verscheidene systeem-gerelateerde objecten te beheren, zoals packages, services, gebruikers, bestanden en firewallregels.
+Taken maken gebruik van (ingebouwde) modules om verscheidene systeem-gerelateerde objecten te beheren, zoals \emph{packages}, \emph{services}, gebruikers, bestanden en \emph{firewall}-regels.
 Hier is de kracht van \emph{Ansible} dat men deze taken op declaratieve wijze kan schrijven in plaats van imperatief; men beschrijft \emph{wat} het eindresultaat moet zijn, niet \emph{hoe} men daar moet geraken. \emph{Ansible} biedt hier dus ook de mogelijkheid om \emph{playbooks} zo idempotent mogelijk te schrijven; bij herhaalde uitvoeringen krijgt men steeds hetzelfde, verwachte eindresultaat. \autocite{Stoeckl2025}
 
 Dankzij een \emph{inventory}-bestand kunnen de taken van een \emph{playbook} identiek uitgevoerd worden op groepen van meerdere hosts, wat \emph{Ansible} geschikt maakt voor het configureren van tientallen of honderden servers in één keer. \autocite{Ansible2025}
@@ -307,7 +299,7 @@ Dankzij een \emph{inventory}-bestand kunnen de taken van een \emph{playbook} ide
 Onderstaand voorbeeld toont een beknopte \emph{Ansible}-\emph{playbook} die twee taken uitvoert: de webserver en databankserver updaten op alle hosts in de overeenkomende groepen (``\texttt{webservers}'' en ``\texttt{databases}'').
 
 \begin{codeblock}
-  \begin{lstlisting}
+  \begin{minted}{yaml}
 ---
 - name: Update web servers
   hosts: webservers
@@ -338,7 +330,7 @@ Onderstaand voorbeeld toont een beknopte \emph{Ansible}-\emph{playbook} die twee
     ansible.builtin.service:
       name: postgresql
       state: started
-\end{lstlisting}
+\end{minted}
   \caption[Voorbeeld \emph{Ansible}-\emph{playbook}]{Voorbeeld van een eenvoudige \emph{Ansible}-\emph{playbook} \autocite{Ansible2025a}.}
   \label{code:ansible_playbook_vb}
 \end{codeblock}
@@ -348,7 +340,7 @@ Deze \emph{playbook} kan herhaaldelijk uitgevoerd worden en telkens hetzelfde re
 \subsection{\emph{Puppet}}%
 
 \emph{Puppet} is een ``\emph{configuration management}''- tool die gebruikmaakt van een declaratieve domeinspecifieke taal (gebaseerd op \emph{Ruby}) om de gewenste toestand van systemen te beschrijven.
-Beheerders definiëren resources (zoals packages, files en services) in \emph{manifests}; \emph{Puppet} vergelijkt vervolgens de actuele toestand van een host met deze gewenste toestand en brengt enkel de noodzakelijke wijzigingen aan. \autocite{Perforce2026a}
+Beheerders definiëren resources (zoals \emph{packages}, files en \emph{services}) in \emph{manifests}; \emph{Puppet} vergelijkt vervolgens de actuele toestand van een host met deze gewenste toestand en brengt enkel de noodzakelijke wijzigingen aan. \autocite{Perforce2026a}
 
 Typisch wordt \emph{Puppet} ingezet in een ``\emph{server-agent}''-architectuur: een centrale \emph{Puppet}-server compileert de \emph{manifests} tot een \emph{catalog} en deelt deze catalog uit aan \emph{Puppet}-\emph{\emph{agent}s} op de beheerde hosts.
 De \emph{agent} past de catalog toe, corrigeert eventuele configuratiedrift en rapporteert zijn status terug aan de server, waardoor beheerders op grote schaal configuraties kunnen afdwingen en monitoren. \autocite{Perforce2026b}
@@ -356,7 +348,7 @@ De \emph{agent} past de catalog toe, corrigeert eventuele configuratiedrift en r
 Het volgende \emph{manifest} toont vereenvoudigd aan hoe een server geconfigureerd kan worden met \emph{Puppet}:
 
 \begin{codeblock}
-  \begin{lstlisting}
+  \begin{minted}{ruby}
 file { 'ntp.conf':
   path    => '/etc/ntp.conf',
   ensure  => file,
@@ -374,12 +366,12 @@ service { 'ntpd':
   ensure    => running,
   subscribe => File['ntp.conf'],
 }
-\end{lstlisting}
+\end{minted}
   \caption[Eenvoudig \emph{Puppet}-\emph{manifest} voor een webserver]{\autocite{Perforce2026}}
   \label{code:puppetvb}
 \end{codeblock}
 
-Wanneer de \emph{agent} dit \emph{manifest} meerdere keren toepast, zal \emph{Puppet} enkel wijzigingen maken als de werkelijke toestand (bijvoorbeeld ontbrekende bestanden of een gestopte service) afwijkt van de beschreven gewenste toestand.
+Wanneer de \emph{agent} dit \emph{manifest} meerdere keren toepast, zal \emph{Puppet} enkel wijzigingen maken als de werkelijke toestand (bijvoorbeeld ontbrekende bestanden of een gestopte \emph{service}) afwijkt van de beschreven gewenste toestand.
 
 \subsection{\emph{Chef}}%
 
@@ -392,7 +384,7 @@ Tijdens een \emph{run} vraagt de client zijn \emph{run list} op, convergeert het
 Onderstaande vereenvoudigde \emph{recipe} installeert een \emph{Apache} webserver, kiest op willekeurige basis \emph{PHP} of \emph{Perl} als scriptingtaal, en installeert deze vervolgens.
 
 \begin{codeblock}
-  \begin{lstlisting}
+  \begin{minted}{ruby}
 package 'httpd' do
   action :install
 end
@@ -411,7 +403,7 @@ package 'scripting_language' do
   package_name lazy { node.run_state['scripting_language'] }
   action :install
 end
-\end{lstlisting}
+\end{minted}
   \caption[Eenvoudige \emph{Chef}-\emph{recipe} voor een webserver]{\autocite{ProgressSoftware2025}}
   \label{code:chefvb}
 \end{codeblock}
@@ -450,13 +442,13 @@ Het gebruik van \emph{configuration management} of \emph{UML}-diagrammen is hier
 
 ``\emph{Infrastructure Automation}'' is een \emph{OLOD} dat een reeks labo's bevat die verschillende tools introduceren voor het automatisch opzetten, configureren en monitoren van serveromgevingen, waaronder \emph{Ansible}, \emph{Jenkins}\footnote{\url{https://www.jenkins.io/}}, \emph{Prometheus}\footnote{\url{https://prometheus.io/}} en \emph{Kubernetes}\footnote{\url{https://kubernetes.io/}} \autocite{HOGENT2025a}. In tegenstelling tot ``\emph{Cybersecurity Advanced}'' is het gebruik van \emph{configuration management} hier een centrale leerdoelstelling: de labo's vereisen dat studenten \emph{Ansible} inzetten om de virtuele machines te configureren.
 
-De labo-omgeving voor dit \emph{OLOD} is gebaseerd op de ``\emph{Ansible Skeleton}'' van \textcite{Vreckem2025}: een sjabloon voor \emph{Ansible}-projecten met een geïntegreerde \emph{Vagrant}-omgeving (zie \nameref{subsec:bertvv}). Deze structuur -- met mappen zoals ``\texttt{ansible/}'', ``\texttt{ansible/host\_vars/}'', ``\texttt{ansible/group\_vars/}'' en een centrale ``\texttt{site.yml}''-\emph{playbook} -- vormt ook de uitvoerstructuur van de \emph{converter} die in deze bachelorproef wordt ontwikkeld \autocite{HoGentTIN2025a}.
+De labo-omgeving voor dit \emph{OLOD} is gebaseerd op de ``\emph{Ansible Skeleton}'' van \textcite{Vreckem2025}: een sjabloon voor \emph{Ansible}-projecten met een geïntegreerde \emph{Vagrant}-omgeving (zie \autoref{subsec:bertvv}). Deze structuur -- met mappen zoals ``\texttt{ansible/}'', ``\texttt{ansible/host\_vars/}'', ``\texttt{ansible/group\_vars/}'' en een centrale ``\texttt{site.yml}''-\emph{playbook} -- vormt ook de uitvoerstructuur van de \emph{converter} die in deze bachelorproef wordt ontwikkeld \autocite{HoGentTIN2025a}.
 
 \subsection{``\emph{DevOps Project: Operations}'' (\emph{OLOD})}%
 \label{subsec:devops_ops}
 
 ``\emph{DevOps Project: Operations}'' is een \emph{OLOD} dat het tweede luik vormt van een tweeledig groepsproject \autocite{HOGENT2025b}, het eerste luik zijnde ``\emph{Real-life Integrated Software Engineering}'' (\emph{RISE}) voor de studenten binnen het keuzetraject ``\emph{full stack developer}''.
-Het doel van het ``\emph{operations}-team'' is om de backend van een webapplicatie (bijvoorbeeld een \emph{.NET}- of \emph{Android}-package) -- ontwikkeld door een parallel ``\emph{development}-team'' -- te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet volledig geautomatiseerd kunnen opgezet worden via \emph{Infrastructure-as-Code}- en \emph{configuration management}-tools.
+Het doel van het ``\emph{operations}-team'' is om de backend van een webapplicatie (bijvoorbeeld een \emph{.NET}- of \emph{Android}-\emph{package}) -- ontwikkeld door een parallel ``\emph{development}-team'' -- te ondersteunen met een productie-waardige serverinfrastructuur. Deze omgeving moet volledig geautomatiseerd kunnen opgezet worden via \emph{Infrastructure-as-Code}- en \emph{configuration management}-tools.
 
 In tegenstelling tot de twee vorige \emph{OLODs} is het gebruik van een netwerkdiagram hier verplicht: de onderliggende architectuur moet gevisualiseerd worden voor zowel technische als niet-technische stakeholders via \emph{UML}-modelleringssoftware. Dit \emph{OLOD} combineert daarmee twee aspecten die centraal staan in deze bachelorproef: het ontwerpen van een infrastructuur via (\emph{UML}-)diagrammen, en het automatisch uitrollen ervan via \emph{IaC} en \emph{configuration management}.
 
@@ -469,7 +461,7 @@ De \emph{Ansible Skeleton} is een sjabloon voor \emph{Vagrant}- en \emph{Ansible
 Naast de \emph{Ansible Skeleton} heeft \textcite{Vreckem2016} ook een reeks \emph{Ansible}-rollen ontwikkeld die specifiek gericht zijn op \emph{RedHat}-gebaseerde distributies en die binnen de opleiding standaard worden ingezet, waarvan hier enkele voorbeelden:
 
 \begin{description}
-  \item[``\texttt{bertvv.rh-base}''] Basisinstallatie en -configuratie van een \emph{RedHat}-gebaseerde server: firewall, \emph{SELinux}, gebruikersbeheer en algemene systeeminstellingen \autocite{Vreckem2016}.
+  \item[``\texttt{bertvv.rh-base}''] Basisinstallatie en -configuratie van een \emph{RedHat}-gebaseerde server: \emph{firewall}, \emph{SELinux}, gebruikersbeheer en algemene systeeminstellingen \autocite{Vreckem2016}.
   \item[``\texttt{bertvv.bind}''] Installatie en configuratie van \emph{BIND9} als autoritatieve \emph{DNS}-server \autocite{Vreckem2015}.
   \item[``\texttt{bertvv.dhcp}''] Installatie en configuratie van \emph{ISC DHCP} als \emph{DHCP}-server \autocite{Vreckem2015a}.
   \item[``\texttt{bertvv.httpd}''] Installatie en configuratie van een \emph{Apache}-webserver \autocite{Vreckem2015b}.
@@ -511,11 +503,11 @@ De eerste fase, de \emph{lexicale analyse} (ook wel ``\emph{scanning}'' of ``\em
 
 \subsubsection{\emph{Parsen}/ontleden}%
 
-De \emph{parser} neemt de \emph{tokens} van de vorige fase als invoer en controleert of deze voldoen aan de grammaticale regels van de brontaal \autocite{Seidl2012}. Het resultaat is een \emph{parse tree}, die de hiërarchische structuur van de broncode weergeeft (zie \nameref{subsec:parsetree}). Als de \emph{tokens} niet grammaticaal correct zijn, ontstaat er in de \emph{parser} een syntaxfout.
+De \emph{parser} neemt de \emph{tokens} van de vorige fase als invoer en controleert of deze voldoen aan de grammaticale regels van de brontaal \autocite{Seidl2012}. Het resultaat is een \emph{parse tree}, die de hiërarchische structuur van de broncode weergeeft (zie \autoref{subsec:parsetree}). Als de \emph{tokens} niet grammaticaal correct zijn, ontstaat er in de \emph{parser} een syntaxfout.
 
 \subsubsection{Semantische analyse}%
 
-Waar de \emph{parser} enkel de syntactische correctheid controleert, gaat de \emph{semantische analyse} na of de code ook effectief betekenisvol is \autocite{Seidl2012}. Typische controles zijn typeverificatie, scopecontrole en het oplossen van namen. Het resultaat is doorgaans een verrijkte \emph{abstracte syntaxboom} (of \emph{AST}, zie \nameref{subsec:ast}).
+Waar de \emph{parser} enkel de syntactische correctheid controleert, gaat de \emph{semantische analyse} na of de code ook effectief betekenisvol is \autocite{Seidl2012}. Typische controles zijn typeverificatie, scopecontrole en het oplossen van namen. Het resultaat is doorgaans een verrijkte \emph{abstracte syntaxboom} (of \emph{AST}, zie \autoref{subsec:ast}).
 
 \subsubsection{Optimalisatie}%
 
@@ -523,7 +515,7 @@ De optionele \emph{optimalisatiefase} transformeert de tussentijdse representati
 
 \subsubsection{Codegeneratie}%
 
-De laatste fase zet de (al dan niet geoptimaliseerde) tussentijdse representatie om naar de doeltaal \autocite{Seidl2012}. Voor traditionele \emph{compilers} is dit machinecode of \emph{Assembly}; voor andere \emph{compilers} kan dit ook een andere \emph{high-level} taal zijn. In dat laatste geval spreekt men van een \emph{transpiler}, wat in \nameref{sec:transpilers} verder wordt toegelicht.
+De laatste fase zet de (al dan niet geoptimaliseerde) tussentijdse representatie om naar de doeltaal \autocite{Seidl2012}. Voor traditionele \emph{compilers} is dit machinecode of \emph{Assembly}; voor andere \emph{compilers} kan dit ook een andere \emph{high-level} taal zijn. In dat laatste geval spreekt men van een \emph{transpiler}, wat in \autoref{sec:transpilers} verder wordt toegelicht.
 
 \subsection{Abstract Syntax Tree (\emph{AST})}%
 \label{subsec:ast}

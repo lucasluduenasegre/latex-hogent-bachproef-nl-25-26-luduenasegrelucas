@@ -152,7 +152,7 @@
 \author{Lucas Ludueña-Segre}
 \supervisor{Dhr. A. Veldeman}
 \cosupervisor{Dhr. Y. Rousseaux}
-\title[Onderzoek \& proof-of-concept]%
+\title[Onderzoek \& \emph{Proof of Concept}]%
     {Omzetten van \emph{UML}-diagrammen \\(\emph{PlantUML}) naar ``\emph{configuration \\management}''-code (\emph{Ansible})}
 \academicyear{\advance\year by -1 \the\year--\advance\year by 1 \the\year}
 \examperiod{2}
@@ -263,7 +263,7 @@ Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat 
 Op \emph{HOGENT}, binnen de opleiding \emph{Toegepaste Informatica} en meerbepaald het keuzetraject ``System \& Network Administrator'', worden er \emph{OLODs} (opleidingsonderdelen) gegeven die aan de hand van labo's bijdragen aan het leren beheren van serverinfrastructuren. Deze infrastructuren worden geïmplementeerd aan de hand van netwerk- en implementatiediagrammen, ontworpen met \emph{UML}-modeling software.
 De probleemstelling voor deze bachelorproef vertrekt vanuit het foutgevoelige en tijdrovende proces waarbij (complexe) \emph{UML}-diagrammen eerst geïnterpreteerd en daarna manueel vertaald worden naar een configureerbare infrastructuur.
 De hoofdonderzoeksvraag is hoe men, voor een potentiële serverinfrastructuur, netwerk- en implementatiediagrammen (meerbepaald in tekstuele vorm via \emph{PlantUML}/\emph{MermaidJS}) met zo weinig mogelijk manuele interventie kan omzetten naar een overeenkomende, gebruiksklare omgeving ondersteund door ``\emph{configuration management}''-code (zoals \emph{Ansible}, \emph{Puppet} of \emph{Chef}).
-De doelstelling van dit onderzoek is om een proof-of-concept \emph{converter} te ontwikkelen die gegeven netwerk- en implementatiediagrammen als invoer rechtstreeks kan vertalen naar ``\emph{configuration management}''-code als uitvoer.
+De doelstelling van dit onderzoek is om een \emph{Proof of Concept} \emph{converter} te ontwikkelen die gegeven netwerk- en implementatiediagrammen als invoer rechtstreeks kan vertalen naar ``\emph{configuration management}''-code als uitvoer.
 De geplande testomgeving zal bestaan uit 2 tot 3 reeds uitgerolde (virtuele) servers (al dan niet via ``\emph{Infrastructure-as-Code}''-tools), en zullen bestaan uit een web-, \emph{DNS}- en monitoringserver (zonder nog eventuele uitbreidingen).
 Qua methodologie wordt er eerst een studie naar \emph{transpilers} uitgevoerd, parallel met een evaluatie van te gebruiken tools (\emph{PlantUML}, \emph{MermaidJS}, \emph{Ansible}, \emph{Puppet} en \emph{Chef}). Vervolgens wordt de testomgeving ontworpen (via \emph{UML}-diagrammen), opgezet en gedocumenteert. Dan wordt de \emph{transpiler} ontwikkeld en ten slotte systematisch getest tegen (onder andere) de kwaliteit en idempotentie van de uitvoer.
 Verwacht wordt dat deze oplossing een meerwaarde biedt voor docenten (en studenten): zij zouden hiermee sneller en efficiënter nieuwe labo-omgevingen kunnen ontwerpen en deze tegelijk voorzien van bijkomende ``\emph{configuration management}''-code, aangezien de kloof tussen de ontwerp- en implementatiefase zo wordt verkleind.

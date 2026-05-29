@@ -16,6 +16,7 @@ node srv002 {
     component node_exporter
 }
 
+
 node srv003 {
     component dhcp_server
     component dns_client

@@ -1,33 +1,27 @@
-# ansible/site.yml
 ---
 - name: General prerequisites
   hosts: all
   become: true
   roles: [bertvv.rh-base]
-
 - name: Configure dns
   hosts: dns
   become: true
   roles:
     - dns_server
     - prometheus.prometheus.bind_exporter
-
 - name: Set  DNS server(s) for every host
   hosts: all
   become: true
   roles: [dns_client]
-
 - name: Configure monitoring
   hosts: monitoring
   become: true
   roles:
     - monitoring_server
-
 - name: Set up Node Exporter for every host
   hosts: all
   become: true
   roles: [prometheus.prometheus.node_exporter]
-
 - name: Configure web
   hosts: web
   become: true
