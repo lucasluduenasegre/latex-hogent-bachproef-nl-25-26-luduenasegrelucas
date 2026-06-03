@@ -1,0 +1,175 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Je kan het lettertype iets vergroten door hierboven optie ``14pt'' toe te
+% voegen.
+
+%==============================================================================
+% Aanloop
+%==============================================================================
+
+%---------- Vormgeving --------------------------------------------------------
+
+\usetheme{hogent}
+
+% Kies hieronder een achtergrondkleur
+\usecolortheme{hgwhite} % witte achtergrond, zwarte tekst
+%\usecolortheme{hgblack} % zwarte achtergrond, witte tekst
+
+%---------- Packages ----------------------------------------------------------
+
+\usepackage[dutch]{babel}      % Nederlandse taal: splitsingen, enz.
+
+\usepackage{booktabs}          % Mooie tabellen
+\usepackage{multirow,multicol} % Tabelcellen samenvoegen
+\usepackage{eurosym}           % Euro symbool
+\usepackage{qrcode}            % Voor QR-codes op de slotslide
+
+%---------- Commando-definities -----------------------------------------------
+
+%---------- Info over de presentatie ------------------------------------------
+
+\title[ITPCO Eindgesprek]{\Large Omzetten van \emph{UML}-diagrammen (\emph{PlantUML}) naar "\emph{configuration management}"-code (\emph{Ansible}).}
+\subtitle{\small Onderzoek \& \emph{Proof of Concept}.}
+\author{Lucas Ludueña-Segre}
+\date{10 juni, 2026}
+
+%==============================================================================
+% Inhoud presentatie
+%==============================================================================
+
+\begin{document}
+
+%---------- Titelpagina, inhoudstafel -----------------------------------------
+
+\frame{\maketitle}
+
+\begin{frame}
+  \frametitle{Inhoud}
+
+  \tableofcontents
+\end{frame}
+
+%---------- Corpus ------------------------------------------------------------
+
+\section{Introductie.}
+\section{Methodologie.}
+
+\begin{frame}
+  \centering
+  \includegraphics[width=\textwidth]{../graphics/gantt-fases.png}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Methodologie -- Fases.}
+  
+    \begin{itemize}
+        \item \textbf{Fase 1A} (week 1-7): Literatuurstudie
+        \item \textbf{Fase 1B} (week 1-2): Evaluatie van de beschikbare tools
+        \begin{itemize}
+          \item \footnotesize Te gebruiken tools voor de \emph{PoC}
+        \end{itemize}
+        \item \textbf{Fase 2} (week 3-5): Ontwerp van de manuele testomgeving
+        \item \textbf{Fase 3A} (week 6-7): Implementatie van de manuele testomgeving
+        \begin{itemize}
+          \item \footnotesize De uitvoer voor de \emph{PoC} is gebaseerd op de functionaliteit van deze omgeving
+        \end{itemize}
+        \item \textbf{Fase 3B} (week 6-10): Opstellen van de testcases
+        \begin{itemize}
+          \item Testcases zijn gebaseerd op bestaande \emph{OLODs}
+        \end{itemize}
+        \item \textbf{Fase 4} (week 8-15): Ontwikkeling van de \emph{Proof of Concept}
+        \item \textbf{Fase 5} (week 11-15): Uitvoeren van de testcases
+    \end{itemize}
+\end{frame}
+
+\section{Proof of Concept (\emph{PlantUML2Ansible}).}
+
+\begin{frame}
+  \centering
+  \includegraphics[height=\textheight]{../graphics/demo.png}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{\large Gebruiksscenario's.}
+  \centering
+  \begin{columns}[t]
+    \column{.5\textwidth}
+    \textbf{``\emph{Full mode}''} (``\emph{volledige modus}'')
+    \bigskip
+    \begin{itemize}
+      \item \footnotesize \textbf{Invoer}: netwerk- en implementatiediagram
+      \item \footnotesize \textbf{Uitvoer}: \emph{Vagrant}- en \emph{Ansible}-ondersteunde omgeving
+      \item Enkel \textbf{één netwerk} mogelijk
+    \end{itemize}
+    \column{.5\textwidth}
+    \small \textbf{``\emph{IaC-only-mode}''} (``\emph{enkel-IaC-modus}'')
+    \bigskip
+    \begin{itemize}
+      \item \footnotesize \textbf{Invoer}: netwerkdiagram
+      \item \footnotesize \textbf{Uitvoer}: \emph{Vagrant}-ondersteunde omgeving
+      \item \textbf{Meerdere netwerken} mogelijk\\(max. 3 IP-adressen per host)
+    \end{itemize}
+  \end{columns}
+\end{frame}
+
+\section{Resultaten.}
+
+\begin{frame}
+  \frametitle{\large Testcase 1 -- \emph{Cybersecurity Advanced} ("\emph{IaC-only-mode}").}
+  \centering
+  \begin{columns}[t]
+    \column{.5\textwidth}
+    \column{.5\textwidth}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\large Testcase 2 -- \emph{Infrastructure Automation}, labo 2 ("\emph{full mode}").}
+  \centering
+  \begin{columns}[t]
+    \column{.5\textwidth}
+    \column{.5\textwidth}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\large Testcase 3 -- \emph{Infrastructure Automation}, labo 3 ("\emph{full mode}").}
+  \centering
+  \begin{columns}[t]
+    \column{.5\textwidth}
+    \column{.5\textwidth}
+  \end{columns}
+\end{frame}
+
+\section{Conclusie.}
+
+% \begin{frame}
+%   \frametitle{Lucas Ludueña-Segre.}
+%   \centering
+%   \begin{columns}[t]
+%     \column{.5\textwidth}
+%     \column{.5\textwidth}
+%   \end{columns}
+% \end{frame}
+
+\begin{frame}
+  \frametitle{Broncode.}
+  \begin{columns}[c]
+    \column{.5\textwidth}
+    \centering
+    Broncode bachelorproef (\emph{LaTeX})
+    \bigskip\\
+    \qrcode[height=3cm]{https://github.com/lucasluduenasegre/latex-hogent-bachproef-nl-25-26-luduenasegrelucas}\\
+
+    \column{.5\textwidth}
+    \centering
+    Broncode ``\emph{PlantUML2Ansible}''
+    \bigskip\\
+    \qrcode[height=3cm]{https://github.com/lucasluduenasegre/plantuml2ansible}\\
+  \end{columns}
+\end{frame}
+
+\section{Bedankt! Vragen?}
+
+\end{document}

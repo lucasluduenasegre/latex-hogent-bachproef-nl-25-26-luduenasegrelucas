@@ -1,0 +1,39 @@
+@startgantt p2a_gantt
+<style>
+ganttDiagram {
+  FontName Montserrat
+  FontStyle bold
+}
+</style>
+
+Project starts 2026-02-09
+projectscale weekly with calendar date
+
+[1A: Literatuurstudie] starts 2026-02-09 and ends 2026-03-27
+[1A: Literatuurstudie] is colored in #FABC32
+
+[1B: Evaluatie beschikbare tools] starts 2026-02-09 and ends 2026-02-20
+[1B: Evaluatie beschikbare tools] is colored in #FABC32
+
+[2: Ontwerp manuele testomgeving] starts 2026-02-23 and ends 2026-03-13
+[2: Ontwerp manuele testomgeving] is colored in #4CA2D5
+[2: Ontwerp manuele testomgeving] starts after [1B: Evaluatie beschikbare tools]'s end
+
+[3A: Implementatie manuele testomgeving] starts 2026-03-16 and ends 2026-03-27
+[3A: Implementatie manuele testomgeving] is colored in #A5CA72
+[3A: Implementatie manuele testomgeving] starts after [2: Ontwerp manuele testomgeving]'s end
+
+[3B: Opstellen testcases] starts 2026-03-16 and ends 2026-04-17
+[3B: Opstellen testcases] is colored in #A5CA72
+[3B: Opstellen testcases] starts after [2: Ontwerp manuele testomgeving]'s end
+
+[4: Ontwikkeling PoC] starts 2026-03-30 and ends 2026-05-22
+[4: Ontwikkeling PoC] is colored in #BB90BD
+[4: Ontwikkeling PoC] starts after [1A: Literatuurstudie]'s end
+[4: Ontwikkeling PoC] starts after [3A: Implementatie manuele testomgeving]'s end
+
+[5: Uitvoeren testcases] starts 2026-04-20 and ends 2026-05-22
+[5: Uitvoeren testcases] is colored in #F19DA0
+[5: Uitvoeren testcases] starts after [3B: Opstellen testcases]'s end
+
+@endgantt

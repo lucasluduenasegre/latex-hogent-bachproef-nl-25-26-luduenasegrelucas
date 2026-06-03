@@ -9,78 +9,100 @@
 % Info over de opleiding
 \course{Bachelorproef}
 \studyprogramme{toegepaste informatica}
-\academicyear{2022-2023}
+\academicyear{2025-2026}
 \institution{Hogeschool Gent, Valentin Vaerwyckweg 1, 9000 Gent}
 
 % Info over de bachelorproef
-\title{Omzetten van \emph{UML}-diagrammen\\(\emph{PlantUML}) naar ``\emph{configuration\\management}''-code (\emph{Ansible})}
+\title{Omzetten van \emph{UML}-diagrammen (\emph{PlantUML}) naar "\emph{configuration management}"-code (\emph{Ansible})}
 \subtitle{Onderzoek \& \emph{Proof of Concept}}
 \author{Lucas Ludueña-Segre}
 \email{lucas.luduenasegre@student.hogent.be}
 \supervisor{Alexander Veldeman}
 \cosupervisor{Yoeri Rousseaux (District09)}
 
-% Indien ingevuld, wordt deze informatie toegevoegd aan het einde van de
-% abstract. Zet in commentaar als je dit niet wilt.
-\specialisation{Systeem- en Netwerkbeheer}
-\keywords{Unified Modeling Language, UML, PlantUML, MermaidJS, Infrastructure-as-Code, IaC, Terraform, OpenTofu, Vagrant, configuration management, Ansible, Puppet, Chef, compiler, transpiler, converter}
-\projectrepo{https://github.com/lucasluduenasegre/latex-hogent-bachproef-nl-25-26-luduenasegrelucas}
+\specialisation{IT infrastructure engineer}
+\keywords{UML, PlantUML, Infrastructure-as-Code, IaC, Vagrant, configuration management, Ansible, converter}
+\projectrepo{https://github.com/lucasluduenasegre/plantuml2ansible}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-It's only a model.
-You don't vote for kings. Who's that then? We found them. Ni! Ni! Ni! Ni!
-The nose? On second thoughts, let's not go there. It is a silly place. Bloody Peasant! And the hat. She's a witch! Where'd you get the coconuts?
+      Deze bachelorproef onderzoekt hoe men netwerk- en implementatiediagrammen met minimale menselijke interventie kan omzetten tot overeenkomende ``\emph{configuration management}''-ondersteunde omgevingen.
+      Er werd hiervoor een \emph{Proof of Concept} \emph{converter} ontwikkeld die, op basis van \emph{PlantUML}-bronbestanden, een \emph{Vagrant}- en \emph{Ansible}-ondersteunde omgeving produceert.
+      Hierop werden een aantal testcases uitgevoerd (op basis van opleidingsonderdelen binnen \emph{Toegepaste Informatica}) die de technische haalbaarheid van de onderzoeksdoelstelling aantonen.
+      De meerwaarde van deze tool bevindt zich binnen een educatieve context: docenten kunnen labo's sneller implementeren en studenten kunnen infrastructuurideeën gemakkelijker uitproberen.
 \end{abstract}
 
-\begin{multicols}{2} % This is how many columns your poster will be broken into, a portrait poster is generally split into 2 columns
+\begin{multicols}{2}
 
-\section{Introductie}
+      \section{Introductie}
 
-Be quiet! Found them? In Mercia?! The coconut's tropical! But you are dressed as one… Well, what do you want? Knights of Ni, we are but simple travelers who seek the enchanter who lives beyond these woods.
+      Binnen de opleiding \emph{Toegepaste Informatica} op \emph{HOGENT} wordt er binnen het keuzeprofiel ``\emph{IT infrastructure engineer}'' aangeleerd om infrastructuren te beheren, o.a. aan de hand van netwerk- en implementatiediagrammen, die de topologie, software en onderlinge verbindingen van servers voorstellen.
 
-Well, what do you want? It's only a model. Camelot! We found them. We shall say `Ni' again to you, if you do not appease us.
+      \textbf{Probleemstelling}: het proces waarbij netwerk- en implementatiediagrammen geïnterpreteerd en omgezet worden tot ``\emph{IaC}''- en ``\emph{configuration management}''-ondersteunde serveromgevingen is, volgens Nicácio \& Petrillo (2020), foutgevoelig en tijdrovend.
 
-The nose? Shut up! Burn her! I am your king. You don't vote for kings.
+      \textbf{Hoofdonderzoeksvraag}: \emph{Hoe kan men een netwerk- en implementatiediagram met minimale menselijke interventie omzetten tot een overeenkomende, gebruiksklare ``}configuration management\emph{''-ondersteunde omgeving?}
 
-You can't expect to wield supreme power just `cause some watery tart threw a sword at you! Well, we did do the nose. I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave before I am forced to taunt you a second time!
+      \section{Methodologie}
 
-Why do you think that she is a witch? We want a shrubbery!! I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave before I am forced to taunt you a second time!
+      \begin{center}
+            \captionsetup{type=figure}
+            \includegraphics[width=\linewidth]{../graphics/gantt-fases-small.png}
+            \captionof{figure}{Fases van de methodologie aan de hand van een GANTT-schema. Fase 1B onderzocht de te gebruiken tools voor de PoC, en de uitvoer voor deze PoC werd gebaseerd op de functionaliteit van de manuele testomgeving (fases 2 en 3A).}
+      \end{center}
 
-\section{Experimenten}
+      \section{\emph{Proof of Concept} (\emph{PlantUML2Ansible})}
 
-A newt? Camelot! Why? No, no, no! Yes, yes. A bit. But she's got a wart.
 
-Shut up! I dunno. Must be a king. Who's that then? Look, my liege! On second thoughts, let's not go there. It is a silly place.
+      \begin{center}
+            \begin{minipage}{\linewidth}
+                  \captionsetup{type=figure}
+                  \includegraphics[width=\linewidth]{../graphics/demo.png}
+                  \captionof{figure}{Vereenvoudigde werking (invoerbestanden, stappen, uitvoerstructuur) van de \emph{converter} ``\texttt{plantuml2ansible.py}'', met testcase 2 (\emph{Infrastructure Automation}, labo 2) als voorbeeld.}
+            \end{minipage}
+      \end{center}
+      De \emph{converter} ondersteunt twee \emph{gebruiksscenario}'s:
 
-Shut up! Will you shut up?! No, no, no! Yes, yes. A bit. But she's got a wart. He hasn't got shit all over him. It's only a model. It's only a model.
+      \begin{description}
+            \item[\emph{``full mode''}] (zoals te zien op figuur 2): neemt zowel een netwerk- als implementatiediagram als invoerbestanden. Deze produceert een complete \emph{Vagrant}- én \emph{Ansible}-ondersteunde omgeving (aan de hand van voorgedefinieerde \emph{Ansible}-rollen en een ingebouwde \emph{Ansible} ``\texttt{control}'' node), maar ondersteunt slechts één netwerk.
+                  \item[\emph{``IaC-only-mode''}]: neemt enkel een netwerkdiagram als invoer. Deze produceert uitsluitend een \emph{Vagrant}-ondersteunde omgeving én ondersteunt meerdere netwerken (max. 3 IP-adressen per host).
+      \end{description}
 
-Bring her forward! I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave 
+      \section{Resultaten}
 
-\section{Sectie met figuur}
+      \begin{description}
+            \item[Testcase 1 -- \emph{Cybersecurity Advanced} ("\emph{IaC-only-mode}")]: De volledige labo-omgeving (4 subnetten, 8 beheerde hosts waaronder routers, werkstations en servers) werd succesvol gereproduceerd als \emph{Vagrant}-omgeving (zonder \emph{Ansible}-ondersteuning). Deze kan worden opgestart met het ``\texttt{vagrant up}''-commando.
+            \item[Testcase 2 -- \emph{Infrastructure Automation}, labo 2 ("\emph{full mode}")]: Deze omgeving (primaire \& secundaire DNS-server, DHCP-server en webserver) werd volledig gereproduceerd, met uitzondering op de router en workstation. DNS-clients werden ingesteld op basis van verbindingen in het implementatiediagram.
+            \item[Testcase 3 -- \emph{Infrastructure Automation}, labo 3 ("\emph{full mode}")]: Dit is een uitbreiding van testcase 2 met een monitoringserver. Monitoringdoelen werden ook geconfigureerd op basis van verbindingen in het implementatiediagram.
+      \end{description}
+      \section{Conclusie}
 
-De {\LaTeX} figure-omgeving bepaalt zelf waar een afbeelding komt en dat is meestal niet op de plek in de tekst waar de figure-omgeving gedefinieerd wordt. Als je wilt forceren dat afbeeldingen toch in de flow van de tekst blijven, dan kan je dat zoals hieronder:
+      De testresultaten tonen aan dat het \emph{technisch haalbaar} is om op basis van netwerk- en implementatiediagrammen functionele omgevingen te produceren zonder manuele tussenkomst. De kloof tussen de ontwerp- en implementatiefase wordt met deze tool aanzienlijk verkleind.
 
-\begin{center}
-  \captionsetup{type=figure}
-  \includegraphics[width=1.0\linewidth]{grail}
-  \captionof{figure}{He hasn't got shit all over him. The nose? Where'd you get the coconuts? What do you mean? We shall say `Ni' again to you, if you do not appease us}
-\end{center}
+      De \emph{converter} kent een aantal \textbf{beperkingen}:
 
-Let er wel op dat dit tot problemen met bladschikking kan leiden.
+      \begin{itemize}
+            \item Er wordt maar één netwerk ondersteund binnen ``\emph{full mode}''.
+            \item Er is geen routering tussen verschillende netwerken.
+            \item Enkel \emph{IPv4}-adressering wordt ondersteund.
+            \item Alleen \emph{AlmaLinux 9} kan als gastbesturingssysteem gebruikt worden.
+            \item De \emph{converter} houdt slechts rekening met een beperkte subset van de\\\emph{PlantUML}-syntax
+      \end{itemize}
 
-\section{Conclusies}
+      Deze vormen wel een vertrekpunt voor \textbf{toekomstige uitbreidingen}:
 
-Don't underestimate the Force. Oh God, my uncle. How am I ever gonna explain this? I suggest you try it again, Luke. This time, let go your conscious self and act on instinct. Don't be too proud of this technological terror you've constructed. The ability to destroy a planet is insignificant next to the power of the Force.
-
-\section{Toekomstig onderzoek}
-
-I care. So, what do you think of her, Han? No! Alderaan is peaceful. We have no weapons. You can't possibly… I have traced the Rebel spies to her. Now she is my only link to finding their secret base.
-
-Kid, I've flown from one side of this galaxy to the other. I've seen a lot of strange stuff, but I've never seen anything to make me believe there's one all-powerful Force controlling everything. There's no mystical energy field that controls my destiny. It's all a lot of simple tricks and nonsense. You are a part of the Rebel Alliance and a traitor! Take her away! 
+      \begin{itemize}
+            \item Ondersteuning voor \emph{meerdere netwerken} binnen ``\emph{full mode}'',
+                  inclusief configuratie voor routering en bijhorende firewall-regels.
+            \item Ondersteuning voor \emph{IPv6}-adressering.
+            \item Uitbreiding naar andere \emph{gastbesturingssystemen} (\emph{AlmaLinux 10},
+                  \emph{Ubuntu\\Server}, \emph{Alpine Linux}) via meer distributie-agnostische \emph{Ansible}-modules.
+            \item Ondersteuning voor andere \emph{IaC-} (\emph{Terraform}, \emph{OpenTofu}) en \emph{configuration management-backends}
+                  (\emph{Puppet}, \emph{Chef}).
+            \item Formele validatie van invoer en uitvoer via geïntegreerde linters.
+      \end{itemize}
 
 \end{multicols}
 \end{document}

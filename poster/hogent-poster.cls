@@ -28,6 +28,13 @@
 \RequirePackage{wrapfig} % Allows wrapping text around tables and figures
 \RequirePackage[export]{adjustbox}
 
+% Typography & Symbols
+\RequirePackage{eurosym}
+\RequirePackage{microtype}
+\RequirePackage{textcomp}
+\RequirePackage{xspace}
+\RequirePackage{csquotes}
+
 %%============================================================================
 %% Process options
 %%============================================================================
@@ -446,7 +453,7 @@
     {\Large\titlefont\abstractname}
   \end{center}
   \list{}{%
-    \setlength{\leftmargin}{2cm}
+    \setlength{\leftmargin}{1.8cm}
     \setlength{\rightmargin}{\leftmargin}}%
   \item\relax\normalfont\itshape
 }{%

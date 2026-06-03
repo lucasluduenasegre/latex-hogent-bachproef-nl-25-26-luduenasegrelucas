@@ -1,0 +1,13 @@
+@startuml p2a_activity
+<style>
+activityDiagram {
+  FontName Montserrat
+}
+</style>
+start
+:1. **Parsering**;
+:2. **Validatie**;
+:3. __**Codegeneratie**__;
+:4. //**Asset-kopiëring**//;
+stop
+@enduml
