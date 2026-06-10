@@ -269,15 +269,17 @@
 
   \begingroup
   \medskip
-  \raggedright\titlefont\color{title}\VeryHuge\@title
+  \raggedright\titlefont\color{title}\veryHuge\@title
+
+  \medskip
 
   \if\@subtitle\@empty\else
-    \raggedright\titlefont\Huge\textit{\@subtitle}
+    \raggedright\titlefont\huge\textit{\@subtitle}
   \fi
   \endgroup
 
   \begingroup
-  \bigskip
+  \smallskip
   \raggedright\huge\textbf{\@author}
 
   \if\@email\@empty\else
@@ -446,7 +448,7 @@
 
 \renewenvironment{abstract}
 {%
-  \bigskip\bigskip
+  \smallskip
   \addtolength{\leftmargin}{1em}
 
   \begin{center}
@@ -476,8 +478,6 @@
     \url{\@projectrepo}
   \fi
   \endlist
-
-  \bigskip
 }
 
 \endinput
